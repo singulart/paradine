@@ -1,0 +1,43 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "unsafe.delete.thehipsta",
+      "nativeLanguage": "en"
+    },
+    "jhipsterVersion": "6.9.1",
+    "applicationType": "monolith",
+    "baseName": "thehipsta",
+    "packageName": "unsafe.delete.thehipsta",
+    "packageFolder": "unsafe/delete/thehipsta",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "redis",
+    "enableHibernateCache": true,
+    "websocket": "spring-websocket",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": "elasticsearch",
+    "messageBroker": "kafka",
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": true,
+    "jwtSecretKey": "MmM1NDhmM2MxMmRkZTFlZGI3M2U1YjM0OGJjNDFiNjVmMWI0YzI1NTRiYjBlOGNiMmY2MTIyNzFiNzJhMTEzMDM1ZjYxNzUwYzc4ODE4YTY4MWNlYTJiYjBlMDI2ZTk2M2U3YmYxNDA4MjRjNmViNWY3ZjQ3ZWVmYjE3NWNjNjE=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "creationTimestamp": 1592401198225,
+    "testFrameworks": ["protractor"],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "en",
+    "languages": ["en", "ru", "ua"],
+    "blueprints": []
+  }
+}
