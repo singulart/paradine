@@ -60,6 +60,7 @@ public class CacheConfiguration {
             createCache(cm, unsafe.delete.thehipsta.domain.User.class.getName(), jcacheConfiguration);
             createCache(cm, unsafe.delete.thehipsta.domain.Authority.class.getName(), jcacheConfiguration);
             createCache(cm, unsafe.delete.thehipsta.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            createCache(cm, unsafe.delete.thehipsta.domain.Restaurant.class.getName(), jcacheConfiguration);
             // jhipster-needle-redis-add-entry
         };
     }

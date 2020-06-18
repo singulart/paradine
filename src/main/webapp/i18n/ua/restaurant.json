@@ -1,0 +1,31 @@
+{
+  "thehipstaApp": {
+    "restaurant": {
+      "home": {
+        "title": "Restaurants",
+        "createLabel": "Створити новий Restaurant",
+        "createOrEditLabel": "Створити чи редагувати Restaurant",
+        "search": "Знайти Restaurant",
+        "notFound": "No Restaurants found"
+      },
+      "created": "Новий Restaurant створений з ідентифікатором {{ param }}",
+      "updated": "Restaurant оновлений з ідентифікатором {{ param }}",
+      "deleted": "Restaurant видалений з ідентифікатором {{ param }}",
+      "delete": {
+        "question": "Ви впевнені, що хочете видалити Restaurant {{ id }}?"
+      },
+      "detail": {
+        "title": "Restaurant"
+      },
+      "uuid": "Uuid",
+      "capacity": "Capacity",
+      "geolat": "Geolat",
+      "geolng": "Geolng",
+      "name": "Name",
+      "photoUrl": "Photo Url",
+      "altName1": "Alt Name 1",
+      "altName2": "Alt Name 2",
+      "altName3": "Alt Name 3"
+    }
+  }
+}
