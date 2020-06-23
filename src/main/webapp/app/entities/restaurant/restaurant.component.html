@@ -50,6 +50,9 @@
                     <th scope="col"  jhiSortBy="altName1"><span jhiTranslate="thehipstaApp.restaurant.altName1">Alt Name 1</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="altName2"><span jhiTranslate="thehipstaApp.restaurant.altName2">Alt Name 2</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="altName3"><span jhiTranslate="thehipstaApp.restaurant.altName3">Alt Name 3</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="googlePlacesId"><span jhiTranslate="thehipstaApp.restaurant.googlePlacesId">Google Places Id</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="createdAt"><span jhiTranslate="thehipstaApp.restaurant.createdAt">Created At</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="updatedAt"><span jhiTranslate="thehipstaApp.restaurant.updatedAt">Updated At</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -65,6 +68,9 @@
                     <td>{{ restaurant.altName1 }}</td>
                     <td>{{ restaurant.altName2 }}</td>
                     <td>{{ restaurant.altName3 }}</td>
+                    <td>{{ restaurant.googlePlacesId }}</td>
+                    <td>{{ restaurant.createdAt | date:'medium' }}</td>
+                    <td>{{ restaurant.updatedAt | date:'medium' }}</td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

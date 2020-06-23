@@ -1,3 +1,5 @@
+import { Moment } from 'moment';
+
 export interface IRestaurant {
   id?: number;
   uuid?: string;
@@ -9,6 +11,9 @@ export interface IRestaurant {
   altName1?: string;
   altName2?: string;
   altName3?: string;
+  googlePlacesId?: string;
+  createdAt?: Moment;
+  updatedAt?: Moment;
 }
 
 export class Restaurant implements IRestaurant {
@@ -22,6 +27,9 @@ export class Restaurant implements IRestaurant {
     public photoUrl?: string,
     public altName1?: string,
     public altName2?: string,
-    public altName3?: string
+    public altName3?: string,
+    public googlePlacesId?: string,
+    public createdAt?: Moment,
+    public updatedAt?: Moment
   ) {}
 }

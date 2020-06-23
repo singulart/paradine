@@ -38,6 +38,9 @@ export class RestaurantUpdatePage {
   altName1Input = element(by.id('field_altName1'));
   altName2Input = element(by.id('field_altName2'));
   altName3Input = element(by.id('field_altName3'));
+  googlePlacesIdInput = element(by.id('field_googlePlacesId'));
+  createdAtInput = element(by.id('field_createdAt'));
+  updatedAtInput = element(by.id('field_updatedAt'));
 
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -113,6 +116,30 @@ export class RestaurantUpdatePage {
 
   async getAltName3Input(): Promise<string> {
     return await this.altName3Input.getAttribute('value');
+  }
+
+  async setGooglePlacesIdInput(googlePlacesId: string): Promise<void> {
+    await this.googlePlacesIdInput.sendKeys(googlePlacesId);
+  }
+
+  async getGooglePlacesIdInput(): Promise<string> {
+    return await this.googlePlacesIdInput.getAttribute('value');
+  }
+
+  async setCreatedAtInput(createdAt: string): Promise<void> {
+    await this.createdAtInput.sendKeys(createdAt);
+  }
+
+  async getCreatedAtInput(): Promise<string> {
+    return await this.createdAtInput.getAttribute('value');
+  }
+
+  async setUpdatedAtInput(updatedAt: string): Promise<void> {
+    await this.updatedAtInput.sendKeys(updatedAt);
+  }
+
+  async getUpdatedAtInput(): Promise<string> {
+    return await this.updatedAtInput.getAttribute('value');
   }
 
   async save(): Promise<void> {

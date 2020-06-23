@@ -8,6 +8,7 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 
 /**
  * A Restaurant.
@@ -67,6 +68,18 @@ public class Restaurant implements Serializable {
     @Size(max = 128)
     @Column(name = "alt_name_3", length = 128)
     private String altName3;
+
+    @Size(max = 255)
+    @Column(name = "google_places_id", length = 255)
+    private String googlePlacesId;
+
+    @NotNull
+    @Column(name = "created_at", nullable = false)
+    private ZonedDateTime createdAt;
+
+    @NotNull
+    @Column(name = "updated_at", nullable = false)
+    private ZonedDateTime updatedAt;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -193,6 +206,45 @@ public class Restaurant implements Serializable {
     public void setAltName3(String altName3) {
         this.altName3 = altName3;
     }
+
+    public String getGooglePlacesId() {
+        return googlePlacesId;
+    }
+
+    public Restaurant googlePlacesId(String googlePlacesId) {
+        this.googlePlacesId = googlePlacesId;
+        return this;
+    }
+
+    public void setGooglePlacesId(String googlePlacesId) {
+        this.googlePlacesId = googlePlacesId;
+    }
+
+    public ZonedDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public Restaurant createdAt(ZonedDateTime createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
+
+    public void setCreatedAt(ZonedDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public ZonedDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public Restaurant updatedAt(ZonedDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+        return this;
+    }
+
+    public void setUpdatedAt(ZonedDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -225,6 +277,9 @@ public class Restaurant implements Serializable {
             ", altName1='" + getAltName1() + "'" +
             ", altName2='" + getAltName2() + "'" +
             ", altName3='" + getAltName3() + "'" +
+            ", googlePlacesId='" + getGooglePlacesId() + "'" +
+            ", createdAt='" + getCreatedAt() + "'" +
+            ", updatedAt='" + getUpdatedAt() + "'" +
             "}";
     }
 }

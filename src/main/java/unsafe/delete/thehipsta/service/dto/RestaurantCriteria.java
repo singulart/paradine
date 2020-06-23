@@ -10,6 +10,7 @@ import io.github.jhipster.service.filter.FloatFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
+import io.github.jhipster.service.filter.ZonedDateTimeFilter;
 
 /**
  * Criteria class for the {@link unsafe.delete.thehipsta.domain.Restaurant} entity. This class is used
@@ -44,6 +45,12 @@ public class RestaurantCriteria implements Serializable, Criteria {
 
     private StringFilter altName3;
 
+    private StringFilter googlePlacesId;
+
+    private ZonedDateTimeFilter createdAt;
+
+    private ZonedDateTimeFilter updatedAt;
+
     public RestaurantCriteria() {
     }
 
@@ -58,6 +65,9 @@ public class RestaurantCriteria implements Serializable, Criteria {
         this.altName1 = other.altName1 == null ? null : other.altName1.copy();
         this.altName2 = other.altName2 == null ? null : other.altName2.copy();
         this.altName3 = other.altName3 == null ? null : other.altName3.copy();
+        this.googlePlacesId = other.googlePlacesId == null ? null : other.googlePlacesId.copy();
+        this.createdAt = other.createdAt == null ? null : other.createdAt.copy();
+        this.updatedAt = other.updatedAt == null ? null : other.updatedAt.copy();
     }
 
     @Override
@@ -145,6 +155,30 @@ public class RestaurantCriteria implements Serializable, Criteria {
         this.altName3 = altName3;
     }
 
+    public StringFilter getGooglePlacesId() {
+        return googlePlacesId;
+    }
+
+    public void setGooglePlacesId(StringFilter googlePlacesId) {
+        this.googlePlacesId = googlePlacesId;
+    }
+
+    public ZonedDateTimeFilter getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(ZonedDateTimeFilter createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public ZonedDateTimeFilter getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(ZonedDateTimeFilter updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -165,7 +199,10 @@ public class RestaurantCriteria implements Serializable, Criteria {
             Objects.equals(photoUrl, that.photoUrl) &&
             Objects.equals(altName1, that.altName1) &&
             Objects.equals(altName2, that.altName2) &&
-            Objects.equals(altName3, that.altName3);
+            Objects.equals(altName3, that.altName3) &&
+            Objects.equals(googlePlacesId, that.googlePlacesId) &&
+            Objects.equals(createdAt, that.createdAt) &&
+            Objects.equals(updatedAt, that.updatedAt);
     }
 
     @Override
@@ -180,7 +217,10 @@ public class RestaurantCriteria implements Serializable, Criteria {
         photoUrl,
         altName1,
         altName2,
-        altName3
+        altName3,
+        googlePlacesId,
+        createdAt,
+        updatedAt
         );
     }
 
@@ -198,6 +238,9 @@ public class RestaurantCriteria implements Serializable, Criteria {
                 (altName1 != null ? "altName1=" + altName1 + ", " : "") +
                 (altName2 != null ? "altName2=" + altName2 + ", " : "") +
                 (altName3 != null ? "altName3=" + altName3 + ", " : "") +
+                (googlePlacesId != null ? "googlePlacesId=" + googlePlacesId + ", " : "") +
+                (createdAt != null ? "createdAt=" + createdAt + ", " : "") +
+                (updatedAt != null ? "updatedAt=" + updatedAt + ", " : "") +
             "}";
     }
 

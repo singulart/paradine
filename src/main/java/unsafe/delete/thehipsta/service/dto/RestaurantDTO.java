@@ -1,5 +1,6 @@
 package unsafe.delete.thehipsta.service.dto;
 
+import java.time.ZonedDateTime;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 
@@ -43,6 +44,15 @@ public class RestaurantDTO implements Serializable {
 
     @Size(max = 128)
     private String altName3;
+
+    @Size(max = 255)
+    private String googlePlacesId;
+
+    @NotNull
+    private ZonedDateTime createdAt;
+
+    @NotNull
+    private ZonedDateTime updatedAt;
 
     
     public Long getId() {
@@ -125,6 +135,30 @@ public class RestaurantDTO implements Serializable {
         this.altName3 = altName3;
     }
 
+    public String getGooglePlacesId() {
+        return googlePlacesId;
+    }
+
+    public void setGooglePlacesId(String googlePlacesId) {
+        this.googlePlacesId = googlePlacesId;
+    }
+
+    public ZonedDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(ZonedDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public ZonedDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(ZonedDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -156,6 +190,9 @@ public class RestaurantDTO implements Serializable {
             ", altName1='" + getAltName1() + "'" +
             ", altName2='" + getAltName2() + "'" +
             ", altName3='" + getAltName3() + "'" +
+            ", googlePlacesId='" + getGooglePlacesId() + "'" +
+            ", createdAt='" + getCreatedAt() + "'" +
+            ", updatedAt='" + getUpdatedAt() + "'" +
             "}";
     }
 }

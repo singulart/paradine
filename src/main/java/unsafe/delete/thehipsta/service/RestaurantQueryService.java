@@ -122,6 +122,15 @@ public class RestaurantQueryService extends QueryService<Restaurant> {
             if (criteria.getAltName3() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getAltName3(), Restaurant_.altName3));
             }
+            if (criteria.getGooglePlacesId() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getGooglePlacesId(), Restaurant_.googlePlacesId));
+            }
+            if (criteria.getCreatedAt() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getCreatedAt(), Restaurant_.createdAt));
+            }
+            if (criteria.getUpdatedAt() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getUpdatedAt(), Restaurant_.updatedAt));
+            }
         }
         return specification;
     }

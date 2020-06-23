@@ -25,7 +25,10 @@
       "photoUrl": "Photo Url",
       "altName1": "Alt Name 1",
       "altName2": "Alt Name 2",
-      "altName3": "Alt Name 3"
+      "altName3": "Alt Name 3",
+      "googlePlacesId": "Google Places Id",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At"
     }
   }
 }

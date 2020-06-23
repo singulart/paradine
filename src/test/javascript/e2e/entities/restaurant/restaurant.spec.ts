@@ -1,4 +1,4 @@
-import { browser, ExpectedConditions as ec, promise } from 'protractor';
+import { browser, ExpectedConditions as ec, protractor, promise } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
 import { RestaurantComponentsPage, RestaurantDeleteDialog, RestaurantUpdatePage } from './restaurant.page-object';
@@ -52,6 +52,9 @@ describe('Restaurant e2e test', () => {
       restaurantUpdatePage.setAltName1Input('altName1'),
       restaurantUpdatePage.setAltName2Input('altName2'),
       restaurantUpdatePage.setAltName3Input('altName3'),
+      restaurantUpdatePage.setGooglePlacesIdInput('googlePlacesId'),
+      restaurantUpdatePage.setCreatedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+      restaurantUpdatePage.setUpdatedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
     ]);
 
     expect(await restaurantUpdatePage.getUuidInput()).to.eq(
@@ -69,6 +72,18 @@ describe('Restaurant e2e test', () => {
     expect(await restaurantUpdatePage.getAltName1Input()).to.eq('altName1', 'Expected AltName1 value to be equals to altName1');
     expect(await restaurantUpdatePage.getAltName2Input()).to.eq('altName2', 'Expected AltName2 value to be equals to altName2');
     expect(await restaurantUpdatePage.getAltName3Input()).to.eq('altName3', 'Expected AltName3 value to be equals to altName3');
+    expect(await restaurantUpdatePage.getGooglePlacesIdInput()).to.eq(
+      'googlePlacesId',
+      'Expected GooglePlacesId value to be equals to googlePlacesId'
+    );
+    expect(await restaurantUpdatePage.getCreatedAtInput()).to.contain(
+      '2001-01-01T02:30',
+      'Expected createdAt value to be equals to 2000-12-31'
+    );
+    expect(await restaurantUpdatePage.getUpdatedAtInput()).to.contain(
+      '2001-01-01T02:30',
+      'Expected updatedAt value to be equals to 2000-12-31'
+    );
 
     await restaurantUpdatePage.save();
     expect(await restaurantUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;

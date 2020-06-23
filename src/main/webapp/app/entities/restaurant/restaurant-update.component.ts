@@ -4,6 +4,8 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IRestaurant, Restaurant } from 'app/shared/model/restaurant.model';
 import { RestaurantService } from './restaurant.service';
@@ -45,12 +47,21 @@ export class RestaurantUpdateComponent implements OnInit {
     altName1: [null, [Validators.maxLength(128)]],
     altName2: [null, [Validators.maxLength(128)]],
     altName3: [null, [Validators.maxLength(128)]],
+    googlePlacesId: [null, [Validators.maxLength(255)]],
+    createdAt: [null, [Validators.required]],
+    updatedAt: [null, [Validators.required]],
   });
 
   constructor(protected restaurantService: RestaurantService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ restaurant }) => {
+      if (!restaurant.id) {
+        const today = moment().startOf('day');
+        restaurant.createdAt = today;
+        restaurant.updatedAt = today;
+      }
+
       this.updateForm(restaurant);
     });
   }
@@ -67,6 +78,9 @@ export class RestaurantUpdateComponent implements OnInit {
       altName1: restaurant.altName1,
       altName2: restaurant.altName2,
       altName3: restaurant.altName3,
+      googlePlacesId: restaurant.googlePlacesId,
+      createdAt: restaurant.createdAt ? restaurant.createdAt.format(DATE_TIME_FORMAT) : null,
+      updatedAt: restaurant.updatedAt ? restaurant.updatedAt.format(DATE_TIME_FORMAT) : null,
     });
   }
 
@@ -97,6 +111,9 @@ export class RestaurantUpdateComponent implements OnInit {
       altName1: this.editForm.get(['altName1'])!.value,
       altName2: this.editForm.get(['altName2'])!.value,
       altName3: this.editForm.get(['altName3'])!.value,
+      googlePlacesId: this.editForm.get(['googlePlacesId'])!.value,
+      createdAt: this.editForm.get(['createdAt'])!.value ? moment(this.editForm.get(['createdAt'])!.value, DATE_TIME_FORMAT) : undefined,
+      updatedAt: this.editForm.get(['updatedAt'])!.value ? moment(this.editForm.get(['updatedAt'])!.value, DATE_TIME_FORMAT) : undefined,
     };
   }
 

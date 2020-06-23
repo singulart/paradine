@@ -26,9 +26,14 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.List;
 
+import static unsafe.delete.thehipsta.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
@@ -75,6 +80,17 @@ public class RestaurantResourceIT {
     private static final String DEFAULT_ALT_NAME_3 = "AAAAAAAAAA";
     private static final String UPDATED_ALT_NAME_3 = "BBBBBBBBBB";
 
+    private static final String DEFAULT_GOOGLE_PLACES_ID = "AAAAAAAAAA";
+    private static final String UPDATED_GOOGLE_PLACES_ID = "BBBBBBBBBB";
+
+    private static final ZonedDateTime DEFAULT_CREATED_AT = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_CREATED_AT = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+    private static final ZonedDateTime SMALLER_CREATED_AT = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
+
+    private static final ZonedDateTime DEFAULT_UPDATED_AT = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_UPDATED_AT = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+    private static final ZonedDateTime SMALLER_UPDATED_AT = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
+
     @Autowired
     private RestaurantRepository restaurantRepository;
 
@@ -119,7 +135,10 @@ public class RestaurantResourceIT {
             .photoUrl(DEFAULT_PHOTO_URL)
             .altName1(DEFAULT_ALT_NAME_1)
             .altName2(DEFAULT_ALT_NAME_2)
-            .altName3(DEFAULT_ALT_NAME_3);
+            .altName3(DEFAULT_ALT_NAME_3)
+            .googlePlacesId(DEFAULT_GOOGLE_PLACES_ID)
+            .createdAt(DEFAULT_CREATED_AT)
+            .updatedAt(DEFAULT_UPDATED_AT);
         return restaurant;
     }
     /**
@@ -138,7 +157,10 @@ public class RestaurantResourceIT {
             .photoUrl(UPDATED_PHOTO_URL)
             .altName1(UPDATED_ALT_NAME_1)
             .altName2(UPDATED_ALT_NAME_2)
-            .altName3(UPDATED_ALT_NAME_3);
+            .altName3(UPDATED_ALT_NAME_3)
+            .googlePlacesId(UPDATED_GOOGLE_PLACES_ID)
+            .createdAt(UPDATED_CREATED_AT)
+            .updatedAt(UPDATED_UPDATED_AT);
         return restaurant;
     }
 
@@ -171,6 +193,9 @@ public class RestaurantResourceIT {
         assertThat(testRestaurant.getAltName1()).isEqualTo(DEFAULT_ALT_NAME_1);
         assertThat(testRestaurant.getAltName2()).isEqualTo(DEFAULT_ALT_NAME_2);
         assertThat(testRestaurant.getAltName3()).isEqualTo(DEFAULT_ALT_NAME_3);
+        assertThat(testRestaurant.getGooglePlacesId()).isEqualTo(DEFAULT_GOOGLE_PLACES_ID);
+        assertThat(testRestaurant.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
+        assertThat(testRestaurant.getUpdatedAt()).isEqualTo(DEFAULT_UPDATED_AT);
 
         // Validate the Restaurant in Elasticsearch
         verify(mockRestaurantSearchRepository, times(1)).save(testRestaurant);
@@ -322,6 +347,46 @@ public class RestaurantResourceIT {
 
     @Test
     @Transactional
+    public void checkCreatedAtIsRequired() throws Exception {
+        int databaseSizeBeforeTest = restaurantRepository.findAll().size();
+        // set the field null
+        restaurant.setCreatedAt(null);
+
+        // Create the Restaurant, which fails.
+        RestaurantDTO restaurantDTO = restaurantMapper.toDto(restaurant);
+
+
+        restRestaurantMockMvc.perform(post("/api/restaurants")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(restaurantDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Restaurant> restaurantList = restaurantRepository.findAll();
+        assertThat(restaurantList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkUpdatedAtIsRequired() throws Exception {
+        int databaseSizeBeforeTest = restaurantRepository.findAll().size();
+        // set the field null
+        restaurant.setUpdatedAt(null);
+
+        // Create the Restaurant, which fails.
+        RestaurantDTO restaurantDTO = restaurantMapper.toDto(restaurant);
+
+
+        restRestaurantMockMvc.perform(post("/api/restaurants")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(restaurantDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Restaurant> restaurantList = restaurantRepository.findAll();
+        assertThat(restaurantList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllRestaurants() throws Exception {
         // Initialize the database
         restaurantRepository.saveAndFlush(restaurant);
@@ -339,7 +404,10 @@ public class RestaurantResourceIT {
             .andExpect(jsonPath("$.[*].photoUrl").value(hasItem(DEFAULT_PHOTO_URL)))
             .andExpect(jsonPath("$.[*].altName1").value(hasItem(DEFAULT_ALT_NAME_1)))
             .andExpect(jsonPath("$.[*].altName2").value(hasItem(DEFAULT_ALT_NAME_2)))
-            .andExpect(jsonPath("$.[*].altName3").value(hasItem(DEFAULT_ALT_NAME_3)));
+            .andExpect(jsonPath("$.[*].altName3").value(hasItem(DEFAULT_ALT_NAME_3)))
+            .andExpect(jsonPath("$.[*].googlePlacesId").value(hasItem(DEFAULT_GOOGLE_PLACES_ID)))
+            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(sameInstant(DEFAULT_CREATED_AT))))
+            .andExpect(jsonPath("$.[*].updatedAt").value(hasItem(sameInstant(DEFAULT_UPDATED_AT))));
     }
     
     @Test
@@ -361,7 +429,10 @@ public class RestaurantResourceIT {
             .andExpect(jsonPath("$.photoUrl").value(DEFAULT_PHOTO_URL))
             .andExpect(jsonPath("$.altName1").value(DEFAULT_ALT_NAME_1))
             .andExpect(jsonPath("$.altName2").value(DEFAULT_ALT_NAME_2))
-            .andExpect(jsonPath("$.altName3").value(DEFAULT_ALT_NAME_3));
+            .andExpect(jsonPath("$.altName3").value(DEFAULT_ALT_NAME_3))
+            .andExpect(jsonPath("$.googlePlacesId").value(DEFAULT_GOOGLE_PLACES_ID))
+            .andExpect(jsonPath("$.createdAt").value(sameInstant(DEFAULT_CREATED_AT)))
+            .andExpect(jsonPath("$.updatedAt").value(sameInstant(DEFAULT_UPDATED_AT)));
     }
 
 
@@ -1166,6 +1237,294 @@ public class RestaurantResourceIT {
         defaultRestaurantShouldBeFound("altName3.doesNotContain=" + UPDATED_ALT_NAME_3);
     }
 
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByGooglePlacesIdIsEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where googlePlacesId equals to DEFAULT_GOOGLE_PLACES_ID
+        defaultRestaurantShouldBeFound("googlePlacesId.equals=" + DEFAULT_GOOGLE_PLACES_ID);
+
+        // Get all the restaurantList where googlePlacesId equals to UPDATED_GOOGLE_PLACES_ID
+        defaultRestaurantShouldNotBeFound("googlePlacesId.equals=" + UPDATED_GOOGLE_PLACES_ID);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByGooglePlacesIdIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where googlePlacesId not equals to DEFAULT_GOOGLE_PLACES_ID
+        defaultRestaurantShouldNotBeFound("googlePlacesId.notEquals=" + DEFAULT_GOOGLE_PLACES_ID);
+
+        // Get all the restaurantList where googlePlacesId not equals to UPDATED_GOOGLE_PLACES_ID
+        defaultRestaurantShouldBeFound("googlePlacesId.notEquals=" + UPDATED_GOOGLE_PLACES_ID);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByGooglePlacesIdIsInShouldWork() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where googlePlacesId in DEFAULT_GOOGLE_PLACES_ID or UPDATED_GOOGLE_PLACES_ID
+        defaultRestaurantShouldBeFound("googlePlacesId.in=" + DEFAULT_GOOGLE_PLACES_ID + "," + UPDATED_GOOGLE_PLACES_ID);
+
+        // Get all the restaurantList where googlePlacesId equals to UPDATED_GOOGLE_PLACES_ID
+        defaultRestaurantShouldNotBeFound("googlePlacesId.in=" + UPDATED_GOOGLE_PLACES_ID);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByGooglePlacesIdIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where googlePlacesId is not null
+        defaultRestaurantShouldBeFound("googlePlacesId.specified=true");
+
+        // Get all the restaurantList where googlePlacesId is null
+        defaultRestaurantShouldNotBeFound("googlePlacesId.specified=false");
+    }
+                @Test
+    @Transactional
+    public void getAllRestaurantsByGooglePlacesIdContainsSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where googlePlacesId contains DEFAULT_GOOGLE_PLACES_ID
+        defaultRestaurantShouldBeFound("googlePlacesId.contains=" + DEFAULT_GOOGLE_PLACES_ID);
+
+        // Get all the restaurantList where googlePlacesId contains UPDATED_GOOGLE_PLACES_ID
+        defaultRestaurantShouldNotBeFound("googlePlacesId.contains=" + UPDATED_GOOGLE_PLACES_ID);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByGooglePlacesIdNotContainsSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where googlePlacesId does not contain DEFAULT_GOOGLE_PLACES_ID
+        defaultRestaurantShouldNotBeFound("googlePlacesId.doesNotContain=" + DEFAULT_GOOGLE_PLACES_ID);
+
+        // Get all the restaurantList where googlePlacesId does not contain UPDATED_GOOGLE_PLACES_ID
+        defaultRestaurantShouldBeFound("googlePlacesId.doesNotContain=" + UPDATED_GOOGLE_PLACES_ID);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByCreatedAtIsEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where createdAt equals to DEFAULT_CREATED_AT
+        defaultRestaurantShouldBeFound("createdAt.equals=" + DEFAULT_CREATED_AT);
+
+        // Get all the restaurantList where createdAt equals to UPDATED_CREATED_AT
+        defaultRestaurantShouldNotBeFound("createdAt.equals=" + UPDATED_CREATED_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByCreatedAtIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where createdAt not equals to DEFAULT_CREATED_AT
+        defaultRestaurantShouldNotBeFound("createdAt.notEquals=" + DEFAULT_CREATED_AT);
+
+        // Get all the restaurantList where createdAt not equals to UPDATED_CREATED_AT
+        defaultRestaurantShouldBeFound("createdAt.notEquals=" + UPDATED_CREATED_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByCreatedAtIsInShouldWork() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where createdAt in DEFAULT_CREATED_AT or UPDATED_CREATED_AT
+        defaultRestaurantShouldBeFound("createdAt.in=" + DEFAULT_CREATED_AT + "," + UPDATED_CREATED_AT);
+
+        // Get all the restaurantList where createdAt equals to UPDATED_CREATED_AT
+        defaultRestaurantShouldNotBeFound("createdAt.in=" + UPDATED_CREATED_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByCreatedAtIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where createdAt is not null
+        defaultRestaurantShouldBeFound("createdAt.specified=true");
+
+        // Get all the restaurantList where createdAt is null
+        defaultRestaurantShouldNotBeFound("createdAt.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByCreatedAtIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where createdAt is greater than or equal to DEFAULT_CREATED_AT
+        defaultRestaurantShouldBeFound("createdAt.greaterThanOrEqual=" + DEFAULT_CREATED_AT);
+
+        // Get all the restaurantList where createdAt is greater than or equal to UPDATED_CREATED_AT
+        defaultRestaurantShouldNotBeFound("createdAt.greaterThanOrEqual=" + UPDATED_CREATED_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByCreatedAtIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where createdAt is less than or equal to DEFAULT_CREATED_AT
+        defaultRestaurantShouldBeFound("createdAt.lessThanOrEqual=" + DEFAULT_CREATED_AT);
+
+        // Get all the restaurantList where createdAt is less than or equal to SMALLER_CREATED_AT
+        defaultRestaurantShouldNotBeFound("createdAt.lessThanOrEqual=" + SMALLER_CREATED_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByCreatedAtIsLessThanSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where createdAt is less than DEFAULT_CREATED_AT
+        defaultRestaurantShouldNotBeFound("createdAt.lessThan=" + DEFAULT_CREATED_AT);
+
+        // Get all the restaurantList where createdAt is less than UPDATED_CREATED_AT
+        defaultRestaurantShouldBeFound("createdAt.lessThan=" + UPDATED_CREATED_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByCreatedAtIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where createdAt is greater than DEFAULT_CREATED_AT
+        defaultRestaurantShouldNotBeFound("createdAt.greaterThan=" + DEFAULT_CREATED_AT);
+
+        // Get all the restaurantList where createdAt is greater than SMALLER_CREATED_AT
+        defaultRestaurantShouldBeFound("createdAt.greaterThan=" + SMALLER_CREATED_AT);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByUpdatedAtIsEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where updatedAt equals to DEFAULT_UPDATED_AT
+        defaultRestaurantShouldBeFound("updatedAt.equals=" + DEFAULT_UPDATED_AT);
+
+        // Get all the restaurantList where updatedAt equals to UPDATED_UPDATED_AT
+        defaultRestaurantShouldNotBeFound("updatedAt.equals=" + UPDATED_UPDATED_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByUpdatedAtIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where updatedAt not equals to DEFAULT_UPDATED_AT
+        defaultRestaurantShouldNotBeFound("updatedAt.notEquals=" + DEFAULT_UPDATED_AT);
+
+        // Get all the restaurantList where updatedAt not equals to UPDATED_UPDATED_AT
+        defaultRestaurantShouldBeFound("updatedAt.notEquals=" + UPDATED_UPDATED_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByUpdatedAtIsInShouldWork() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where updatedAt in DEFAULT_UPDATED_AT or UPDATED_UPDATED_AT
+        defaultRestaurantShouldBeFound("updatedAt.in=" + DEFAULT_UPDATED_AT + "," + UPDATED_UPDATED_AT);
+
+        // Get all the restaurantList where updatedAt equals to UPDATED_UPDATED_AT
+        defaultRestaurantShouldNotBeFound("updatedAt.in=" + UPDATED_UPDATED_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByUpdatedAtIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where updatedAt is not null
+        defaultRestaurantShouldBeFound("updatedAt.specified=true");
+
+        // Get all the restaurantList where updatedAt is null
+        defaultRestaurantShouldNotBeFound("updatedAt.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByUpdatedAtIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where updatedAt is greater than or equal to DEFAULT_UPDATED_AT
+        defaultRestaurantShouldBeFound("updatedAt.greaterThanOrEqual=" + DEFAULT_UPDATED_AT);
+
+        // Get all the restaurantList where updatedAt is greater than or equal to UPDATED_UPDATED_AT
+        defaultRestaurantShouldNotBeFound("updatedAt.greaterThanOrEqual=" + UPDATED_UPDATED_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByUpdatedAtIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where updatedAt is less than or equal to DEFAULT_UPDATED_AT
+        defaultRestaurantShouldBeFound("updatedAt.lessThanOrEqual=" + DEFAULT_UPDATED_AT);
+
+        // Get all the restaurantList where updatedAt is less than or equal to SMALLER_UPDATED_AT
+        defaultRestaurantShouldNotBeFound("updatedAt.lessThanOrEqual=" + SMALLER_UPDATED_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByUpdatedAtIsLessThanSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where updatedAt is less than DEFAULT_UPDATED_AT
+        defaultRestaurantShouldNotBeFound("updatedAt.lessThan=" + DEFAULT_UPDATED_AT);
+
+        // Get all the restaurantList where updatedAt is less than UPDATED_UPDATED_AT
+        defaultRestaurantShouldBeFound("updatedAt.lessThan=" + UPDATED_UPDATED_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByUpdatedAtIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where updatedAt is greater than DEFAULT_UPDATED_AT
+        defaultRestaurantShouldNotBeFound("updatedAt.greaterThan=" + DEFAULT_UPDATED_AT);
+
+        // Get all the restaurantList where updatedAt is greater than SMALLER_UPDATED_AT
+        defaultRestaurantShouldBeFound("updatedAt.greaterThan=" + SMALLER_UPDATED_AT);
+    }
+
     /**
      * Executes the search, and checks that the default entity is returned.
      */
@@ -1182,7 +1541,10 @@ public class RestaurantResourceIT {
             .andExpect(jsonPath("$.[*].photoUrl").value(hasItem(DEFAULT_PHOTO_URL)))
             .andExpect(jsonPath("$.[*].altName1").value(hasItem(DEFAULT_ALT_NAME_1)))
             .andExpect(jsonPath("$.[*].altName2").value(hasItem(DEFAULT_ALT_NAME_2)))
-            .andExpect(jsonPath("$.[*].altName3").value(hasItem(DEFAULT_ALT_NAME_3)));
+            .andExpect(jsonPath("$.[*].altName3").value(hasItem(DEFAULT_ALT_NAME_3)))
+            .andExpect(jsonPath("$.[*].googlePlacesId").value(hasItem(DEFAULT_GOOGLE_PLACES_ID)))
+            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(sameInstant(DEFAULT_CREATED_AT))))
+            .andExpect(jsonPath("$.[*].updatedAt").value(hasItem(sameInstant(DEFAULT_UPDATED_AT))));
 
         // Check, that the count call also returns 1
         restRestaurantMockMvc.perform(get("/api/restaurants/count?sort=id,desc&" + filter))
@@ -1237,7 +1599,10 @@ public class RestaurantResourceIT {
             .photoUrl(UPDATED_PHOTO_URL)
             .altName1(UPDATED_ALT_NAME_1)
             .altName2(UPDATED_ALT_NAME_2)
-            .altName3(UPDATED_ALT_NAME_3);
+            .altName3(UPDATED_ALT_NAME_3)
+            .googlePlacesId(UPDATED_GOOGLE_PLACES_ID)
+            .createdAt(UPDATED_CREATED_AT)
+            .updatedAt(UPDATED_UPDATED_AT);
         RestaurantDTO restaurantDTO = restaurantMapper.toDto(updatedRestaurant);
 
         restRestaurantMockMvc.perform(put("/api/restaurants")
@@ -1258,6 +1623,9 @@ public class RestaurantResourceIT {
         assertThat(testRestaurant.getAltName1()).isEqualTo(UPDATED_ALT_NAME_1);
         assertThat(testRestaurant.getAltName2()).isEqualTo(UPDATED_ALT_NAME_2);
         assertThat(testRestaurant.getAltName3()).isEqualTo(UPDATED_ALT_NAME_3);
+        assertThat(testRestaurant.getGooglePlacesId()).isEqualTo(UPDATED_GOOGLE_PLACES_ID);
+        assertThat(testRestaurant.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
+        assertThat(testRestaurant.getUpdatedAt()).isEqualTo(UPDATED_UPDATED_AT);
 
         // Validate the Restaurant in Elasticsearch
         verify(mockRestaurantSearchRepository, times(1)).save(testRestaurant);
@@ -1328,6 +1696,9 @@ public class RestaurantResourceIT {
             .andExpect(jsonPath("$.[*].photoUrl").value(hasItem(DEFAULT_PHOTO_URL)))
             .andExpect(jsonPath("$.[*].altName1").value(hasItem(DEFAULT_ALT_NAME_1)))
             .andExpect(jsonPath("$.[*].altName2").value(hasItem(DEFAULT_ALT_NAME_2)))
-            .andExpect(jsonPath("$.[*].altName3").value(hasItem(DEFAULT_ALT_NAME_3)));
+            .andExpect(jsonPath("$.[*].altName3").value(hasItem(DEFAULT_ALT_NAME_3)))
+            .andExpect(jsonPath("$.[*].googlePlacesId").value(hasItem(DEFAULT_GOOGLE_PLACES_ID)))
+            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(sameInstant(DEFAULT_CREATED_AT))))
+            .andExpect(jsonPath("$.[*].updatedAt").value(hasItem(sameInstant(DEFAULT_UPDATED_AT))));
     }
 }
