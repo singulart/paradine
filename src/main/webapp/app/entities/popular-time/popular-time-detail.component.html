@@ -1,0 +1,108 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="popularTime">
+            <h2><span jhiTranslate="thehipstaApp.popularTime.detail.title">Popular Time</span> {{ popularTime.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="thehipstaApp.popularTime.dayOfWeek">Day Of Week</span></dt>
+                <dd>
+                    <span>{{ popularTime.dayOfWeek }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ06">Occ 06</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ06 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ07">Occ 07</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ07 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ08">Occ 08</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ08 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ09">Occ 09</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ09 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ10">Occ 10</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ10 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ11">Occ 11</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ11 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ12">Occ 12</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ12 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ13">Occ 13</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ13 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ14">Occ 14</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ14 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ15">Occ 15</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ15 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ16">Occ 16</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ16 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ17">Occ 17</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ17 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ18">Occ 18</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ18 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ19">Occ 19</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ19 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ20">Occ 20</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ20 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ21">Occ 21</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ21 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ22">Occ 22</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ22 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.occ23">Occ 23</span></dt>
+                <dd>
+                    <span>{{ popularTime.occ23 }}</span>
+                </dd>
+                <dt><span jhiTranslate="thehipstaApp.popularTime.restaurant">Restaurant</span></dt>
+                <dd>
+                    <div *ngIf="popularTime.restaurantId">
+                        <a [routerLink]="['/restaurant', popularTime.restaurantId, 'view']">{{ popularTime.restaurantName }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/popular-time', popularTime.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

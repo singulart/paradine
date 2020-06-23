@@ -1,0 +1,42 @@
+{
+  "thehipstaApp": {
+    "popularTime": {
+      "home": {
+        "title": "Popular Times",
+        "createLabel": "Створити новий Popular Time",
+        "createOrEditLabel": "Створити чи редагувати Popular Time",
+        "search": "Знайти Popular Time",
+        "notFound": "No Popular Times found"
+      },
+      "created": "Новий Popular Time створений з ідентифікатором {{ param }}",
+      "updated": "Popular Time оновлений з ідентифікатором {{ param }}",
+      "deleted": "Popular Time видалений з ідентифікатором {{ param }}",
+      "delete": {
+        "question": "Ви впевнені, що хочете видалити Popular Time {{ id }}?"
+      },
+      "detail": {
+        "title": "Popular Time"
+      },
+      "dayOfWeek": "Day Of Week",
+      "occ06": "Occ 06",
+      "occ07": "Occ 07",
+      "occ08": "Occ 08",
+      "occ09": "Occ 09",
+      "occ10": "Occ 10",
+      "occ11": "Occ 11",
+      "occ12": "Occ 12",
+      "occ13": "Occ 13",
+      "occ14": "Occ 14",
+      "occ15": "Occ 15",
+      "occ16": "Occ 16",
+      "occ17": "Occ 17",
+      "occ18": "Occ 18",
+      "occ19": "Occ 19",
+      "occ20": "Occ 20",
+      "occ21": "Occ 21",
+      "occ22": "Occ 22",
+      "occ23": "Occ 23",
+      "restaurant": "Restaurant"
+    }
+  }
+}

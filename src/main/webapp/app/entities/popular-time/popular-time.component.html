@@ -1,0 +1,121 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="thehipstaApp.popularTime.home.title">Popular Times</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-popular-time" [routerLink]="['/popular-time/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span class="hidden-sm-down"  jhiTranslate="thehipstaApp.popularTime.home.createLabel">
+            Create a new Popular Time
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'thehipstaApp.popularTime.home.search' | translate }}">
+
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <fa-icon icon="search"></fa-icon>
+                    </button>
+
+                    <button class="input-group-append btn btn-danger" (click)="search('')" *ngIf="currentSearch">
+                        <fa-icon icon="trash-alt"></fa-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="popularTimes?.length === 0">
+        <span jhiTranslate="thehipstaApp.popularTime.home.notFound">No popularTimes found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="popularTimes && popularTimes.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.dayOfWeek">Day Of Week</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ06">Occ 06</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ07">Occ 07</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ08">Occ 08</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ09">Occ 09</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ10">Occ 10</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ11">Occ 11</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ12">Occ 12</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ13">Occ 13</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ14">Occ 14</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ15">Occ 15</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ16">Occ 16</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ17">Occ 17</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ18">Occ 18</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ19">Occ 19</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ20">Occ 20</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ21">Occ 21</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ22">Occ 22</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ23">Occ 23</span></th>
+                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.restaurant">Restaurant</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let popularTime of popularTimes ;trackBy: trackId">
+                    <td><a [routerLink]="['/popular-time', popularTime.id, 'view']">{{ popularTime.id }}</a></td>
+                    <td>{{ popularTime.dayOfWeek }}</td>
+                    <td>{{ popularTime.occ06 }}</td>
+                    <td>{{ popularTime.occ07 }}</td>
+                    <td>{{ popularTime.occ08 }}</td>
+                    <td>{{ popularTime.occ09 }}</td>
+                    <td>{{ popularTime.occ10 }}</td>
+                    <td>{{ popularTime.occ11 }}</td>
+                    <td>{{ popularTime.occ12 }}</td>
+                    <td>{{ popularTime.occ13 }}</td>
+                    <td>{{ popularTime.occ14 }}</td>
+                    <td>{{ popularTime.occ15 }}</td>
+                    <td>{{ popularTime.occ16 }}</td>
+                    <td>{{ popularTime.occ17 }}</td>
+                    <td>{{ popularTime.occ18 }}</td>
+                    <td>{{ popularTime.occ19 }}</td>
+                    <td>{{ popularTime.occ20 }}</td>
+                    <td>{{ popularTime.occ21 }}</td>
+                    <td>{{ popularTime.occ22 }}</td>
+                    <td>{{ popularTime.occ23 }}</td>
+                    <td>
+                        <div *ngIf="popularTime.restaurantId">
+                            <a [routerLink]="['/restaurant', popularTime.restaurantId , 'view']" >{{ popularTime.restaurantName }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/popular-time', popularTime.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/popular-time', popularTime.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(popularTime)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

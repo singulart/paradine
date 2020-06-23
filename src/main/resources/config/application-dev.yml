@@ -23,7 +23,7 @@ eureka:
   instance:
     prefer-ip-address: true
   client:
-    enabled: true # By default, the JHipster Registry is not used in the "dev" profile
+    enabled: false # By default, the JHipster Registry is not used in the "dev" profile
     service-url:
       defaultZone: http://admin:${jhipster.registry.password}@UAIEV8759NBM.LEVI9.COM:8761/eureka/
 
@@ -53,7 +53,7 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:file:./target/h2db/db/thehipsta;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:file:./target/h2db/db/thehipsta;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1
     username: thehipsta
     password:
     hikari:

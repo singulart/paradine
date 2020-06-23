@@ -1,0 +1,486 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-popular-time-heading" jhiTranslate="thehipstaApp.popularTime.home.createOrEditLabel">Create or edit a Popular Time</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.dayOfWeek" for="field_dayOfWeek">Day Of Week</label>
+                    <input type="text" class="form-control" name="dayOfWeek" id="field_dayOfWeek"
+                           formControlName="dayOfWeek"/>
+                    <div *ngIf="editForm.get('dayOfWeek')!.invalid && (editForm.get('dayOfWeek')!.dirty || editForm.get('dayOfWeek')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('dayOfWeek')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('dayOfWeek')?.errors?.minlength" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 2 }">
+                        This field is required to be at least 2 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('dayOfWeek')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 2 }">
+                        This field cannot be longer than 2 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ06" for="field_occ06">Occ 06</label>
+                    <input type="number" class="form-control" name="occ06" id="field_occ06"
+                           formControlName="occ06"/>
+                    <div *ngIf="editForm.get('occ06')!.invalid && (editForm.get('occ06')!.dirty || editForm.get('occ06')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ06')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ06')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ06')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ06')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ07" for="field_occ07">Occ 07</label>
+                    <input type="number" class="form-control" name="occ07" id="field_occ07"
+                           formControlName="occ07"/>
+                    <div *ngIf="editForm.get('occ07')!.invalid && (editForm.get('occ07')!.dirty || editForm.get('occ07')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ07')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ07')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ07')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ07')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ08" for="field_occ08">Occ 08</label>
+                    <input type="number" class="form-control" name="occ08" id="field_occ08"
+                           formControlName="occ08"/>
+                    <div *ngIf="editForm.get('occ08')!.invalid && (editForm.get('occ08')!.dirty || editForm.get('occ08')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ08')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ08')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ08')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ08')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ09" for="field_occ09">Occ 09</label>
+                    <input type="number" class="form-control" name="occ09" id="field_occ09"
+                           formControlName="occ09"/>
+                    <div *ngIf="editForm.get('occ09')!.invalid && (editForm.get('occ09')!.dirty || editForm.get('occ09')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ09')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ09')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ09')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ09')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ10" for="field_occ10">Occ 10</label>
+                    <input type="number" class="form-control" name="occ10" id="field_occ10"
+                           formControlName="occ10"/>
+                    <div *ngIf="editForm.get('occ10')!.invalid && (editForm.get('occ10')!.dirty || editForm.get('occ10')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ10')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ10')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ10')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ10')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ11" for="field_occ11">Occ 11</label>
+                    <input type="number" class="form-control" name="occ11" id="field_occ11"
+                           formControlName="occ11"/>
+                    <div *ngIf="editForm.get('occ11')!.invalid && (editForm.get('occ11')!.dirty || editForm.get('occ11')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ11')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ11')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ11')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ11')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ12" for="field_occ12">Occ 12</label>
+                    <input type="number" class="form-control" name="occ12" id="field_occ12"
+                           formControlName="occ12"/>
+                    <div *ngIf="editForm.get('occ12')!.invalid && (editForm.get('occ12')!.dirty || editForm.get('occ12')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ12')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ12')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ12')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ12')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ13" for="field_occ13">Occ 13</label>
+                    <input type="number" class="form-control" name="occ13" id="field_occ13"
+                           formControlName="occ13"/>
+                    <div *ngIf="editForm.get('occ13')!.invalid && (editForm.get('occ13')!.dirty || editForm.get('occ13')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ13')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ13')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ13')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ13')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ14" for="field_occ14">Occ 14</label>
+                    <input type="number" class="form-control" name="occ14" id="field_occ14"
+                           formControlName="occ14"/>
+                    <div *ngIf="editForm.get('occ14')!.invalid && (editForm.get('occ14')!.dirty || editForm.get('occ14')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ14')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ14')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ14')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ14')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ15" for="field_occ15">Occ 15</label>
+                    <input type="number" class="form-control" name="occ15" id="field_occ15"
+                           formControlName="occ15"/>
+                    <div *ngIf="editForm.get('occ15')!.invalid && (editForm.get('occ15')!.dirty || editForm.get('occ15')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ15')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ15')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ15')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ15')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ16" for="field_occ16">Occ 16</label>
+                    <input type="number" class="form-control" name="occ16" id="field_occ16"
+                           formControlName="occ16"/>
+                    <div *ngIf="editForm.get('occ16')!.invalid && (editForm.get('occ16')!.dirty || editForm.get('occ16')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ16')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ16')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ16')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ16')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ17" for="field_occ17">Occ 17</label>
+                    <input type="number" class="form-control" name="occ17" id="field_occ17"
+                           formControlName="occ17"/>
+                    <div *ngIf="editForm.get('occ17')!.invalid && (editForm.get('occ17')!.dirty || editForm.get('occ17')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ17')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ17')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ17')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ17')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ18" for="field_occ18">Occ 18</label>
+                    <input type="number" class="form-control" name="occ18" id="field_occ18"
+                           formControlName="occ18"/>
+                    <div *ngIf="editForm.get('occ18')!.invalid && (editForm.get('occ18')!.dirty || editForm.get('occ18')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ18')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ18')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ18')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ18')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ19" for="field_occ19">Occ 19</label>
+                    <input type="number" class="form-control" name="occ19" id="field_occ19"
+                           formControlName="occ19"/>
+                    <div *ngIf="editForm.get('occ19')!.invalid && (editForm.get('occ19')!.dirty || editForm.get('occ19')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ19')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ19')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ19')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ19')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ20" for="field_occ20">Occ 20</label>
+                    <input type="number" class="form-control" name="occ20" id="field_occ20"
+                           formControlName="occ20"/>
+                    <div *ngIf="editForm.get('occ20')!.invalid && (editForm.get('occ20')!.dirty || editForm.get('occ20')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ20')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ20')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ20')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ20')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ21" for="field_occ21">Occ 21</label>
+                    <input type="number" class="form-control" name="occ21" id="field_occ21"
+                           formControlName="occ21"/>
+                    <div *ngIf="editForm.get('occ21')!.invalid && (editForm.get('occ21')!.dirty || editForm.get('occ21')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ21')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ21')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ21')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ21')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ22" for="field_occ22">Occ 22</label>
+                    <input type="number" class="form-control" name="occ22" id="field_occ22"
+                           formControlName="occ22"/>
+                    <div *ngIf="editForm.get('occ22')!.invalid && (editForm.get('occ22')!.dirty || editForm.get('occ22')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ22')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ22')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ22')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ22')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.occ23" for="field_occ23">Occ 23</label>
+                    <input type="number" class="form-control" name="occ23" id="field_occ23"
+                           formControlName="occ23"/>
+                    <div *ngIf="editForm.get('occ23')!.invalid && (editForm.get('occ23')!.dirty || editForm.get('occ23')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ23')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ23')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ23')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ23')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="thehipstaApp.popularTime.restaurant" for="field_restaurant">Restaurant</label>
+                    <select class="form-control" id="field_restaurant" name="restaurant" formControlName="restaurantId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="restaurantOption.id" *ngFor="let restaurantOption of restaurants; trackBy: trackById">{{ restaurantOption.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
