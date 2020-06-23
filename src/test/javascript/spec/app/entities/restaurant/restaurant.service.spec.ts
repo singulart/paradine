@@ -27,10 +27,10 @@ describe('Service Tests', () => {
       elemDefault = new Restaurant(
         0,
         'AAAAAAA',
-        0,
-        0,
-        0,
         'AAAAAAA',
+        0,
+        0,
+        0,
         'AAAAAAA',
         'AAAAAAA',
         'AAAAAAA',

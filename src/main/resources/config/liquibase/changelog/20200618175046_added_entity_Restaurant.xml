@@ -66,10 +66,10 @@
                   tableName="restaurant">
             <column name="id" type="numeric"/>
             <column name="uuid" type="string"/>
+            <column name="name" type="string"/>
             <column name="capacity" type="numeric"/>
             <column name="geolat" type="numeric"/>
             <column name="geolng" type="numeric"/>
-            <column name="name" type="string"/>
             <column name="photo_url" type="string"/>
             <column name="alt_name_1" type="string"/>
             <column name="alt_name_2" type="string"/>

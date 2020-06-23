@@ -27,11 +27,6 @@ public class RestaurantDTO implements Serializable {
     private Float geolng;
 
     @NotNull
-    @Size(min = 3, max = 128)
-    @Pattern(regexp = "([a-zA-Z0-9]| |,|&|\\.)+")
-    private String name;
-
-    @NotNull
     @Size(min = 2, max = 256)
     @Pattern(regexp = "[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)")
     private String photoUrl;
@@ -53,6 +48,10 @@ public class RestaurantDTO implements Serializable {
 
     @NotNull
     private ZonedDateTime updatedAt;
+
+    @NotNull
+    @Size(min = 3, max = 128)
+    private String name;
 
     
     public Long getId() {
@@ -93,14 +92,6 @@ public class RestaurantDTO implements Serializable {
 
     public void setGeolng(Float geolng) {
         this.geolng = geolng;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getPhotoUrl() {
@@ -159,6 +150,14 @@ public class RestaurantDTO implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -185,7 +184,6 @@ public class RestaurantDTO implements Serializable {
             ", capacity=" + getCapacity() +
             ", geolat=" + getGeolat() +
             ", geolng=" + getGeolng() +
-            ", name='" + getName() + "'" +
             ", photoUrl='" + getPhotoUrl() + "'" +
             ", altName1='" + getAltName1() + "'" +
             ", altName2='" + getAltName2() + "'" +
@@ -193,6 +191,7 @@ public class RestaurantDTO implements Serializable {
             ", googlePlacesId='" + getGooglePlacesId() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             ", updatedAt='" + getUpdatedAt() + "'" +
+            ", name='" + getName() + "'" +
             "}";
     }
 }

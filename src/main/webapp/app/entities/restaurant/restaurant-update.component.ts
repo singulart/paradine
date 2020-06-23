@@ -31,10 +31,6 @@ export class RestaurantUpdateComponent implements OnInit {
     capacity: [null, [Validators.required, Validators.min(3)]],
     geolat: [null, [Validators.required]],
     geolng: [null, [Validators.required]],
-    name: [
-      null,
-      [Validators.required, Validators.minLength(3), Validators.maxLength(128), Validators.pattern('([a-zA-Z0-9]| |,|&amp;|\\.)+')],
-    ],
     photoUrl: [
       null,
       [
@@ -50,6 +46,7 @@ export class RestaurantUpdateComponent implements OnInit {
     googlePlacesId: [null, [Validators.maxLength(255)]],
     createdAt: [null, [Validators.required]],
     updatedAt: [null, [Validators.required]],
+    name: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(128)]],
   });
 
   constructor(protected restaurantService: RestaurantService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
@@ -73,7 +70,6 @@ export class RestaurantUpdateComponent implements OnInit {
       capacity: restaurant.capacity,
       geolat: restaurant.geolat,
       geolng: restaurant.geolng,
-      name: restaurant.name,
       photoUrl: restaurant.photoUrl,
       altName1: restaurant.altName1,
       altName2: restaurant.altName2,
@@ -81,6 +77,7 @@ export class RestaurantUpdateComponent implements OnInit {
       googlePlacesId: restaurant.googlePlacesId,
       createdAt: restaurant.createdAt ? restaurant.createdAt.format(DATE_TIME_FORMAT) : null,
       updatedAt: restaurant.updatedAt ? restaurant.updatedAt.format(DATE_TIME_FORMAT) : null,
+      name: restaurant.name,
     });
   }
 
@@ -106,7 +103,6 @@ export class RestaurantUpdateComponent implements OnInit {
       capacity: this.editForm.get(['capacity'])!.value,
       geolat: this.editForm.get(['geolat'])!.value,
       geolng: this.editForm.get(['geolng'])!.value,
-      name: this.editForm.get(['name'])!.value,
       photoUrl: this.editForm.get(['photoUrl'])!.value,
       altName1: this.editForm.get(['altName1'])!.value,
       altName2: this.editForm.get(['altName2'])!.value,
@@ -114,6 +110,7 @@ export class RestaurantUpdateComponent implements OnInit {
       googlePlacesId: this.editForm.get(['googlePlacesId'])!.value,
       createdAt: this.editForm.get(['createdAt'])!.value ? moment(this.editForm.get(['createdAt'])!.value, DATE_TIME_FORMAT) : undefined,
       updatedAt: this.editForm.get(['updatedAt'])!.value ? moment(this.editForm.get(['updatedAt'])!.value, DATE_TIME_FORMAT) : undefined,
+      name: this.editForm.get(['name'])!.value,
     };
   }
 

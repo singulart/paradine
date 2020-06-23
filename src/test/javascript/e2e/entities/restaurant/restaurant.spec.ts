@@ -45,9 +45,8 @@ describe('Restaurant e2e test', () => {
       restaurantUpdatePage.setCapacityInput('5'),
       restaurantUpdatePage.setGeolatInput('5'),
       restaurantUpdatePage.setGeolngInput('5'),
-      restaurantUpdatePage.setNameInput(' .&amp;.&amp;,'),
       restaurantUpdatePage.setPhotoUrlInput(
-        'jkj+E(ZUGCdR4fR/C_e9qL9q=N?~ua+6tt#wjLPTvZ8@tYEXm?9FjeG)M~SOXnqayP:MwcA@SkAQrM5)U/9bOq#PHtB@lohy6fBF(aN5DzSSHX9p3o/cHrc/XVmWh_rl4mC~MeGEsjJ1PQCkF7nrFhwA7506HW(o=rlP7pH/()GPORqY~9bP35..=Dy4uqx%V7PCSHYYO4PmfV+@b:@f5_q)CG(Bi/Yi?Rkm2rnkwJj.~ow.kvph9Dvr'
+        '?TQ=C/%jkj+E(ZUGCdR4fR/C_e9qL9q=N?~ua+6tt#wjLPTvZ8@tYEXm?9FjeG)M~SOXnqayP:MwcA@SkAQrM5)U/9bOq#PHtB@lohy6fBF(aN5DzSSHX9p3o/cHrc/XVmWh_rl4mC~MeGEsjJ1PQCkF7nrFhwA7506HW(o=rlP7pH/()GPORqY~9bP35..=Dy4uqx%V7PCSHYYO4PmfV+@b:@f5_q)CG(Bi/Yi?.eflgfeVi@'
       ),
       restaurantUpdatePage.setAltName1Input('altName1'),
       restaurantUpdatePage.setAltName2Input('altName2'),
@@ -55,6 +54,7 @@ describe('Restaurant e2e test', () => {
       restaurantUpdatePage.setGooglePlacesIdInput('googlePlacesId'),
       restaurantUpdatePage.setCreatedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       restaurantUpdatePage.setUpdatedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+      restaurantUpdatePage.setNameInput('name'),
     ]);
 
     expect(await restaurantUpdatePage.getUuidInput()).to.eq(
@@ -64,10 +64,9 @@ describe('Restaurant e2e test', () => {
     expect(await restaurantUpdatePage.getCapacityInput()).to.eq('5', 'Expected capacity value to be equals to 5');
     expect(await restaurantUpdatePage.getGeolatInput()).to.eq('5', 'Expected geolat value to be equals to 5');
     expect(await restaurantUpdatePage.getGeolngInput()).to.eq('5', 'Expected geolng value to be equals to 5');
-    expect(await restaurantUpdatePage.getNameInput()).to.eq(' .&amp;.&amp;,', 'Expected Name value to be equals to  .&amp;.&amp;,');
     expect(await restaurantUpdatePage.getPhotoUrlInput()).to.eq(
-      'jkj+E(ZUGCdR4fR/C_e9qL9q=N?~ua+6tt#wjLPTvZ8@tYEXm?9FjeG)M~SOXnqayP:MwcA@SkAQrM5)U/9bOq#PHtB@lohy6fBF(aN5DzSSHX9p3o/cHrc/XVmWh_rl4mC~MeGEsjJ1PQCkF7nrFhwA7506HW(o=rlP7pH/()GPORqY~9bP35..=Dy4uqx%V7PCSHYYO4PmfV+@b:@f5_q)CG(Bi/Yi?Rkm2rnkwJj.~ow.kvph9Dvr',
-      'Expected PhotoUrl value to be equals to jkj+E(ZUGCdR4fR/C_e9qL9q=N?~ua+6tt#wjLPTvZ8@tYEXm?9FjeG)M~SOXnqayP:MwcA@SkAQrM5)U/9bOq#PHtB@lohy6fBF(aN5DzSSHX9p3o/cHrc/XVmWh_rl4mC~MeGEsjJ1PQCkF7nrFhwA7506HW(o=rlP7pH/()GPORqY~9bP35..=Dy4uqx%V7PCSHYYO4PmfV+@b:@f5_q)CG(Bi/Yi?Rkm2rnkwJj.~ow.kvph9Dvr'
+      '?TQ=C/%jkj+E(ZUGCdR4fR/C_e9qL9q=N?~ua+6tt#wjLPTvZ8@tYEXm?9FjeG)M~SOXnqayP:MwcA@SkAQrM5)U/9bOq#PHtB@lohy6fBF(aN5DzSSHX9p3o/cHrc/XVmWh_rl4mC~MeGEsjJ1PQCkF7nrFhwA7506HW(o=rlP7pH/()GPORqY~9bP35..=Dy4uqx%V7PCSHYYO4PmfV+@b:@f5_q)CG(Bi/Yi?.eflgfeVi@',
+      'Expected PhotoUrl value to be equals to ?TQ=C/%jkj+E(ZUGCdR4fR/C_e9qL9q=N?~ua+6tt#wjLPTvZ8@tYEXm?9FjeG)M~SOXnqayP:MwcA@SkAQrM5)U/9bOq#PHtB@lohy6fBF(aN5DzSSHX9p3o/cHrc/XVmWh_rl4mC~MeGEsjJ1PQCkF7nrFhwA7506HW(o=rlP7pH/()GPORqY~9bP35..=Dy4uqx%V7PCSHYYO4PmfV+@b:@f5_q)CG(Bi/Yi?.eflgfeVi@'
     );
     expect(await restaurantUpdatePage.getAltName1Input()).to.eq('altName1', 'Expected AltName1 value to be equals to altName1');
     expect(await restaurantUpdatePage.getAltName2Input()).to.eq('altName2', 'Expected AltName2 value to be equals to altName2');
@@ -84,6 +83,7 @@ describe('Restaurant e2e test', () => {
       '2001-01-01T02:30',
       'Expected updatedAt value to be equals to 2000-12-31'
     );
+    expect(await restaurantUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
 
     await restaurantUpdatePage.save();
     expect(await restaurantUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;

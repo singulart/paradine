@@ -107,9 +107,6 @@ public class RestaurantQueryService extends QueryService<Restaurant> {
             if (criteria.getGeolng() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getGeolng(), Restaurant_.geolng));
             }
-            if (criteria.getName() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getName(), Restaurant_.name));
-            }
             if (criteria.getPhotoUrl() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getPhotoUrl(), Restaurant_.photoUrl));
             }
@@ -130,6 +127,9 @@ public class RestaurantQueryService extends QueryService<Restaurant> {
             }
             if (criteria.getUpdatedAt() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getUpdatedAt(), Restaurant_.updatedAt));
+            }
+            if (criteria.getName() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getName(), Restaurant_.name));
             }
         }
         return specification;

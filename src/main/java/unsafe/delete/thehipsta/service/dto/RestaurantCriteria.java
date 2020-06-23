@@ -35,8 +35,6 @@ public class RestaurantCriteria implements Serializable, Criteria {
 
     private FloatFilter geolng;
 
-    private StringFilter name;
-
     private StringFilter photoUrl;
 
     private StringFilter altName1;
@@ -51,6 +49,8 @@ public class RestaurantCriteria implements Serializable, Criteria {
 
     private ZonedDateTimeFilter updatedAt;
 
+    private StringFilter name;
+
     public RestaurantCriteria() {
     }
 
@@ -60,7 +60,6 @@ public class RestaurantCriteria implements Serializable, Criteria {
         this.capacity = other.capacity == null ? null : other.capacity.copy();
         this.geolat = other.geolat == null ? null : other.geolat.copy();
         this.geolng = other.geolng == null ? null : other.geolng.copy();
-        this.name = other.name == null ? null : other.name.copy();
         this.photoUrl = other.photoUrl == null ? null : other.photoUrl.copy();
         this.altName1 = other.altName1 == null ? null : other.altName1.copy();
         this.altName2 = other.altName2 == null ? null : other.altName2.copy();
@@ -68,6 +67,7 @@ public class RestaurantCriteria implements Serializable, Criteria {
         this.googlePlacesId = other.googlePlacesId == null ? null : other.googlePlacesId.copy();
         this.createdAt = other.createdAt == null ? null : other.createdAt.copy();
         this.updatedAt = other.updatedAt == null ? null : other.updatedAt.copy();
+        this.name = other.name == null ? null : other.name.copy();
     }
 
     @Override
@@ -113,14 +113,6 @@ public class RestaurantCriteria implements Serializable, Criteria {
 
     public void setGeolng(FloatFilter geolng) {
         this.geolng = geolng;
-    }
-
-    public StringFilter getName() {
-        return name;
-    }
-
-    public void setName(StringFilter name) {
-        this.name = name;
     }
 
     public StringFilter getPhotoUrl() {
@@ -179,6 +171,14 @@ public class RestaurantCriteria implements Serializable, Criteria {
         this.updatedAt = updatedAt;
     }
 
+    public StringFilter getName() {
+        return name;
+    }
+
+    public void setName(StringFilter name) {
+        this.name = name;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -195,14 +195,14 @@ public class RestaurantCriteria implements Serializable, Criteria {
             Objects.equals(capacity, that.capacity) &&
             Objects.equals(geolat, that.geolat) &&
             Objects.equals(geolng, that.geolng) &&
-            Objects.equals(name, that.name) &&
             Objects.equals(photoUrl, that.photoUrl) &&
             Objects.equals(altName1, that.altName1) &&
             Objects.equals(altName2, that.altName2) &&
             Objects.equals(altName3, that.altName3) &&
             Objects.equals(googlePlacesId, that.googlePlacesId) &&
             Objects.equals(createdAt, that.createdAt) &&
-            Objects.equals(updatedAt, that.updatedAt);
+            Objects.equals(updatedAt, that.updatedAt) &&
+            Objects.equals(name, that.name);
     }
 
     @Override
@@ -213,14 +213,14 @@ public class RestaurantCriteria implements Serializable, Criteria {
         capacity,
         geolat,
         geolng,
-        name,
         photoUrl,
         altName1,
         altName2,
         altName3,
         googlePlacesId,
         createdAt,
-        updatedAt
+        updatedAt,
+        name
         );
     }
 
@@ -233,7 +233,6 @@ public class RestaurantCriteria implements Serializable, Criteria {
                 (capacity != null ? "capacity=" + capacity + ", " : "") +
                 (geolat != null ? "geolat=" + geolat + ", " : "") +
                 (geolng != null ? "geolng=" + geolng + ", " : "") +
-                (name != null ? "name=" + name + ", " : "") +
                 (photoUrl != null ? "photoUrl=" + photoUrl + ", " : "") +
                 (altName1 != null ? "altName1=" + altName1 + ", " : "") +
                 (altName2 != null ? "altName2=" + altName2 + ", " : "") +
@@ -241,6 +240,7 @@ public class RestaurantCriteria implements Serializable, Criteria {
                 (googlePlacesId != null ? "googlePlacesId=" + googlePlacesId + ", " : "") +
                 (createdAt != null ? "createdAt=" + createdAt + ", " : "") +
                 (updatedAt != null ? "updatedAt=" + updatedAt + ", " : "") +
+                (name != null ? "name=" + name + ", " : "") +
             "}";
     }
 

@@ -41,36 +41,36 @@
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
                     <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="uuid"><span jhiTranslate="thehipstaApp.restaurant.uuid">Uuid</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="capacity"><span jhiTranslate="thehipstaApp.restaurant.capacity">Capacity</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="name"><span jhiTranslate="thehipstaApp.restaurant.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="altName1"><span jhiTranslate="thehipstaApp.restaurant.altName1">Alt Name 1</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="googlePlacesId"><span jhiTranslate="thehipstaApp.restaurant.googlePlacesId">Google Places Id</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="geolat"><span jhiTranslate="thehipstaApp.restaurant.geolat">Geolat</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="geolng"><span jhiTranslate="thehipstaApp.restaurant.geolng">Geolng</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="name"><span jhiTranslate="thehipstaApp.restaurant.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="photoUrl"><span jhiTranslate="thehipstaApp.restaurant.photoUrl">Photo Url</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="altName1"><span jhiTranslate="thehipstaApp.restaurant.altName1">Alt Name 1</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="altName2"><span jhiTranslate="thehipstaApp.restaurant.altName2">Alt Name 2</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="altName3"><span jhiTranslate="thehipstaApp.restaurant.altName3">Alt Name 3</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="googlePlacesId"><span jhiTranslate="thehipstaApp.restaurant.googlePlacesId">Google Places Id</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="capacity"><span jhiTranslate="thehipstaApp.restaurant.capacity">Capacity</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="createdAt"><span jhiTranslate="thehipstaApp.restaurant.createdAt">Created At</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="updatedAt"><span jhiTranslate="thehipstaApp.restaurant.updatedAt">Updated At</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="uuid"><span jhiTranslate="thehipstaApp.restaurant.uuid">Uuid</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                 <tr *ngFor="let restaurant of restaurants ;trackBy: trackId">
                     <td><a [routerLink]="['/restaurant', restaurant.id, 'view']">{{ restaurant.id }}</a></td>
-                    <td>{{ restaurant.uuid }}</td>
-                    <td>{{ restaurant.capacity }}</td>
+                    <td>{{ restaurant.name }}</td>
+                    <td>{{ restaurant.altName1 }}</td>
+                    <td>{{ restaurant.googlePlacesId }}</td>
                     <td>{{ restaurant.geolat }}</td>
                     <td>{{ restaurant.geolng }}</td>
-                    <td>{{ restaurant.name }}</td>
                     <td>{{ restaurant.photoUrl }}</td>
-                    <td>{{ restaurant.altName1 }}</td>
                     <td>{{ restaurant.altName2 }}</td>
                     <td>{{ restaurant.altName3 }}</td>
-                    <td>{{ restaurant.googlePlacesId }}</td>
+                    <td>{{ restaurant.capacity }}</td>
                     <td>{{ restaurant.createdAt | date:'medium' }}</td>
                     <td>{{ restaurant.updatedAt | date:'medium' }}</td>
+                    <td>{{ restaurant.uuid }}</td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

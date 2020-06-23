@@ -78,14 +78,6 @@ export class RestaurantUpdatePage {
     return await this.geolngInput.getAttribute('value');
   }
 
-  async setNameInput(name: string): Promise<void> {
-    await this.nameInput.sendKeys(name);
-  }
-
-  async getNameInput(): Promise<string> {
-    return await this.nameInput.getAttribute('value');
-  }
-
   async setPhotoUrlInput(photoUrl: string): Promise<void> {
     await this.photoUrlInput.sendKeys(photoUrl);
   }
@@ -140,6 +132,14 @@ export class RestaurantUpdatePage {
 
   async getUpdatedAtInput(): Promise<string> {
     return await this.updatedAtInput.getAttribute('value');
+  }
+
+  async setNameInput(name: string): Promise<void> {
+    await this.nameInput.sendKeys(name);
+  }
+
+  async getNameInput(): Promise<string> {
+    return await this.nameInput.getAttribute('value');
   }
 
   async save(): Promise<void> {

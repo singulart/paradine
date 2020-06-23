@@ -47,7 +47,6 @@ public class Restaurant implements Serializable {
 
     @NotNull
     @Size(min = 3, max = 128)
-    @Pattern(regexp = "([a-zA-Z0-9]| |,|&|\\.)+")
     @Column(name = "name", length = 128, nullable = false)
     private String name;
 
@@ -142,19 +141,6 @@ public class Restaurant implements Serializable {
         this.geolng = geolng;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Restaurant name(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getPhotoUrl() {
         return photoUrl;
     }
@@ -245,6 +231,19 @@ public class Restaurant implements Serializable {
     public void setUpdatedAt(ZonedDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public Restaurant name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -272,7 +271,6 @@ public class Restaurant implements Serializable {
             ", capacity=" + getCapacity() +
             ", geolat=" + getGeolat() +
             ", geolng=" + getGeolng() +
-            ", name='" + getName() + "'" +
             ", photoUrl='" + getPhotoUrl() + "'" +
             ", altName1='" + getAltName1() + "'" +
             ", altName2='" + getAltName2() + "'" +
@@ -280,6 +278,7 @@ public class Restaurant implements Serializable {
             ", googlePlacesId='" + getGooglePlacesId() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             ", updatedAt='" + getUpdatedAt() + "'" +
+            ", name='" + getName() + "'" +
             "}";
     }
 }
