@@ -1,7 +1,7 @@
 package ua.com.paradine.web.rest;
 
 import ua.com.paradine.RedisTestContainerExtension;
-import ua.com.paradine.ThehipstaApp;
+import ua.com.paradine.ParadineApp;
 import ua.com.paradine.domain.User;
 import ua.com.paradine.repository.UserRepository;
 import ua.com.paradine.web.rest.vm.LoginVM;
@@ -28,7 +28,7 @@ import static org.hamcrest.Matchers.not;
  * Integration tests for the {@link UserJWTController} REST controller.
  */
 @AutoConfigureMockMvc
-@SpringBootTest(classes = ThehipstaApp.class)
+@SpringBootTest(classes = ParadineApp.class)
 @ExtendWith(RedisTestContainerExtension.class)
 public class UserJWTControllerIT {
 

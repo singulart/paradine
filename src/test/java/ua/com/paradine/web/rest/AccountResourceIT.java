@@ -1,6 +1,6 @@
 package ua.com.paradine.web.rest;
 
-import ua.com.paradine.ThehipstaApp;
+import ua.com.paradine.ParadineApp;
 import ua.com.paradine.config.Constants;
 import ua.com.paradine.domain.User;
 import ua.com.paradine.repository.AuthorityRepository;
@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @AutoConfigureMockMvc
 @WithMockUser(value = TEST_USER_LOGIN)
-@SpringBootTest(classes = ThehipstaApp.class)
+@SpringBootTest(classes = ParadineApp.class)
 public class AccountResourceIT {
     static final String TEST_USER_LOGIN = "test";
 

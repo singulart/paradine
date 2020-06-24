@@ -19,4 +19,4 @@ import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
     HasAnyAuthorityDirective,
   ],
 })
-export class ThehipstaSharedModule {}
+export class ParadineSharedModule {}

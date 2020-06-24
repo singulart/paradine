@@ -24,14 +24,14 @@ describe('Restaurant e2e test', () => {
     await navBarPage.goToEntity('restaurant');
     restaurantComponentsPage = new RestaurantComponentsPage();
     await browser.wait(ec.visibilityOf(restaurantComponentsPage.title), 5000);
-    expect(await restaurantComponentsPage.getTitle()).to.eq('thehipstaApp.restaurant.home.title');
+    expect(await restaurantComponentsPage.getTitle()).to.eq('paradineApp.restaurant.home.title');
     await browser.wait(ec.or(ec.visibilityOf(restaurantComponentsPage.entities), ec.visibilityOf(restaurantComponentsPage.noResult)), 1000);
   });
 
   it('should load create Restaurant page', async () => {
     await restaurantComponentsPage.clickOnCreateButton();
     restaurantUpdatePage = new RestaurantUpdatePage();
-    expect(await restaurantUpdatePage.getPageTitle()).to.eq('thehipstaApp.restaurant.home.createOrEditLabel');
+    expect(await restaurantUpdatePage.getPageTitle()).to.eq('paradineApp.restaurant.home.createOrEditLabel');
     await restaurantUpdatePage.cancel();
   });
 
@@ -96,7 +96,7 @@ describe('Restaurant e2e test', () => {
     await restaurantComponentsPage.clickOnLastDeleteButton();
 
     restaurantDeleteDialog = new RestaurantDeleteDialog();
-    expect(await restaurantDeleteDialog.getDialogTitle()).to.eq('thehipstaApp.restaurant.delete.question');
+    expect(await restaurantDeleteDialog.getDialogTitle()).to.eq('paradineApp.restaurant.delete.question');
     await restaurantDeleteDialog.clickOnConfirmButton();
 
     expect(await restaurantComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);

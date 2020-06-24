@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-restaurant-heading" jhiTranslate="thehipstaApp.restaurant.home.createOrEditLabel">Create or edit a Restaurant</h2>
+            <h2 id="jhi-restaurant-heading" jhiTranslate="paradineApp.restaurant.home.createOrEditLabel">Create or edit a Restaurant</h2>
 
             <div>
                 <jhi-alert-error></jhi-alert-error>
@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="thehipstaApp.restaurant.uuid" for="field_uuid">Uuid</label>
+                    <label class="form-control-label" jhiTranslate="paradineApp.restaurant.uuid" for="field_uuid">Uuid</label>
                     <input type="text" class="form-control" name="uuid" id="field_uuid"
                            formControlName="uuid"/>
                     <div *ngIf="editForm.get('uuid')!.invalid && (editForm.get('uuid')!.dirty || editForm.get('uuid')!.touched)">
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="thehipstaApp.restaurant.capacity" for="field_capacity">Capacity</label>
+                    <label class="form-control-label" jhiTranslate="paradineApp.restaurant.capacity" for="field_capacity">Capacity</label>
                     <input type="number" class="form-control" name="capacity" id="field_capacity"
                            formControlName="capacity"/>
                     <div *ngIf="editForm.get('capacity')!.invalid && (editForm.get('capacity')!.dirty || editForm.get('capacity')!.touched)">
@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="thehipstaApp.restaurant.geolat" for="field_geolat">Geolat</label>
+                    <label class="form-control-label" jhiTranslate="paradineApp.restaurant.geolat" for="field_geolat">Geolat</label>
                     <input type="number" class="form-control" name="geolat" id="field_geolat"
                            formControlName="geolat"/>
                     <div *ngIf="editForm.get('geolat')!.invalid && (editForm.get('geolat')!.dirty || editForm.get('geolat')!.touched)">
@@ -72,7 +72,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="thehipstaApp.restaurant.geolng" for="field_geolng">Geolng</label>
+                    <label class="form-control-label" jhiTranslate="paradineApp.restaurant.geolng" for="field_geolng">Geolng</label>
                     <input type="number" class="form-control" name="geolng" id="field_geolng"
                            formControlName="geolng"/>
                     <div *ngIf="editForm.get('geolng')!.invalid && (editForm.get('geolng')!.dirty || editForm.get('geolng')!.touched)">
@@ -88,7 +88,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="thehipstaApp.restaurant.name" for="field_name">Name</label>
+                    <label class="form-control-label" jhiTranslate="paradineApp.restaurant.name" for="field_name">Name</label>
                     <input type="text" class="form-control" name="name" id="field_name"
                            formControlName="name"/>
                     <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
@@ -112,7 +112,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="thehipstaApp.restaurant.photoUrl" for="field_photoUrl">Photo Url</label>
+                    <label class="form-control-label" jhiTranslate="paradineApp.restaurant.photoUrl" for="field_photoUrl">Photo Url</label>
                     <input type="text" class="form-control" name="photoUrl" id="field_photoUrl"
                            formControlName="photoUrl"/>
                     <div *ngIf="editForm.get('photoUrl')!.invalid && (editForm.get('photoUrl')!.dirty || editForm.get('photoUrl')!.touched)">
@@ -136,7 +136,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="thehipstaApp.restaurant.altName1" for="field_altName1">Alt Name 1</label>
+                    <label class="form-control-label" jhiTranslate="paradineApp.restaurant.altName1" for="field_altName1">Alt Name 1</label>
                     <input type="text" class="form-control" name="altName1" id="field_altName1"
                            formControlName="altName1"/>
                     <div *ngIf="editForm.get('altName1')!.invalid && (editForm.get('altName1')!.dirty || editForm.get('altName1')!.touched)">
@@ -148,7 +148,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="thehipstaApp.restaurant.altName2" for="field_altName2">Alt Name 2</label>
+                    <label class="form-control-label" jhiTranslate="paradineApp.restaurant.altName2" for="field_altName2">Alt Name 2</label>
                     <input type="text" class="form-control" name="altName2" id="field_altName2"
                            formControlName="altName2"/>
                     <div *ngIf="editForm.get('altName2')!.invalid && (editForm.get('altName2')!.dirty || editForm.get('altName2')!.touched)">
@@ -160,7 +160,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="thehipstaApp.restaurant.altName3" for="field_altName3">Alt Name 3</label>
+                    <label class="form-control-label" jhiTranslate="paradineApp.restaurant.altName3" for="field_altName3">Alt Name 3</label>
                     <input type="text" class="form-control" name="altName3" id="field_altName3"
                            formControlName="altName3"/>
                     <div *ngIf="editForm.get('altName3')!.invalid && (editForm.get('altName3')!.dirty || editForm.get('altName3')!.touched)">
@@ -172,7 +172,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="thehipstaApp.restaurant.googlePlacesId" for="field_googlePlacesId">Google Places Id</label>
+                    <label class="form-control-label" jhiTranslate="paradineApp.restaurant.googlePlacesId" for="field_googlePlacesId">Google Places Id</label>
                     <input type="text" class="form-control" name="googlePlacesId" id="field_googlePlacesId"
                            formControlName="googlePlacesId"/>
                     <div *ngIf="editForm.get('googlePlacesId')!.invalid && (editForm.get('googlePlacesId')!.dirty || editForm.get('googlePlacesId')!.touched)">
@@ -184,7 +184,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="thehipstaApp.restaurant.createdAt" for="field_createdAt">Created At</label>
+                    <label class="form-control-label" jhiTranslate="paradineApp.restaurant.createdAt" for="field_createdAt">Created At</label>
                     <div class="d-flex">
                         <input id="field_createdAt" type="datetime-local" class="form-control" name="createdAt" formControlName="createdAt" placeholder="YYYY-MM-DD HH:mm"/>
                     </div>
@@ -201,7 +201,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="thehipstaApp.restaurant.updatedAt" for="field_updatedAt">Updated At</label>
+                    <label class="form-control-label" jhiTranslate="paradineApp.restaurant.updatedAt" for="field_updatedAt">Updated At</label>
                     <div class="d-flex">
                         <input id="field_updatedAt" type="datetime-local" class="form-control" name="updatedAt" formControlName="updatedAt" placeholder="YYYY-MM-DD HH:mm"/>
                     </div>

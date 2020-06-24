@@ -1,6 +1,6 @@
 package ua.com.paradine.config.timezone;
 
-import ua.com.paradine.ThehipstaApp;
+import ua.com.paradine.ParadineApp;
 import ua.com.paradine.RedisTestContainerExtension;
 import ua.com.paradine.repository.timezone.DateTimeWrapper;
 import ua.com.paradine.repository.timezone.DateTimeWrapperRepository;
@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Integration tests for the UTC Hibernate configuration.
  */
-@SpringBootTest(classes = ThehipstaApp.class)
+@SpringBootTest(classes = ParadineApp.class)
 @ExtendWith(RedisTestContainerExtension.class)
 public class HibernateTimeZoneIT {
 

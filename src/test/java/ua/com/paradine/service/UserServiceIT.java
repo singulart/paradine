@@ -1,7 +1,7 @@
 package ua.com.paradine.service;
 
 import ua.com.paradine.RedisTestContainerExtension;
-import ua.com.paradine.ThehipstaApp;
+import ua.com.paradine.ParadineApp;
 import ua.com.paradine.config.Constants;
 import ua.com.paradine.domain.User;
 import ua.com.paradine.repository.search.UserSearchRepository;
@@ -38,7 +38,7 @@ import static org.mockito.Mockito.when;
 /**
  * Integration tests for {@link UserService}.
  */
-@SpringBootTest(classes = ThehipstaApp.class)
+@SpringBootTest(classes = ParadineApp.class)
 @ExtendWith(RedisTestContainerExtension.class)
 @Transactional
 public class UserServiceIT {

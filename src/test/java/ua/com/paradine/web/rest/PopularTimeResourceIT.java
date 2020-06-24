@@ -1,7 +1,7 @@
 package ua.com.paradine.web.rest;
 
 import ua.com.paradine.RedisTestContainerExtension;
-import ua.com.paradine.ThehipstaApp;
+import ua.com.paradine.ParadineApp;
 import ua.com.paradine.domain.PopularTime;
 import ua.com.paradine.domain.Restaurant;
 import ua.com.paradine.repository.PopularTimeRepository;
@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Integration tests for the {@link PopularTimeResource} REST controller.
  */
-@SpringBootTest(classes = ThehipstaApp.class)
+@SpringBootTest(classes = ParadineApp.class)
 @ExtendWith({ RedisTestContainerExtension.class, MockitoExtension.class })
 @AutoConfigureMockMvc
 @WithMockUser

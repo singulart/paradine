@@ -1,7 +1,7 @@
 package ua.com.paradine.web.rest.errors;
 
 import ua.com.paradine.RedisTestContainerExtension;
-import ua.com.paradine.ThehipstaApp;
+import ua.com.paradine.ParadineApp;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @WithMockUser
 @AutoConfigureMockMvc
-@SpringBootTest(classes = ThehipstaApp.class)
+@SpringBootTest(classes = ParadineApp.class)
 @ExtendWith(RedisTestContainerExtension.class)
 public class ExceptionTranslatorIT {
 

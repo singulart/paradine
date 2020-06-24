@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
-import { ThehipstaTestModule } from '../../../test.module';
+import { ParadineTestModule } from '../../../test.module';
 import { PopularTimeComponent } from 'app/entities/popular-time/popular-time.component';
 import { PopularTimeService } from 'app/entities/popular-time/popular-time.service';
 import { PopularTime } from 'app/shared/model/popular-time.model';
@@ -15,7 +15,7 @@ describe('Component Tests', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [ThehipstaTestModule],
+        imports: [ParadineTestModule],
         declarations: [PopularTimeComponent],
       })
         .overrideTemplate(PopularTimeComponent, '')

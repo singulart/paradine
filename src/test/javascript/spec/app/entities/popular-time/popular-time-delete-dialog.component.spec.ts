@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { of } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { ThehipstaTestModule } from '../../../test.module';
+import { ParadineTestModule } from '../../../test.module';
 import { MockEventManager } from '../../../helpers/mock-event-manager.service';
 import { MockActiveModal } from '../../../helpers/mock-active-modal.service';
 import { PopularTimeDeleteDialogComponent } from 'app/entities/popular-time/popular-time-delete-dialog.component';
@@ -19,7 +19,7 @@ describe('Component Tests', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [ThehipstaTestModule],
+        imports: [ParadineTestModule],
         declarations: [PopularTimeDeleteDialogComponent],
       })
         .overrideTemplate(PopularTimeDeleteDialogComponent, '')

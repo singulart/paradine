@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import './vendor';
-import { ThehipstaSharedModule } from 'app/shared/shared.module';
-import { ThehipstaCoreModule } from 'app/core/core.module';
-import { ThehipstaAppRoutingModule } from './app-routing.module';
-import { ThehipstaHomeModule } from './home/home.module';
-import { ThehipstaEntityModule } from './entities/entity.module';
+import { ParadineSharedModule } from 'app/shared/shared.module';
+import { ParadineCoreModule } from 'app/core/core.module';
+import { ParadineAppRoutingModule } from './app-routing.module';
+import { ParadineHomeModule } from './home/home.module';
+import { ParadineEntityModule } from './entities/entity.module';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { MainComponent } from './layouts/main/main.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
@@ -18,14 +18,14 @@ import { ErrorComponent } from './layouts/error/error.component';
 @NgModule({
   imports: [
     BrowserModule,
-    ThehipstaSharedModule,
-    ThehipstaCoreModule,
-    ThehipstaHomeModule,
+    ParadineSharedModule,
+    ParadineCoreModule,
+    ParadineHomeModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
-    ThehipstaEntityModule,
-    ThehipstaAppRoutingModule,
+    ParadineEntityModule,
+    ParadineAppRoutingModule,
   ],
   declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   bootstrap: [MainComponent],
 })
-export class ThehipstaAppModule {}
+export class ParadineAppModule {}

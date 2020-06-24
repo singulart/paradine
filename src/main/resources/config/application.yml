@@ -154,7 +154,7 @@ info:
 
 jhipster:
   clientApp:
-    name: 'thehipstaApp'
+    name: 'paradineApp'
   # By default CORS is disabled. Uncomment to enable.
   # cors:
   #     allowed-origins: "*"

@@ -1,6 +1,6 @@
 package ua.com.paradine.web.rest;
 
-import ua.com.paradine.ThehipstaApp;
+import ua.com.paradine.ParadineApp;
 import ua.com.paradine.RedisTestContainerExtension;
 import ua.com.paradine.domain.PersistentAuditEvent;
 import ua.com.paradine.repository.PersistenceAuditEventRepository;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @AutoConfigureMockMvc
 @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
-@SpringBootTest(classes = ThehipstaApp.class)
+@SpringBootTest(classes = ParadineApp.class)
 @ExtendWith(RedisTestContainerExtension.class)
 @Transactional
 public class AuditResourceIT {

@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
-import { ThehipstaTestModule } from '../../../test.module';
+import { ParadineTestModule } from '../../../test.module';
 import { RestaurantComponent } from 'app/entities/restaurant/restaurant.component';
 import { RestaurantService } from 'app/entities/restaurant/restaurant.service';
 import { Restaurant } from 'app/shared/model/restaurant.model';
@@ -16,7 +16,7 @@ describe('Component Tests', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [ThehipstaTestModule],
+        imports: [ParadineTestModule],
         declarations: [RestaurantComponent],
         providers: [
           {

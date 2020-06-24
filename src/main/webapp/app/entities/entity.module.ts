@@ -6,14 +6,14 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       {
         path: 'restaurant',
-        loadChildren: () => import('./restaurant/restaurant.module').then(m => m.ThehipstaRestaurantModule),
+        loadChildren: () => import('./restaurant/restaurant.module').then(m => m.ParadineRestaurantModule),
       },
       {
         path: 'popular-time',
-        loadChildren: () => import('./popular-time/popular-time.module').then(m => m.ThehipstaPopularTimeModule),
+        loadChildren: () => import('./popular-time/popular-time.module').then(m => m.ParadinePopularTimeModule),
       },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],
 })
-export class ThehipstaEntityModule {}
+export class ParadineEntityModule {}

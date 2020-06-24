@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
-import { ThehipstaTestModule } from '../../../test.module';
+import { ParadineTestModule } from '../../../test.module';
 import { PopularTimeDetailComponent } from 'app/entities/popular-time/popular-time-detail.component';
 import { PopularTime } from 'app/shared/model/popular-time.model';
 
@@ -14,7 +14,7 @@ describe('Component Tests', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [ThehipstaTestModule],
+        imports: [ParadineTestModule],
         declarations: [PopularTimeDetailComponent],
         providers: [{ provide: ActivatedRoute, useValue: route }],
       })

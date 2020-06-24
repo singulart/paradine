@@ -24,7 +24,7 @@ describe('PopularTime e2e test', () => {
     await navBarPage.goToEntity('popular-time');
     popularTimeComponentsPage = new PopularTimeComponentsPage();
     await browser.wait(ec.visibilityOf(popularTimeComponentsPage.title), 5000);
-    expect(await popularTimeComponentsPage.getTitle()).to.eq('thehipstaApp.popularTime.home.title');
+    expect(await popularTimeComponentsPage.getTitle()).to.eq('paradineApp.popularTime.home.title');
     await browser.wait(
       ec.or(ec.visibilityOf(popularTimeComponentsPage.entities), ec.visibilityOf(popularTimeComponentsPage.noResult)),
       1000
@@ -34,7 +34,7 @@ describe('PopularTime e2e test', () => {
   it('should load create PopularTime page', async () => {
     await popularTimeComponentsPage.clickOnCreateButton();
     popularTimeUpdatePage = new PopularTimeUpdatePage();
-    expect(await popularTimeUpdatePage.getPageTitle()).to.eq('thehipstaApp.popularTime.home.createOrEditLabel');
+    expect(await popularTimeUpdatePage.getPageTitle()).to.eq('paradineApp.popularTime.home.createOrEditLabel');
     await popularTimeUpdatePage.cancel();
   });
 
@@ -97,7 +97,7 @@ describe('PopularTime e2e test', () => {
     await popularTimeComponentsPage.clickOnLastDeleteButton();
 
     popularTimeDeleteDialog = new PopularTimeDeleteDialog();
-    expect(await popularTimeDeleteDialog.getDialogTitle()).to.eq('thehipstaApp.popularTime.delete.question');
+    expect(await popularTimeDeleteDialog.getDialogTitle()).to.eq('paradineApp.popularTime.delete.question');
     await popularTimeDeleteDialog.clickOnConfirmButton();
 
     expect(await popularTimeComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);

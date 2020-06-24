@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
-import { ThehipstaTestModule } from '../../../test.module';
+import { ParadineTestModule } from '../../../test.module';
 import { RestaurantDetailComponent } from 'app/entities/restaurant/restaurant-detail.component';
 import { Restaurant } from 'app/shared/model/restaurant.model';
 
@@ -14,7 +14,7 @@ describe('Component Tests', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [ThehipstaTestModule],
+        imports: [ParadineTestModule],
         declarations: [RestaurantDetailComponent],
         providers: [{ provide: ActivatedRoute, useValue: route }],
       })

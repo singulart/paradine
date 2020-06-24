@@ -40,7 +40,7 @@ export const popularTimeRoute: Routes = [
     component: PopularTimeComponent,
     data: {
       authorities: [Authority.USER],
-      pageTitle: 'thehipstaApp.popularTime.home.title',
+      pageTitle: 'paradineApp.popularTime.home.title',
     },
     canActivate: [UserRouteAccessService],
   },
@@ -52,7 +52,7 @@ export const popularTimeRoute: Routes = [
     },
     data: {
       authorities: [Authority.USER],
-      pageTitle: 'thehipstaApp.popularTime.home.title',
+      pageTitle: 'paradineApp.popularTime.home.title',
     },
     canActivate: [UserRouteAccessService],
   },
@@ -64,7 +64,7 @@ export const popularTimeRoute: Routes = [
     },
     data: {
       authorities: [Authority.USER],
-      pageTitle: 'thehipstaApp.popularTime.home.title',
+      pageTitle: 'paradineApp.popularTime.home.title',
     },
     canActivate: [UserRouteAccessService],
   },
@@ -76,7 +76,7 @@ export const popularTimeRoute: Routes = [
     },
     data: {
       authorities: [Authority.USER],
-      pageTitle: 'thehipstaApp.popularTime.home.title',
+      pageTitle: 'paradineApp.popularTime.home.title',
     },
     canActivate: [UserRouteAccessService],
   },

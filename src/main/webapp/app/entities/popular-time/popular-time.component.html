@@ -1,10 +1,10 @@
 <div>
     <h2 id="page-heading">
-        <span jhiTranslate="thehipstaApp.popularTime.home.title">Popular Times</span>
+        <span jhiTranslate="paradineApp.popularTime.home.title">Popular Times</span>
 
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-popular-time" [routerLink]="['/popular-time/new']">
             <fa-icon icon="plus"></fa-icon>
-            <span class="hidden-sm-down"  jhiTranslate="thehipstaApp.popularTime.home.createLabel">
+            <span class="hidden-sm-down"  jhiTranslate="paradineApp.popularTime.home.createLabel">
             Create a new Popular Time
             </span>
         </button>
@@ -18,7 +18,7 @@
         <div class="col-sm-12">
             <form name="searchForm" class="form-inline">
                 <div class="input-group w-100 mt-3">
-                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'thehipstaApp.popularTime.home.search' | translate }}">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'paradineApp.popularTime.home.search' | translate }}">
 
                     <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
                         <fa-icon icon="search"></fa-icon>
@@ -33,7 +33,7 @@
     </div>
 
     <div class="alert alert-warning" id="no-result" *ngIf="popularTimes?.length === 0">
-        <span jhiTranslate="thehipstaApp.popularTime.home.notFound">No popularTimes found</span>
+        <span jhiTranslate="paradineApp.popularTime.home.notFound">No popularTimes found</span>
     </div>
 
     <div class="table-responsive" id="entities" *ngIf="popularTimes && popularTimes.length > 0">
@@ -41,26 +41,26 @@
             <thead>
                 <tr>
                     <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.dayOfWeek">Day Of Week</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ06">Occ 06</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ07">Occ 07</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ08">Occ 08</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ09">Occ 09</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ10">Occ 10</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ11">Occ 11</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ12">Occ 12</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ13">Occ 13</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ14">Occ 14</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ15">Occ 15</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ16">Occ 16</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ17">Occ 17</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ18">Occ 18</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ19">Occ 19</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ20">Occ 20</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ21">Occ 21</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ22">Occ 22</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.occ23">Occ 23</span></th>
-                    <th scope="col" ><span jhiTranslate="thehipstaApp.popularTime.restaurant">Restaurant</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.dayOfWeek">Day Of Week</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ06">Occ 06</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ07">Occ 07</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ08">Occ 08</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ09">Occ 09</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ10">Occ 10</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ11">Occ 11</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ12">Occ 12</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ13">Occ 13</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ14">Occ 14</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ15">Occ 15</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ16">Occ 16</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ17">Occ 17</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ18">Occ 18</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ19">Occ 19</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ20">Occ 20</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ21">Occ 21</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ22">Occ 22</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ23">Occ 23</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.restaurant">Restaurant</span></th>
                     <th scope="col"></th>
                 </tr>
             </thead>

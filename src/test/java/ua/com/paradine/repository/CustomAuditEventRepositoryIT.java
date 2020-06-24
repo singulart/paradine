@@ -1,6 +1,6 @@
 package ua.com.paradine.repository;
 
-import ua.com.paradine.ThehipstaApp;
+import ua.com.paradine.ParadineApp;
 
 import ua.com.paradine.RedisTestContainerExtension;
 import ua.com.paradine.config.Constants;
@@ -30,7 +30,7 @@ import static ua.com.paradine.repository.CustomAuditEventRepository.EVENT_DATA_C
 /**
  * Integration tests for {@link CustomAuditEventRepository}.
  */
-@SpringBootTest(classes = ThehipstaApp.class)
+@SpringBootTest(classes = ParadineApp.class)
 @ExtendWith(RedisTestContainerExtension.class)
 @Transactional
 public class CustomAuditEventRepositoryIT {

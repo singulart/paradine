@@ -40,7 +40,7 @@ export const restaurantRoute: Routes = [
     component: RestaurantComponent,
     data: {
       authorities: [Authority.USER],
-      pageTitle: 'thehipstaApp.restaurant.home.title',
+      pageTitle: 'paradineApp.restaurant.home.title',
     },
     canActivate: [UserRouteAccessService],
   },
@@ -52,7 +52,7 @@ export const restaurantRoute: Routes = [
     },
     data: {
       authorities: [Authority.USER],
-      pageTitle: 'thehipstaApp.restaurant.home.title',
+      pageTitle: 'paradineApp.restaurant.home.title',
     },
     canActivate: [UserRouteAccessService],
   },
@@ -64,7 +64,7 @@ export const restaurantRoute: Routes = [
     },
     data: {
       authorities: [Authority.USER],
-      pageTitle: 'thehipstaApp.restaurant.home.title',
+      pageTitle: 'paradineApp.restaurant.home.title',
     },
     canActivate: [UserRouteAccessService],
   },
@@ -76,7 +76,7 @@ export const restaurantRoute: Routes = [
     },
     data: {
       authorities: [Authority.USER],
-      pageTitle: 'thehipstaApp.restaurant.home.title',
+      pageTitle: 'paradineApp.restaurant.home.title',
     },
     canActivate: [UserRouteAccessService],
   },

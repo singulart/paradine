@@ -1,10 +1,10 @@
 <div>
     <h2 id="page-heading">
-        <span jhiTranslate="thehipstaApp.restaurant.home.title">Restaurants</span>
+        <span jhiTranslate="paradineApp.restaurant.home.title">Restaurants</span>
 
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-restaurant" [routerLink]="['/restaurant/new']">
             <fa-icon icon="plus"></fa-icon>
-            <span class="hidden-sm-down"  jhiTranslate="thehipstaApp.restaurant.home.createLabel">
+            <span class="hidden-sm-down"  jhiTranslate="paradineApp.restaurant.home.createLabel">
             Create a new Restaurant
             </span>
         </button>
@@ -18,7 +18,7 @@
         <div class="col-sm-12">
             <form name="searchForm" class="form-inline">
                 <div class="input-group w-100 mt-3">
-                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'thehipstaApp.restaurant.home.search' | translate }}">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'paradineApp.restaurant.home.search' | translate }}">
 
                     <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
                         <fa-icon icon="search"></fa-icon>
@@ -33,7 +33,7 @@
     </div>
 
     <div class="alert alert-warning" id="no-result" *ngIf="restaurants?.length === 0">
-        <span jhiTranslate="thehipstaApp.restaurant.home.notFound">No restaurants found</span>
+        <span jhiTranslate="paradineApp.restaurant.home.notFound">No restaurants found</span>
     </div>
 
     <div class="table-responsive" id="entities" *ngIf="restaurants && restaurants.length > 0">
@@ -41,18 +41,18 @@
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
                     <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="name"><span jhiTranslate="thehipstaApp.restaurant.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="altName1"><span jhiTranslate="thehipstaApp.restaurant.altName1">Alt Name 1</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="googlePlacesId"><span jhiTranslate="thehipstaApp.restaurant.googlePlacesId">Google Places Id</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="geolat"><span jhiTranslate="thehipstaApp.restaurant.geolat">Geolat</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="geolng"><span jhiTranslate="thehipstaApp.restaurant.geolng">Geolng</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="photoUrl"><span jhiTranslate="thehipstaApp.restaurant.photoUrl">Photo Url</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="altName2"><span jhiTranslate="thehipstaApp.restaurant.altName2">Alt Name 2</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="altName3"><span jhiTranslate="thehipstaApp.restaurant.altName3">Alt Name 3</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="capacity"><span jhiTranslate="thehipstaApp.restaurant.capacity">Capacity</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="createdAt"><span jhiTranslate="thehipstaApp.restaurant.createdAt">Created At</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="updatedAt"><span jhiTranslate="thehipstaApp.restaurant.updatedAt">Updated At</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="uuid"><span jhiTranslate="thehipstaApp.restaurant.uuid">Uuid</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="name"><span jhiTranslate="paradineApp.restaurant.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="altName1"><span jhiTranslate="paradineApp.restaurant.altName1">Alt Name 1</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="googlePlacesId"><span jhiTranslate="paradineApp.restaurant.googlePlacesId">Google Places Id</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="geolat"><span jhiTranslate="paradineApp.restaurant.geolat">Geolat</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="geolng"><span jhiTranslate="paradineApp.restaurant.geolng">Geolng</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="photoUrl"><span jhiTranslate="paradineApp.restaurant.photoUrl">Photo Url</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="altName2"><span jhiTranslate="paradineApp.restaurant.altName2">Alt Name 2</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="altName3"><span jhiTranslate="paradineApp.restaurant.altName3">Alt Name 3</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="capacity"><span jhiTranslate="paradineApp.restaurant.capacity">Capacity</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="createdAt"><span jhiTranslate="paradineApp.restaurant.createdAt">Created At</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="updatedAt"><span jhiTranslate="paradineApp.restaurant.updatedAt">Updated At</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="uuid"><span jhiTranslate="paradineApp.restaurant.uuid">Uuid</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>

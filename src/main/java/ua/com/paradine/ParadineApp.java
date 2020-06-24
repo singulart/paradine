@@ -22,18 +22,18 @@ import java.util.Collection;
 
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
-public class ThehipstaApp {
+public class ParadineApp {
 
-    private static final Logger log = LoggerFactory.getLogger(ThehipstaApp.class);
+    private static final Logger log = LoggerFactory.getLogger(ParadineApp.class);
 
     private final Environment env;
 
-    public ThehipstaApp(Environment env) {
+    public ParadineApp(Environment env) {
         this.env = env;
     }
 
     /**
-     * Initializes thehipsta.
+     * Initializes Paradine.
      * <p>
      * Spring profiles can be configured with a program argument --spring.profiles.active=your-active-profile
      * <p>
@@ -58,7 +58,7 @@ public class ThehipstaApp {
      * @param args the command line arguments.
      */
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(ThehipstaApp.class);
+        SpringApplication app = new SpringApplication(ParadineApp.class);
         DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
         logApplicationStartup(env);

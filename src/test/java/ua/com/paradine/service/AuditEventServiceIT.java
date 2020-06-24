@@ -3,7 +3,7 @@ package ua.com.paradine.service;
 import ua.com.paradine.RedisTestContainerExtension;
 import ua.com.paradine.domain.PersistentAuditEvent;
 import ua.com.paradine.repository.PersistenceAuditEventRepository;
-import ua.com.paradine.ThehipstaApp;
+import ua.com.paradine.ParadineApp;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Integration tests for {@link AuditEventService}.
  */
-@SpringBootTest(classes = ThehipstaApp.class)
+@SpringBootTest(classes = ParadineApp.class)
 @ExtendWith(RedisTestContainerExtension.class)
 @Transactional
 public class AuditEventServiceIT {
