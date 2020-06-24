@@ -1,5 +1,7 @@
 package ua.com.paradine.core.business;
 
+import java.util.Set;
+
 public class RestaurantVO {
 
     private String uuid;
@@ -9,6 +11,7 @@ public class RestaurantVO {
     private Float geolng;
     private String photoUrl;
     private String googlePlacesId;
+    private Set<PopularTimeVO> popularTimes;
 
     public String getUuid() {
         return uuid;
@@ -64,5 +67,13 @@ public class RestaurantVO {
 
     public void setGooglePlacesId(String googlePlacesId) {
         this.googlePlacesId = googlePlacesId;
+    }
+
+    public Set<PopularTimeVO> getPopularTimes() {
+        return popularTimes;
+    }
+
+    public void setPopularTimes(Set<PopularTimeVO> popularTimes) {
+        this.popularTimes = popularTimes;
     }
 }

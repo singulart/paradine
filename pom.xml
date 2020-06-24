@@ -509,6 +509,10 @@
                             </path>
                             <!-- jhipster-needle-maven-add-annotation-processor -->
                         </annotationProcessorPaths>
+                        <compilerArgs>
+                            <compilerArg>-Amapstruct.unmappedTargetPolicy=ERROR</compilerArg>
+                            <arg>-parameters</arg>
+                        </compilerArgs>
                     </configuration>
                 </plugin>
                 <plugin>
