@@ -3,7 +3,7 @@ package ua.com.paradine.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Properties specific to Thehipsta.
+ * Properties specific to Paradine.
  * <p>
  * Properties are configured in the {@code application.yml} file.
  * See {@link io.github.jhipster.config.JHipsterProperties} for a good example.

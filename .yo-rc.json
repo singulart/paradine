@@ -6,7 +6,7 @@
     },
     "jhipsterVersion": "6.9.1",
     "applicationType": "monolith",
-    "baseName": "thehipsta",
+    "baseName": "paradine",
     "packageName": "ua.com.paradine",
     "packageFolder": "ua/com/paradine",
     "serverPort": "8080",

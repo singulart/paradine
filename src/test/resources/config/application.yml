@@ -17,18 +17,18 @@ eureka:
   client:
     enabled: false
   instance:
-    appname: thehipsta
-    instanceId: thehipsta:${spring.application.instance-id:${random.value}}
+    appname: paradine
+    instanceId: paradine:${spring.application.instance-id:${random.value}}
 
 spring:
   profiles:
   # Uncomment the following line to enable tests against production database type rather than H2, using Testcontainers
   #active: testcontainers
   application:
-    name: thehipsta
+    name: paradine
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:mem:thehipsta;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:paradine;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     name:
     username:
     password:
@@ -69,13 +69,13 @@ spring:
     basename: i18n/messages
   task:
     execution:
-      thread-name-prefix: thehipsta-task-
+      thread-name-prefix: paradine-task-
       pool:
         core-size: 1
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: thehipsta-scheduling-
+      thread-name-prefix: paradine-scheduling-
       pool:
         size: 1
   thymeleaf:
@@ -121,7 +121,7 @@ kafka:
   consumer:
     key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
     value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    group.id: thehipsta
+    group.id: paradine
     auto.offset.reset: earliest
   producer:
     key.serializer: org.apache.kafka.common.serialization.StringSerializer

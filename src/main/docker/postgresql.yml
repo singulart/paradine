@@ -1,11 +1,11 @@
 version: '2'
 services:
-  thehipsta-postgresql:
+  paradine-postgresql:
     image: postgres:12.3
     # volumes:
-    #     - ~/volumes/jhipster/thehipsta/postgresql/:/var/lib/postgresql/data/
+    #     - ~/volumes/jhipster/paradine/postgresql/:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=thehipsta
+      - POSTGRES_USER=paradine
       - POSTGRES_PASSWORD=
       - POSTGRES_HOST_AUTH_METHOD=trust
     ports:

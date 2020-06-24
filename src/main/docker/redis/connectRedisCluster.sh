@@ -12,9 +12,9 @@ redis-cli \
   --cluster-replicas 1 \
   --cluster-yes \
   --cluster create \
-    $(host thehipsta-redis|awk '{print $4}'):6379 \
-    $(host thehipsta-redis-1|awk '{print $4}'):6379 \
-    $(host thehipsta-redis-2|awk '{print $4}'):6379 \
-    $(host thehipsta-redis-3|awk '{print $4}'):6379 \
-    $(host thehipsta-redis-4|awk '{print $4}'):6379 \
-    $(host thehipsta-redis-5|awk '{print $4}'):6379
+    $(host paradine-redis|awk '{print $4}'):6379 \
+    $(host paradine-redis-1|awk '{print $4}'):6379 \
+    $(host paradine-redis-2|awk '{print $4}'):6379 \
+    $(host paradine-redis-3|awk '{print $4}'):6379 \
+    $(host paradine-redis-4|awk '{print $4}'):6379 \
+    $(host paradine-redis-5|awk '{print $4}'):6379

@@ -1,6 +1,6 @@
 version: '2'
 services:
-  thehipsta-redis:
+  paradine-redis:
     image: redis:6.0.4
     ports:
       - '6379:6379'

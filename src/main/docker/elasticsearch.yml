@@ -1,9 +1,9 @@
 version: '2'
 services:
-  thehipsta-elasticsearch:
+  paradine-elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.8.8
     # volumes:
-    #     - ~/volumes/jhipster/thehipsta/elasticsearch/:/usr/share/elasticsearch/data/
+    #     - ~/volumes/jhipster/paradine/elasticsearch/:/usr/share/elasticsearch/data/
     ports:
       - 9200:9200
       - 9300:9300

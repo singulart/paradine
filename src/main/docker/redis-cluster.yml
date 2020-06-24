@@ -1,6 +1,6 @@
 version: '2'
 services:
-  thehipsta-redis:
+  paradine-redis:
     image: redis:6.0.4
     command:
       - 'redis-server'
@@ -11,7 +11,7 @@ services:
       - '--appendonly yes'
     ports:
       - '6379:6379'
-  thehipsta-redis-1:
+  paradine-redis-1:
     image: redis:6.0.4
     command:
       - 'redis-server'
@@ -22,7 +22,7 @@ services:
       - '--appendonly yes'
     ports:
       - '16379:6379'
-  thehipsta-redis-2:
+  paradine-redis-2:
     image: redis:6.0.4
     command:
       - 'redis-server'
@@ -33,7 +33,7 @@ services:
       - '--appendonly yes'
     ports:
       - '26379:6379'
-  thehipsta-redis-3:
+  paradine-redis-3:
     image: redis:6.0.4
     command:
       - 'redis-server'
@@ -44,7 +44,7 @@ services:
       - '--appendonly yes'
     ports:
       - '36379:6379'
-  thehipsta-redis-4:
+  paradine-redis-4:
     image: redis:6.0.4
     command:
       - 'redis-server'
@@ -55,7 +55,7 @@ services:
       - '--appendonly yes'
     ports:
       - '46379:6379'
-  thehipsta-redis-5:
+  paradine-redis-5:
     image: redis:6.0.4
     command:
       - 'redis-server'
@@ -66,7 +66,7 @@ services:
       - '--appendonly yes'
     ports:
       - '56379:6379'
-  thehipsta-redis-cluster-builder:
+  paradine-redis-cluster-builder:
     build:
       context: .
       dockerfile: redis/Redis-Cluster.Dockerfile
