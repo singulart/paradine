@@ -8,13 +8,17 @@
             <jhi-alert-error></jhi-alert-error>
 
             <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="paradineApp.restaurant.uuid">Uuid</span></dt>
+                <dt><span jhiTranslate="paradineApp.restaurant.name">Name</span></dt>
                 <dd>
-                    <span>{{ restaurant.uuid }}</span>
+                    <span>{{ restaurant.name }}</span>
                 </dd>
-                <dt><span jhiTranslate="paradineApp.restaurant.capacity">Capacity</span></dt>
+                <dt><span jhiTranslate="paradineApp.restaurant.altName1">Alt Name 1</span></dt>
                 <dd>
-                    <span>{{ restaurant.capacity }}</span>
+                    <span>{{ restaurant.altName1 }}</span>
+                </dd>
+                <dt><span jhiTranslate="paradineApp.restaurant.googlePlacesId">Google Places Id</span></dt>
+                <dd>
+                    <span>{{ restaurant.googlePlacesId }}</span>
                 </dd>
                 <dt><span jhiTranslate="paradineApp.restaurant.geolat">Geolat</span></dt>
                 <dd>
@@ -24,17 +28,9 @@
                 <dd>
                     <span>{{ restaurant.geolng }}</span>
                 </dd>
-                <dt><span jhiTranslate="paradineApp.restaurant.name">Name</span></dt>
-                <dd>
-                    <span>{{ restaurant.name }}</span>
-                </dd>
                 <dt><span jhiTranslate="paradineApp.restaurant.photoUrl">Photo Url</span></dt>
                 <dd>
                     <span>{{ restaurant.photoUrl }}</span>
-                </dd>
-                <dt><span jhiTranslate="paradineApp.restaurant.altName1">Alt Name 1</span></dt>
-                <dd>
-                    <span>{{ restaurant.altName1 }}</span>
                 </dd>
                 <dt><span jhiTranslate="paradineApp.restaurant.altName2">Alt Name 2</span></dt>
                 <dd>
@@ -44,9 +40,9 @@
                 <dd>
                     <span>{{ restaurant.altName3 }}</span>
                 </dd>
-                <dt><span jhiTranslate="paradineApp.restaurant.googlePlacesId">Google Places Id</span></dt>
+                <dt><span jhiTranslate="paradineApp.restaurant.capacity">Capacity</span></dt>
                 <dd>
-                    <span>{{ restaurant.googlePlacesId }}</span>
+                    <span>{{ restaurant.capacity }}</span>
                 </dd>
                 <dt><span jhiTranslate="paradineApp.restaurant.createdAt">Created At</span></dt>
                 <dd>
@@ -55,6 +51,10 @@
                 <dt><span jhiTranslate="paradineApp.restaurant.updatedAt">Updated At</span></dt>
                 <dd>
                     <span>{{ restaurant.updatedAt }}</span>
+                </dd>
+                <dt><span jhiTranslate="paradineApp.restaurant.uuid">Uuid</span></dt>
+                <dd>
+                    <span>{{ restaurant.uuid }}</span>
                 </dd>
             </dl>
 

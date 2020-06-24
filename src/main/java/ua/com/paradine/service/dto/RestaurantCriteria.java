@@ -3,6 +3,8 @@ package ua.com.paradine.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
 import io.github.jhipster.service.Criteria;
+import io.github.jhipster.service.filter.BooleanFilter;
+import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.Filter;
 import io.github.jhipster.service.filter.FloatFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
@@ -25,9 +27,11 @@ public class RestaurantCriteria implements Serializable, Criteria {
 
     private LongFilter id;
 
-    private StringFilter uuid;
+    private StringFilter name;
 
-    private IntegerFilter capacity;
+    private StringFilter altName1;
+
+    private StringFilter googlePlacesId;
 
     private FloatFilter geolat;
 
@@ -35,37 +39,38 @@ public class RestaurantCriteria implements Serializable, Criteria {
 
     private StringFilter photoUrl;
 
-    private StringFilter altName1;
-
     private StringFilter altName2;
 
     private StringFilter altName3;
 
-    private StringFilter googlePlacesId;
+    private IntegerFilter capacity;
 
     private ZonedDateTimeFilter createdAt;
 
     private ZonedDateTimeFilter updatedAt;
 
-    private StringFilter name;
+    private StringFilter uuid;
+
+    private LongFilter popularTimesId;
 
     public RestaurantCriteria() {
     }
 
     public RestaurantCriteria(RestaurantCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
-        this.uuid = other.uuid == null ? null : other.uuid.copy();
-        this.capacity = other.capacity == null ? null : other.capacity.copy();
+        this.name = other.name == null ? null : other.name.copy();
+        this.altName1 = other.altName1 == null ? null : other.altName1.copy();
+        this.googlePlacesId = other.googlePlacesId == null ? null : other.googlePlacesId.copy();
         this.geolat = other.geolat == null ? null : other.geolat.copy();
         this.geolng = other.geolng == null ? null : other.geolng.copy();
         this.photoUrl = other.photoUrl == null ? null : other.photoUrl.copy();
-        this.altName1 = other.altName1 == null ? null : other.altName1.copy();
         this.altName2 = other.altName2 == null ? null : other.altName2.copy();
         this.altName3 = other.altName3 == null ? null : other.altName3.copy();
-        this.googlePlacesId = other.googlePlacesId == null ? null : other.googlePlacesId.copy();
+        this.capacity = other.capacity == null ? null : other.capacity.copy();
         this.createdAt = other.createdAt == null ? null : other.createdAt.copy();
         this.updatedAt = other.updatedAt == null ? null : other.updatedAt.copy();
-        this.name = other.name == null ? null : other.name.copy();
+        this.uuid = other.uuid == null ? null : other.uuid.copy();
+        this.popularTimesId = other.popularTimesId == null ? null : other.popularTimesId.copy();
     }
 
     @Override
@@ -81,20 +86,28 @@ public class RestaurantCriteria implements Serializable, Criteria {
         this.id = id;
     }
 
-    public StringFilter getUuid() {
-        return uuid;
+    public StringFilter getName() {
+        return name;
     }
 
-    public void setUuid(StringFilter uuid) {
-        this.uuid = uuid;
+    public void setName(StringFilter name) {
+        this.name = name;
     }
 
-    public IntegerFilter getCapacity() {
-        return capacity;
+    public StringFilter getAltName1() {
+        return altName1;
     }
 
-    public void setCapacity(IntegerFilter capacity) {
-        this.capacity = capacity;
+    public void setAltName1(StringFilter altName1) {
+        this.altName1 = altName1;
+    }
+
+    public StringFilter getGooglePlacesId() {
+        return googlePlacesId;
+    }
+
+    public void setGooglePlacesId(StringFilter googlePlacesId) {
+        this.googlePlacesId = googlePlacesId;
     }
 
     public FloatFilter getGeolat() {
@@ -121,14 +134,6 @@ public class RestaurantCriteria implements Serializable, Criteria {
         this.photoUrl = photoUrl;
     }
 
-    public StringFilter getAltName1() {
-        return altName1;
-    }
-
-    public void setAltName1(StringFilter altName1) {
-        this.altName1 = altName1;
-    }
-
     public StringFilter getAltName2() {
         return altName2;
     }
@@ -145,12 +150,12 @@ public class RestaurantCriteria implements Serializable, Criteria {
         this.altName3 = altName3;
     }
 
-    public StringFilter getGooglePlacesId() {
-        return googlePlacesId;
+    public IntegerFilter getCapacity() {
+        return capacity;
     }
 
-    public void setGooglePlacesId(StringFilter googlePlacesId) {
-        this.googlePlacesId = googlePlacesId;
+    public void setCapacity(IntegerFilter capacity) {
+        this.capacity = capacity;
     }
 
     public ZonedDateTimeFilter getCreatedAt() {
@@ -169,12 +174,20 @@ public class RestaurantCriteria implements Serializable, Criteria {
         this.updatedAt = updatedAt;
     }
 
-    public StringFilter getName() {
-        return name;
+    public StringFilter getUuid() {
+        return uuid;
     }
 
-    public void setName(StringFilter name) {
-        this.name = name;
+    public void setUuid(StringFilter uuid) {
+        this.uuid = uuid;
+    }
+
+    public LongFilter getPopularTimesId() {
+        return popularTimesId;
+    }
+
+    public void setPopularTimesId(LongFilter popularTimesId) {
+        this.popularTimesId = popularTimesId;
     }
 
 
@@ -189,36 +202,38 @@ public class RestaurantCriteria implements Serializable, Criteria {
         final RestaurantCriteria that = (RestaurantCriteria) o;
         return
             Objects.equals(id, that.id) &&
-            Objects.equals(uuid, that.uuid) &&
-            Objects.equals(capacity, that.capacity) &&
+            Objects.equals(name, that.name) &&
+            Objects.equals(altName1, that.altName1) &&
+            Objects.equals(googlePlacesId, that.googlePlacesId) &&
             Objects.equals(geolat, that.geolat) &&
             Objects.equals(geolng, that.geolng) &&
             Objects.equals(photoUrl, that.photoUrl) &&
-            Objects.equals(altName1, that.altName1) &&
             Objects.equals(altName2, that.altName2) &&
             Objects.equals(altName3, that.altName3) &&
-            Objects.equals(googlePlacesId, that.googlePlacesId) &&
+            Objects.equals(capacity, that.capacity) &&
             Objects.equals(createdAt, that.createdAt) &&
             Objects.equals(updatedAt, that.updatedAt) &&
-            Objects.equals(name, that.name);
+            Objects.equals(uuid, that.uuid) &&
+            Objects.equals(popularTimesId, that.popularTimesId);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
         id,
-        uuid,
-        capacity,
+        name,
+        altName1,
+        googlePlacesId,
         geolat,
         geolng,
         photoUrl,
-        altName1,
         altName2,
         altName3,
-        googlePlacesId,
+        capacity,
         createdAt,
         updatedAt,
-        name
+        uuid,
+        popularTimesId
         );
     }
 
@@ -227,18 +242,19 @@ public class RestaurantCriteria implements Serializable, Criteria {
     public String toString() {
         return "RestaurantCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
-                (uuid != null ? "uuid=" + uuid + ", " : "") +
-                (capacity != null ? "capacity=" + capacity + ", " : "") +
+                (name != null ? "name=" + name + ", " : "") +
+                (altName1 != null ? "altName1=" + altName1 + ", " : "") +
+                (googlePlacesId != null ? "googlePlacesId=" + googlePlacesId + ", " : "") +
                 (geolat != null ? "geolat=" + geolat + ", " : "") +
                 (geolng != null ? "geolng=" + geolng + ", " : "") +
                 (photoUrl != null ? "photoUrl=" + photoUrl + ", " : "") +
-                (altName1 != null ? "altName1=" + altName1 + ", " : "") +
                 (altName2 != null ? "altName2=" + altName2 + ", " : "") +
                 (altName3 != null ? "altName3=" + altName3 + ", " : "") +
-                (googlePlacesId != null ? "googlePlacesId=" + googlePlacesId + ", " : "") +
+                (capacity != null ? "capacity=" + capacity + ", " : "") +
                 (createdAt != null ? "createdAt=" + createdAt + ", " : "") +
                 (updatedAt != null ? "updatedAt=" + updatedAt + ", " : "") +
-                (name != null ? "name=" + name + ", " : "") +
+                (uuid != null ? "uuid=" + uuid + ", " : "") +
+                (popularTimesId != null ? "popularTimesId=" + popularTimesId + ", " : "") +
             "}";
     }
 

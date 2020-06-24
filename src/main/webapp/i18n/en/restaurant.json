@@ -17,18 +17,19 @@
       "detail": {
         "title": "Restaurant"
       },
-      "uuid": "Uuid",
-      "capacity": "Capacity",
+      "name": "Name",
+      "altName1": "Alt Name 1",
+      "googlePlacesId": "Google Places Id",
       "geolat": "Geolat",
       "geolng": "Geolng",
       "photoUrl": "Photo Url",
-      "altName1": "Alt Name 1",
       "altName2": "Alt Name 2",
       "altName3": "Alt Name 3",
-      "googlePlacesId": "Google Places Id",
+      "capacity": "Capacity",
       "createdAt": "Created At",
       "updatedAt": "Updated At",
-      "name": "Name"
+      "uuid": "Uuid",
+      "popularTimes": "Popular Times"
     }
   }
 }

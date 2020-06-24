@@ -6,8 +6,11 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Restaurant.
@@ -26,15 +29,17 @@ public class Restaurant implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 36, max = 36)
-    @Pattern(regexp = "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
-    @Column(name = "uuid", length = 36, nullable = false, unique = true)
-    private String uuid;
+    @Size(min = 3, max = 128)
+    @Column(name = "name", length = 128, nullable = false)
+    private String name;
 
-    @NotNull
-    @Min(value = 3)
-    @Column(name = "capacity", nullable = false)
-    private Integer capacity;
+    @Size(max = 128)
+    @Column(name = "alt_name_1", length = 128)
+    private String altName1;
+
+    @Size(max = 255)
+    @Column(name = "google_places_id", length = 255)
+    private String googlePlacesId;
 
     @NotNull
     @Column(name = "geolat", nullable = false)
@@ -45,19 +50,10 @@ public class Restaurant implements Serializable {
     private Float geolng;
 
     @NotNull
-    @Size(min = 3, max = 128)
-    @Column(name = "name", length = 128, nullable = false)
-    private String name;
-
-    @NotNull
     @Size(min = 2, max = 256)
     @Pattern(regexp = "[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)")
     @Column(name = "photo_url", length = 256, nullable = false)
     private String photoUrl;
-
-    @Size(max = 128)
-    @Column(name = "alt_name_1", length = 128)
-    private String altName1;
 
     @Size(max = 128)
     @Column(name = "alt_name_2", length = 128)
@@ -67,9 +63,10 @@ public class Restaurant implements Serializable {
     @Column(name = "alt_name_3", length = 128)
     private String altName3;
 
-    @Size(max = 255)
-    @Column(name = "google_places_id", length = 255)
-    private String googlePlacesId;
+    @NotNull
+    @Min(value = 3)
+    @Column(name = "capacity", nullable = false)
+    private Integer capacity;
 
     @NotNull
     @Column(name = "created_at", nullable = false)
@@ -78,6 +75,16 @@ public class Restaurant implements Serializable {
     @NotNull
     @Column(name = "updated_at", nullable = false)
     private ZonedDateTime updatedAt;
+
+    @NotNull
+    @Size(min = 36, max = 36)
+    @Pattern(regexp = "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
+    @Column(name = "uuid", length = 36, nullable = false, unique = true)
+    private String uuid;
+
+    @OneToMany(mappedBy = "restaurant")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<PopularTime> popularTimes = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -88,30 +95,43 @@ public class Restaurant implements Serializable {
         this.id = id;
     }
 
-    public String getUuid() {
-        return uuid;
+    public String getName() {
+        return name;
     }
 
-    public Restaurant uuid(String uuid) {
-        this.uuid = uuid;
+    public Restaurant name(String name) {
+        this.name = name;
         return this;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getCapacity() {
-        return capacity;
+    public String getAltName1() {
+        return altName1;
     }
 
-    public Restaurant capacity(Integer capacity) {
-        this.capacity = capacity;
+    public Restaurant altName1(String altName1) {
+        this.altName1 = altName1;
         return this;
     }
 
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
+    public void setAltName1(String altName1) {
+        this.altName1 = altName1;
+    }
+
+    public String getGooglePlacesId() {
+        return googlePlacesId;
+    }
+
+    public Restaurant googlePlacesId(String googlePlacesId) {
+        this.googlePlacesId = googlePlacesId;
+        return this;
+    }
+
+    public void setGooglePlacesId(String googlePlacesId) {
+        this.googlePlacesId = googlePlacesId;
     }
 
     public Float getGeolat() {
@@ -153,19 +173,6 @@ public class Restaurant implements Serializable {
         this.photoUrl = photoUrl;
     }
 
-    public String getAltName1() {
-        return altName1;
-    }
-
-    public Restaurant altName1(String altName1) {
-        this.altName1 = altName1;
-        return this;
-    }
-
-    public void setAltName1(String altName1) {
-        this.altName1 = altName1;
-    }
-
     public String getAltName2() {
         return altName2;
     }
@@ -192,17 +199,17 @@ public class Restaurant implements Serializable {
         this.altName3 = altName3;
     }
 
-    public String getGooglePlacesId() {
-        return googlePlacesId;
+    public Integer getCapacity() {
+        return capacity;
     }
 
-    public Restaurant googlePlacesId(String googlePlacesId) {
-        this.googlePlacesId = googlePlacesId;
+    public Restaurant capacity(Integer capacity) {
+        this.capacity = capacity;
         return this;
     }
 
-    public void setGooglePlacesId(String googlePlacesId) {
-        this.googlePlacesId = googlePlacesId;
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
     }
 
     public ZonedDateTime getCreatedAt() {
@@ -231,17 +238,42 @@ public class Restaurant implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public String getName() {
-        return name;
+    public String getUuid() {
+        return uuid;
     }
 
-    public Restaurant name(String name) {
-        this.name = name;
+    public Restaurant uuid(String uuid) {
+        this.uuid = uuid;
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public Set<PopularTime> getPopularTimes() {
+        return popularTimes;
+    }
+
+    public Restaurant popularTimes(Set<PopularTime> popularTimes) {
+        this.popularTimes = popularTimes;
+        return this;
+    }
+
+    public Restaurant addPopularTimes(PopularTime popularTime) {
+        this.popularTimes.add(popularTime);
+        popularTime.setRestaurant(this);
+        return this;
+    }
+
+    public Restaurant removePopularTimes(PopularTime popularTime) {
+        this.popularTimes.remove(popularTime);
+        popularTime.setRestaurant(null);
+        return this;
+    }
+
+    public void setPopularTimes(Set<PopularTime> popularTimes) {
+        this.popularTimes = popularTimes;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -266,18 +298,18 @@ public class Restaurant implements Serializable {
     public String toString() {
         return "Restaurant{" +
             "id=" + getId() +
-            ", uuid='" + getUuid() + "'" +
-            ", capacity=" + getCapacity() +
+            ", name='" + getName() + "'" +
+            ", altName1='" + getAltName1() + "'" +
+            ", googlePlacesId='" + getGooglePlacesId() + "'" +
             ", geolat=" + getGeolat() +
             ", geolng=" + getGeolng() +
             ", photoUrl='" + getPhotoUrl() + "'" +
-            ", altName1='" + getAltName1() + "'" +
             ", altName2='" + getAltName2() + "'" +
             ", altName3='" + getAltName3() + "'" +
-            ", googlePlacesId='" + getGooglePlacesId() + "'" +
+            ", capacity=" + getCapacity() +
             ", createdAt='" + getCreatedAt() + "'" +
             ", updatedAt='" + getUpdatedAt() + "'" +
-            ", name='" + getName() + "'" +
+            ", uuid='" + getUuid() + "'" +
             "}";
     }
 }

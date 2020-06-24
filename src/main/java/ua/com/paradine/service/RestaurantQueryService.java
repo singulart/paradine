@@ -2,6 +2,8 @@ package ua.com.paradine.service;
 
 import java.util.List;
 
+import javax.persistence.criteria.JoinType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -93,11 +95,14 @@ public class RestaurantQueryService extends QueryService<Restaurant> {
             if (criteria.getId() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getId(), Restaurant_.id));
             }
-            if (criteria.getUuid() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getUuid(), Restaurant_.uuid));
+            if (criteria.getName() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getName(), Restaurant_.name));
             }
-            if (criteria.getCapacity() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCapacity(), Restaurant_.capacity));
+            if (criteria.getAltName1() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getAltName1(), Restaurant_.altName1));
+            }
+            if (criteria.getGooglePlacesId() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getGooglePlacesId(), Restaurant_.googlePlacesId));
             }
             if (criteria.getGeolat() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getGeolat(), Restaurant_.geolat));
@@ -108,17 +113,14 @@ public class RestaurantQueryService extends QueryService<Restaurant> {
             if (criteria.getPhotoUrl() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getPhotoUrl(), Restaurant_.photoUrl));
             }
-            if (criteria.getAltName1() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getAltName1(), Restaurant_.altName1));
-            }
             if (criteria.getAltName2() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getAltName2(), Restaurant_.altName2));
             }
             if (criteria.getAltName3() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getAltName3(), Restaurant_.altName3));
             }
-            if (criteria.getGooglePlacesId() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getGooglePlacesId(), Restaurant_.googlePlacesId));
+            if (criteria.getCapacity() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getCapacity(), Restaurant_.capacity));
             }
             if (criteria.getCreatedAt() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getCreatedAt(), Restaurant_.createdAt));
@@ -126,8 +128,12 @@ public class RestaurantQueryService extends QueryService<Restaurant> {
             if (criteria.getUpdatedAt() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getUpdatedAt(), Restaurant_.updatedAt));
             }
-            if (criteria.getName() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getName(), Restaurant_.name));
+            if (criteria.getUuid() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getUuid(), Restaurant_.uuid));
+            }
+            if (criteria.getPopularTimesId() != null) {
+                specification = specification.and(buildSpecification(criteria.getPopularTimesId(),
+                    root -> root.join(Restaurant_.popularTimes, JoinType.LEFT).get(PopularTime_.id)));
             }
         }
         return specification;

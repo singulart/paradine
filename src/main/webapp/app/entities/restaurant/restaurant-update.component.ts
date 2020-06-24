@@ -19,16 +19,9 @@ export class RestaurantUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    uuid: [
-      null,
-      [
-        Validators.required,
-        Validators.minLength(36),
-        Validators.maxLength(36),
-        Validators.pattern('[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}'),
-      ],
-    ],
-    capacity: [null, [Validators.required, Validators.min(3)]],
+    name: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(128)]],
+    altName1: [null, [Validators.maxLength(128)]],
+    googlePlacesId: [null, [Validators.maxLength(255)]],
     geolat: [null, [Validators.required]],
     geolng: [null, [Validators.required]],
     photoUrl: [
@@ -40,13 +33,20 @@ export class RestaurantUpdateComponent implements OnInit {
         Validators.pattern('[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&amp;//=]*)'),
       ],
     ],
-    altName1: [null, [Validators.maxLength(128)]],
     altName2: [null, [Validators.maxLength(128)]],
     altName3: [null, [Validators.maxLength(128)]],
-    googlePlacesId: [null, [Validators.maxLength(255)]],
+    capacity: [null, [Validators.required, Validators.min(3)]],
     createdAt: [null, [Validators.required]],
     updatedAt: [null, [Validators.required]],
-    name: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(128)]],
+    uuid: [
+      null,
+      [
+        Validators.required,
+        Validators.minLength(36),
+        Validators.maxLength(36),
+        Validators.pattern('[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}'),
+      ],
+    ],
   });
 
   constructor(protected restaurantService: RestaurantService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
@@ -66,18 +66,18 @@ export class RestaurantUpdateComponent implements OnInit {
   updateForm(restaurant: IRestaurant): void {
     this.editForm.patchValue({
       id: restaurant.id,
-      uuid: restaurant.uuid,
-      capacity: restaurant.capacity,
+      name: restaurant.name,
+      altName1: restaurant.altName1,
+      googlePlacesId: restaurant.googlePlacesId,
       geolat: restaurant.geolat,
       geolng: restaurant.geolng,
       photoUrl: restaurant.photoUrl,
-      altName1: restaurant.altName1,
       altName2: restaurant.altName2,
       altName3: restaurant.altName3,
-      googlePlacesId: restaurant.googlePlacesId,
+      capacity: restaurant.capacity,
       createdAt: restaurant.createdAt ? restaurant.createdAt.format(DATE_TIME_FORMAT) : null,
       updatedAt: restaurant.updatedAt ? restaurant.updatedAt.format(DATE_TIME_FORMAT) : null,
-      name: restaurant.name,
+      uuid: restaurant.uuid,
     });
   }
 
@@ -99,18 +99,18 @@ export class RestaurantUpdateComponent implements OnInit {
     return {
       ...new Restaurant(),
       id: this.editForm.get(['id'])!.value,
-      uuid: this.editForm.get(['uuid'])!.value,
-      capacity: this.editForm.get(['capacity'])!.value,
+      name: this.editForm.get(['name'])!.value,
+      altName1: this.editForm.get(['altName1'])!.value,
+      googlePlacesId: this.editForm.get(['googlePlacesId'])!.value,
       geolat: this.editForm.get(['geolat'])!.value,
       geolng: this.editForm.get(['geolng'])!.value,
       photoUrl: this.editForm.get(['photoUrl'])!.value,
-      altName1: this.editForm.get(['altName1'])!.value,
       altName2: this.editForm.get(['altName2'])!.value,
       altName3: this.editForm.get(['altName3'])!.value,
-      googlePlacesId: this.editForm.get(['googlePlacesId'])!.value,
+      capacity: this.editForm.get(['capacity'])!.value,
       createdAt: this.editForm.get(['createdAt'])!.value ? moment(this.editForm.get(['createdAt'])!.value, DATE_TIME_FORMAT) : undefined,
       updatedAt: this.editForm.get(['updatedAt'])!.value ? moment(this.editForm.get(['updatedAt'])!.value, DATE_TIME_FORMAT) : undefined,
-      name: this.editForm.get(['name'])!.value,
+      uuid: this.editForm.get(['uuid'])!.value,
     };
   }
 

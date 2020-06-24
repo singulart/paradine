@@ -1,7 +1,14 @@
 {
   "fluentMethods": true,
   "clientRootFolder": "",
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipName": "popularTimes",
+      "otherEntityName": "popularTime",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "restaurant"
+    }
+  ],
   "fields": [
     {
       "fieldName": "name",

@@ -8,17 +8,18 @@ import java.io.Serializable;
  * A DTO for the {@link ua.com.paradine.domain.Restaurant} entity.
  */
 public class RestaurantDTO implements Serializable {
-
+    
     private Long id;
 
     @NotNull
-    @Size(min = 36, max = 36)
-    @Pattern(regexp = "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
-    private String uuid;
+    @Size(min = 3, max = 128)
+    private String name;
 
-    @NotNull
-    @Min(value = 3)
-    private Integer capacity;
+    @Size(max = 128)
+    private String altName1;
+
+    @Size(max = 255)
+    private String googlePlacesId;
 
     @NotNull
     private Float geolat;
@@ -32,16 +33,14 @@ public class RestaurantDTO implements Serializable {
     private String photoUrl;
 
     @Size(max = 128)
-    private String altName1;
-
-    @Size(max = 128)
     private String altName2;
 
     @Size(max = 128)
     private String altName3;
 
-    @Size(max = 255)
-    private String googlePlacesId;
+    @NotNull
+    @Min(value = 3)
+    private Integer capacity;
 
     @NotNull
     private ZonedDateTime createdAt;
@@ -50,10 +49,11 @@ public class RestaurantDTO implements Serializable {
     private ZonedDateTime updatedAt;
 
     @NotNull
-    @Size(min = 3, max = 128)
-    private String name;
+    @Size(min = 36, max = 36)
+    @Pattern(regexp = "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
+    private String uuid;
 
-
+    
     public Long getId() {
         return id;
     }
@@ -62,20 +62,28 @@ public class RestaurantDTO implements Serializable {
         this.id = id;
     }
 
-    public String getUuid() {
-        return uuid;
+    public String getName() {
+        return name;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getCapacity() {
-        return capacity;
+    public String getAltName1() {
+        return altName1;
     }
 
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
+    public void setAltName1(String altName1) {
+        this.altName1 = altName1;
+    }
+
+    public String getGooglePlacesId() {
+        return googlePlacesId;
+    }
+
+    public void setGooglePlacesId(String googlePlacesId) {
+        this.googlePlacesId = googlePlacesId;
     }
 
     public Float getGeolat() {
@@ -102,14 +110,6 @@ public class RestaurantDTO implements Serializable {
         this.photoUrl = photoUrl;
     }
 
-    public String getAltName1() {
-        return altName1;
-    }
-
-    public void setAltName1(String altName1) {
-        this.altName1 = altName1;
-    }
-
     public String getAltName2() {
         return altName2;
     }
@@ -126,12 +126,12 @@ public class RestaurantDTO implements Serializable {
         this.altName3 = altName3;
     }
 
-    public String getGooglePlacesId() {
-        return googlePlacesId;
+    public Integer getCapacity() {
+        return capacity;
     }
 
-    public void setGooglePlacesId(String googlePlacesId) {
-        this.googlePlacesId = googlePlacesId;
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
     }
 
     public ZonedDateTime getCreatedAt() {
@@ -150,12 +150,12 @@ public class RestaurantDTO implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public String getName() {
-        return name;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     @Override
@@ -180,18 +180,18 @@ public class RestaurantDTO implements Serializable {
     public String toString() {
         return "RestaurantDTO{" +
             "id=" + getId() +
-            ", uuid='" + getUuid() + "'" +
-            ", capacity=" + getCapacity() +
+            ", name='" + getName() + "'" +
+            ", altName1='" + getAltName1() + "'" +
+            ", googlePlacesId='" + getGooglePlacesId() + "'" +
             ", geolat=" + getGeolat() +
             ", geolng=" + getGeolng() +
             ", photoUrl='" + getPhotoUrl() + "'" +
-            ", altName1='" + getAltName1() + "'" +
             ", altName2='" + getAltName2() + "'" +
             ", altName3='" + getAltName3() + "'" +
-            ", googlePlacesId='" + getGooglePlacesId() + "'" +
+            ", capacity=" + getCapacity() +
             ", createdAt='" + getCreatedAt() + "'" +
             ", updatedAt='" + getUpdatedAt() + "'" +
-            ", name='" + getName() + "'" +
+            ", uuid='" + getUuid() + "'" +
             "}";
     }
 }

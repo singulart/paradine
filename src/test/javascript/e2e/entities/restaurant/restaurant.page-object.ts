@@ -29,37 +29,45 @@ export class RestaurantUpdatePage {
   saveButton = element(by.id('save-entity'));
   cancelButton = element(by.id('cancel-save'));
 
-  uuidInput = element(by.id('field_uuid'));
-  capacityInput = element(by.id('field_capacity'));
+  nameInput = element(by.id('field_name'));
+  altName1Input = element(by.id('field_altName1'));
+  googlePlacesIdInput = element(by.id('field_googlePlacesId'));
   geolatInput = element(by.id('field_geolat'));
   geolngInput = element(by.id('field_geolng'));
-  nameInput = element(by.id('field_name'));
   photoUrlInput = element(by.id('field_photoUrl'));
-  altName1Input = element(by.id('field_altName1'));
   altName2Input = element(by.id('field_altName2'));
   altName3Input = element(by.id('field_altName3'));
-  googlePlacesIdInput = element(by.id('field_googlePlacesId'));
+  capacityInput = element(by.id('field_capacity'));
   createdAtInput = element(by.id('field_createdAt'));
   updatedAtInput = element(by.id('field_updatedAt'));
+  uuidInput = element(by.id('field_uuid'));
 
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
   }
 
-  async setUuidInput(uuid: string): Promise<void> {
-    await this.uuidInput.sendKeys(uuid);
+  async setNameInput(name: string): Promise<void> {
+    await this.nameInput.sendKeys(name);
   }
 
-  async getUuidInput(): Promise<string> {
-    return await this.uuidInput.getAttribute('value');
+  async getNameInput(): Promise<string> {
+    return await this.nameInput.getAttribute('value');
   }
 
-  async setCapacityInput(capacity: string): Promise<void> {
-    await this.capacityInput.sendKeys(capacity);
+  async setAltName1Input(altName1: string): Promise<void> {
+    await this.altName1Input.sendKeys(altName1);
   }
 
-  async getCapacityInput(): Promise<string> {
-    return await this.capacityInput.getAttribute('value');
+  async getAltName1Input(): Promise<string> {
+    return await this.altName1Input.getAttribute('value');
+  }
+
+  async setGooglePlacesIdInput(googlePlacesId: string): Promise<void> {
+    await this.googlePlacesIdInput.sendKeys(googlePlacesId);
+  }
+
+  async getGooglePlacesIdInput(): Promise<string> {
+    return await this.googlePlacesIdInput.getAttribute('value');
   }
 
   async setGeolatInput(geolat: string): Promise<void> {
@@ -86,14 +94,6 @@ export class RestaurantUpdatePage {
     return await this.photoUrlInput.getAttribute('value');
   }
 
-  async setAltName1Input(altName1: string): Promise<void> {
-    await this.altName1Input.sendKeys(altName1);
-  }
-
-  async getAltName1Input(): Promise<string> {
-    return await this.altName1Input.getAttribute('value');
-  }
-
   async setAltName2Input(altName2: string): Promise<void> {
     await this.altName2Input.sendKeys(altName2);
   }
@@ -110,12 +110,12 @@ export class RestaurantUpdatePage {
     return await this.altName3Input.getAttribute('value');
   }
 
-  async setGooglePlacesIdInput(googlePlacesId: string): Promise<void> {
-    await this.googlePlacesIdInput.sendKeys(googlePlacesId);
+  async setCapacityInput(capacity: string): Promise<void> {
+    await this.capacityInput.sendKeys(capacity);
   }
 
-  async getGooglePlacesIdInput(): Promise<string> {
-    return await this.googlePlacesIdInput.getAttribute('value');
+  async getCapacityInput(): Promise<string> {
+    return await this.capacityInput.getAttribute('value');
   }
 
   async setCreatedAtInput(createdAt: string): Promise<void> {
@@ -134,12 +134,12 @@ export class RestaurantUpdatePage {
     return await this.updatedAtInput.getAttribute('value');
   }
 
-  async setNameInput(name: string): Promise<void> {
-    await this.nameInput.sendKeys(name);
+  async setUuidInput(uuid: string): Promise<void> {
+    await this.uuidInput.sendKeys(uuid);
   }
 
-  async getNameInput(): Promise<string> {
-    return await this.nameInput.getAttribute('value');
+  async getUuidInput(): Promise<string> {
+    return await this.uuidInput.getAttribute('value');
   }
 
   async save(): Promise<void> {

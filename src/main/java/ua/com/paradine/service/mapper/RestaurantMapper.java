@@ -13,6 +13,9 @@ import org.mapstruct.*;
 public interface RestaurantMapper extends EntityMapper<RestaurantDTO, Restaurant> {
 
 
+    @Mapping(target = "popularTimes", ignore = true)
+    @Mapping(target = "removePopularTimes", ignore = true)
+    Restaurant toEntity(RestaurantDTO restaurantDTO);
 
     default Restaurant fromId(Long id) {
         if (id == null) {

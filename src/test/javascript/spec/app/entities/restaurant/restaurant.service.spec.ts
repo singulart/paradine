@@ -28,16 +28,16 @@ describe('Service Tests', () => {
         0,
         'AAAAAAA',
         'AAAAAAA',
+        'AAAAAAA',
         0,
         0,
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
         0,
-        'AAAAAAA',
-        'AAAAAAA',
-        'AAAAAAA',
-        'AAAAAAA',
-        'AAAAAAA',
         currentDate,
-        currentDate
+        currentDate,
+        'AAAAAAA'
       );
     });
 
@@ -86,18 +86,18 @@ describe('Service Tests', () => {
       it('should update a Restaurant', () => {
         const returnedFromService = Object.assign(
           {
-            uuid: 'BBBBBB',
-            capacity: 1,
+            name: 'BBBBBB',
+            altName1: 'BBBBBB',
+            googlePlacesId: 'BBBBBB',
             geolat: 1,
             geolng: 1,
-            name: 'BBBBBB',
             photoUrl: 'BBBBBB',
-            altName1: 'BBBBBB',
             altName2: 'BBBBBB',
             altName3: 'BBBBBB',
-            googlePlacesId: 'BBBBBB',
+            capacity: 1,
             createdAt: currentDate.format(DATE_TIME_FORMAT),
             updatedAt: currentDate.format(DATE_TIME_FORMAT),
+            uuid: 'BBBBBB',
           },
           elemDefault
         );
@@ -120,18 +120,18 @@ describe('Service Tests', () => {
       it('should return a list of Restaurant', () => {
         const returnedFromService = Object.assign(
           {
-            uuid: 'BBBBBB',
-            capacity: 1,
+            name: 'BBBBBB',
+            altName1: 'BBBBBB',
+            googlePlacesId: 'BBBBBB',
             geolat: 1,
             geolng: 1,
-            name: 'BBBBBB',
             photoUrl: 'BBBBBB',
-            altName1: 'BBBBBB',
             altName2: 'BBBBBB',
             altName3: 'BBBBBB',
-            googlePlacesId: 'BBBBBB',
+            capacity: 1,
             createdAt: currentDate.format(DATE_TIME_FORMAT),
             updatedAt: currentDate.format(DATE_TIME_FORMAT),
+            uuid: 'BBBBBB',
           },
           elemDefault
         );

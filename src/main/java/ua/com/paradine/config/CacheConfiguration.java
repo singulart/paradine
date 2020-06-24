@@ -58,6 +58,7 @@ public class CacheConfiguration {
             createCache(cm, ua.com.paradine.domain.User.class.getName() + ".authorities", jcacheConfiguration);
             createCache(cm, ua.com.paradine.domain.Restaurant.class.getName(), jcacheConfiguration);
             createCache(cm, ua.com.paradine.domain.PopularTime.class.getName(), jcacheConfiguration);
+            createCache(cm, ua.com.paradine.domain.Restaurant.class.getName() + ".popularTimes", jcacheConfiguration);
             // jhipster-needle-redis-add-entry
         };
     }
