@@ -1,14 +1,14 @@
 {
   "generator-jhipster": {
     "promptValues": {
-      "packageName": "unsafe.delete.thehipsta",
+      "packageName": "ua.com.paradine",
       "nativeLanguage": "en"
     },
     "jhipsterVersion": "6.9.1",
     "applicationType": "monolith",
     "baseName": "thehipsta",
-    "packageName": "unsafe.delete.thehipsta",
-    "packageFolder": "unsafe/delete/thehipsta",
+    "packageName": "ua.com.paradine",
+    "packageFolder": "ua/com/paradine",
     "serverPort": "8080",
     "authenticationType": "jwt",
     "cacheProvider": "redis",
@@ -39,6 +39,6 @@
     "nativeLanguage": "en",
     "languages": ["en", "ru", "ua"],
     "blueprints": [],
-    "lastLiquibaseTimestamp": 1592502646000
+    "lastLiquibaseTimestamp": 1592943257000
   }
 }

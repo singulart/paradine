@@ -4,7 +4,7 @@
 <configuration scan="true">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <logger name="unsafe.delete.thehipsta" level="INFO"/>
+    <logger name="ua.com.paradine" level="INFO"/>
 
     <logger name="io.github.jhipster" level="WARN"/>
 
@@ -38,7 +38,7 @@
     <logger name="org.I0Itec" level="WARN"/>
     <logger name="springfox" level="WARN"/>
     <logger name="sun.rmi" level="WARN"/>
-    <logger name="liquibase" level="WARN"/>
+    <logger name="liquibase" level="INFO"/>
     <logger name="LiquibaseSchemaResolver" level="INFO"/>
     <logger name="sun.rmi.transport" level="WARN"/>
     <logger name="com.tngtech.archunit.core.importer" level="ERROR"/>

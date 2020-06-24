@@ -17,7 +17,9 @@ logging:
   level:
     ROOT: DEBUG
     io.github.jhipster: DEBUG
-    unsafe.delete.thehipsta: DEBUG
+    ua:
+      com:
+        paradine: DEBUG
 
 eureka:
   instance:
