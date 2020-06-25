@@ -5,6 +5,6 @@ import java.util.Set;
 
 public interface RestaurantSafetyClassifier {
 
-    void classifySafety(LocalDateTime at, Set<RestaurantVO> restaurants);
+    Set<SafetyVO> classifySafety(LocalDateTime at, Set<RestaurantVO> restaurants);
 
 }
