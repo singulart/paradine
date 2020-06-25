@@ -4,6 +4,10 @@ This application was generated using JHipster 6.9.1, you can find documentation 
 
 ## Development
 
+Running with JDK > 11 requires following Netty-related VM options
+
+    -Des.set.netty.runtime.available.processors=false --add-opens java.base/jdk.internal.misc=ALL-UNNAMED -Dio.netty.tryReflectionSetAccessible=true
+
 Before you can build this project, you must install and configure the following dependencies on your machine:
 
 1. [Node.js][]: We use Node to run a development web server and build the project.
