@@ -1,6 +1,5 @@
 package ua.com.paradine.web.rest;
 
-import ua.com.paradine.RedisTestContainerExtension;
 import ua.com.paradine.ParadineApp;
 import ua.com.paradine.domain.Restaurant;
 import ua.com.paradine.domain.PopularTime;
@@ -46,7 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link RestaurantResource} REST controller.
  */
 @SpringBootTest(classes = ParadineApp.class)
-@ExtendWith({ RedisTestContainerExtension.class, MockitoExtension.class })
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 public class RestaurantResourceIT {
