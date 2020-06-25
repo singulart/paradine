@@ -1,5 +1,7 @@
 package ua.com.paradine.domain;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -15,6 +17,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "restaurant")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @org.springframework.data.elasticsearch.annotations.Document(indexName = "restaurant")
 public class Restaurant implements Serializable {
 
@@ -80,6 +83,7 @@ public class Restaurant implements Serializable {
     private String uuid;
 
     @OneToMany(mappedBy = "restaurant")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<PopularTime> popularTimes = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -15,6 +15,7 @@
     "websocket": "spring-websocket",
     "databaseType": "sql",
     "devDatabaseType": "h2Disk",
+    "cacheProvider": "ehcache",
     "prodDatabaseType": "postgresql",
     "searchEngine": "elasticsearch",
     "serviceDiscoveryType": "eureka",
