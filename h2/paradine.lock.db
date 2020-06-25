@@ -1,6 +1,6 @@
 #FileLock
-#Thu Jun 25 15:17:57 EEST 2020
-server=localhost\:62640
-hostName=localhost
+#Thu Jun 25 15:22:04 EEST 2020
+server=192.168.0.172\:53590
+hostName=192.168.0.172
 method=file
-id=172eb69c5806716d5efc00268ca1d044fd2744ca1c2
+id=172eb6d6e61c1fc988242996bb4a70efed8a1fe8a63

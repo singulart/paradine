@@ -1,0 +1,417 @@
+[{
+  "title": "Gram Bar",
+  "totalScore": 4.5,
+  "categoryName": "Bar",
+  "address": "Sichovykh Striltsiv St, 21, Kyiv, Ukraine, 04053             вулиця Січових Стрільців, 21, Київ, 04053",
+  "plusCode": "FG42+FM Kyiv, Ukraine",
+  "website": "gram.bar",
+  "phone": "+380 44 331 8021",
+  "placeId": "ChIJSbh8fqTP1EARQ0ysuidk5pU",
+  "url": "https://www.google.com/maps/place/Gram+Bar/@50.456247,30.4995463,17z/data=!3m1!4b1!4m5!3m4!1s0x40d4cfa47e7cb849:0x95e66427baac4c43!8m2!3d50.456247!4d30.501735",
+  "location": {
+    "lat": 50.456247,
+    "lng": 30.501735
+  },
+  "searchString": "place_id:ChIJSbh8fqTP1EARQ0ysuidk5pU",
+  "popularTimesLiveText": null,
+  "popularTimesLivePercent": null,
+  "popularTimesHistogram": {
+    "Su": [],
+    "Mo": [],
+    "Tu": [
+      {
+        "hour": 6,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 7,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 8,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 9,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 10,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 11,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 12,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 13,
+        "occupancyPercent": 6
+      },
+      {
+        "hour": 14,
+        "occupancyPercent": 8
+      },
+      {
+        "hour": 15,
+        "occupancyPercent": 8
+      },
+      {
+        "hour": 16,
+        "occupancyPercent": 6
+      },
+      {
+        "hour": 17,
+        "occupancyPercent": 8
+      },
+      {
+        "hour": 18,
+        "occupancyPercent": 13
+      },
+      {
+        "hour": 19,
+        "occupancyPercent": 17
+      },
+      {
+        "hour": 20,
+        "occupancyPercent": 17
+      },
+      {
+        "hour": 21,
+        "occupancyPercent": 15
+      },
+      {
+        "hour": 22,
+        "occupancyPercent": 10
+      },
+      {
+        "hour": 23,
+        "occupancyPercent": 4
+      }
+    ],
+    "We": [
+      {
+        "hour": 6,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 7,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 8,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 9,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 10,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 11,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 12,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 13,
+        "occupancyPercent": 6
+      },
+      {
+        "hour": 14,
+        "occupancyPercent": 10
+      },
+      {
+        "hour": 15,
+        "occupancyPercent": 15
+      },
+      {
+        "hour": 16,
+        "occupancyPercent": 15
+      },
+      {
+        "hour": 17,
+        "occupancyPercent": 13
+      },
+      {
+        "hour": 18,
+        "occupancyPercent": 13
+      },
+      {
+        "hour": 19,
+        "occupancyPercent": 15
+      },
+      {
+        "hour": 20,
+        "occupancyPercent": 13
+      },
+      {
+        "hour": 21,
+        "occupancyPercent": 8
+      },
+      {
+        "hour": 22,
+        "occupancyPercent": 6
+      },
+      {
+        "hour": 23,
+        "occupancyPercent": 4
+      }
+    ],
+    "Th": [
+      {
+        "hour": 6,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 7,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 8,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 9,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 10,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 11,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 12,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 13,
+        "occupancyPercent": 4
+      },
+      {
+        "hour": 14,
+        "occupancyPercent": 8
+      },
+      {
+        "hour": 15,
+        "occupancyPercent": 8
+      },
+      {
+        "hour": 16,
+        "occupancyPercent": 6
+      },
+      {
+        "hour": 17,
+        "occupancyPercent": 6
+      },
+      {
+        "hour": 18,
+        "occupancyPercent": 8
+      },
+      {
+        "hour": 19,
+        "occupancyPercent": 15
+      },
+      {
+        "hour": 20,
+        "occupancyPercent": 21
+      },
+      {
+        "hour": 21,
+        "occupancyPercent": 26
+      },
+      {
+        "hour": 22,
+        "occupancyPercent": 23
+      },
+      {
+        "hour": 23,
+        "occupancyPercent": 17
+      }
+    ],
+    "Fr": [
+      {
+        "hour": 6,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 7,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 8,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 9,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 10,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 11,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 12,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 13,
+        "occupancyPercent": 17
+      },
+      {
+        "hour": 14,
+        "occupancyPercent": 15
+      },
+      {
+        "hour": 15,
+        "occupancyPercent": 4
+      },
+      {
+        "hour": 16,
+        "occupancyPercent": 2
+      },
+      {
+        "hour": 17,
+        "occupancyPercent": 6
+      },
+      {
+        "hour": 18,
+        "occupancyPercent": 15
+      },
+      {
+        "hour": 19,
+        "occupancyPercent": 34
+      },
+      {
+        "hour": 20,
+        "occupancyPercent": 56
+      },
+      {
+        "hour": 21,
+        "occupancyPercent": 78
+      },
+      {
+        "hour": 22,
+        "occupancyPercent": 89
+      },
+      {
+        "hour": 23,
+        "occupancyPercent": 97
+      },
+      {
+        "hour": 24,
+        "occupancyPercent": 100
+      },
+      {
+        "hour": 1,
+        "occupancyPercent": 84
+      },
+      {
+        "hour": 2,
+        "occupancyPercent": 56
+      }
+    ],
+    "Sa": [
+      {
+        "hour": 6,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 7,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 8,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 9,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 10,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 11,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 12,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 13,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 14,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 15,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 16,
+        "occupancyPercent": 0
+      },
+      {
+        "hour": 17,
+        "occupancyPercent": 6
+      },
+      {
+        "hour": 18,
+        "occupancyPercent": 10
+      },
+      {
+        "hour": 19,
+        "occupancyPercent": 10
+      },
+      {
+        "hour": 20,
+        "occupancyPercent": 17
+      },
+      {
+        "hour": 21,
+        "occupancyPercent": 34
+      },
+      {
+        "hour": 22,
+        "occupancyPercent": 52
+      },
+      {
+        "hour": 23,
+        "occupancyPercent": 60
+      },
+      {
+        "hour": 24,
+        "occupancyPercent": 56
+      },
+      {
+        "hour": 1,
+        "occupancyPercent": 41
+      },
+      {
+        "hour": 2,
+        "occupancyPercent": 23
+      }
+    ]
+  },
+  "reviewsCount": 184
+}]

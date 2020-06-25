@@ -1,0 +1,19 @@
+[{
+  "title": "Crab's Burger",
+  "totalScore": 4.6,
+  "categoryName": "Restaurant",
+  "address": "Vozdvyzhens'ka St, 21-23, Kyiv, Ukraine, 04071             вулиця Воздвиженська, 21-23, Київ, 04071 Located in: Vozdvyzhenka Barrio",
+  "plusCode": "FG66+78 Kyiv, Ukraine",
+  "website": "borysov.com.ua",
+  "phone": "+380 96 121 3131",
+  "placeId": "ChIJiQr82WnO1EARZpo_sZLZVIo",
+  "url": "https://www.google.com/maps/place/Crab's+Burger/@50.46065,30.5086782,17z/data=!3m1!4b1!4m5!3m4!1s0x40d4ce69d9fc0a89:0x8a54d992b13f9a66!8m2!3d50.46065!4d30.5108669",
+  "location": {
+    "lat": 50.46065,
+    "lng": 30.5108669
+  },
+  "searchString": "place_id:ChIJiQr82WnO1EARZpo_sZLZVIo",
+  "popularTimesLiveText": null,
+  "popularTimesLivePercent": null,
+  "reviewsCount": 599
+}]
