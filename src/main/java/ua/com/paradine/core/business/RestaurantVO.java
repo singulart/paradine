@@ -1,5 +1,6 @@
 package ua.com.paradine.core.business;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class RestaurantVO {
@@ -11,7 +12,7 @@ public class RestaurantVO {
     private Float geolng;
     private String photoUrl;
     private String googlePlacesId;
-    private Set<PopularTimeVO> popularTimes;
+    private Set<PopularTimeVO> popularTimes = new HashSet<>();
 
     public String getUuid() {
         return uuid;
