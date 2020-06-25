@@ -4,6 +4,16 @@ public class PopularTimeVO {
 
     private String dayOfWeek;
 
+    private Integer occ01;
+
+    private Integer occ02;
+
+    private Integer occ03;
+
+    private Integer occ04;
+
+    private Integer occ05;
+
     private Integer occ06;
 
     private Integer occ07;
@@ -40,12 +50,54 @@ public class PopularTimeVO {
 
     private Integer occ23;
 
+    private Integer occ24;
+
     public String getDayOfWeek() {
         return dayOfWeek;
     }
 
     public void setDayOfWeek(String dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
+    }
+
+    public Integer getOcc01() {
+        return occ01;
+    }
+
+    public void setOcc01(Integer occ01) {
+        this.occ01 = occ01;
+    }
+
+    public Integer getOcc02() {
+        return occ02;
+    }
+
+    public void setOcc02(Integer occ02) {
+        this.occ02 = occ02;
+    }
+
+    public Integer getOcc03() {
+        return occ03;
+    }
+
+    public void setOcc03(Integer occ03) {
+        this.occ03 = occ03;
+    }
+
+    public Integer getOcc04() {
+        return occ04;
+    }
+
+    public void setOcc04(Integer occ04) {
+        this.occ04 = occ04;
+    }
+
+    public Integer getOcc05() {
+        return occ05;
+    }
+
+    public void setOcc05(Integer occ05) {
+        this.occ05 = occ05;
     }
 
     public Integer getOcc06() {
@@ -190,5 +242,13 @@ public class PopularTimeVO {
 
     public void setOcc23(Integer occ23) {
         this.occ23 = occ23;
+    }
+
+    public Integer getOcc24() {
+        return occ24;
+    }
+
+    public void setOcc24(Integer occ24) {
+        this.occ24 = occ24;
     }
 }

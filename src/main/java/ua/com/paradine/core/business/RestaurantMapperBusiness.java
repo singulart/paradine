@@ -22,7 +22,6 @@ public interface RestaurantMapperBusiness {
 
     RestaurantVO dbEntityToValueObject(Restaurant restaurant);
 
-//    @Mapping(target = "safety", source = "safety")
     SafetyVO convertToSafety(RestaurantVO restaurant, SafetyMarker safety);
 
     default Set<SafetyVO> convertToSafety(Set<RestaurantVO> restaurants, SafetyMarker marker) {
