@@ -3,7 +3,10 @@ package ua.com.paradine.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
 import io.github.jhipster.service.Criteria;
+import io.github.jhipster.service.filter.BooleanFilter;
+import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.Filter;
+import io.github.jhipster.service.filter.FloatFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
@@ -24,6 +27,16 @@ public class PopularTimeCriteria implements Serializable, Criteria {
     private LongFilter id;
 
     private StringFilter dayOfWeek;
+
+    private IntegerFilter occ01;
+
+    private IntegerFilter occ02;
+
+    private IntegerFilter occ03;
+
+    private IntegerFilter occ04;
+
+    private IntegerFilter occ05;
 
     private IntegerFilter occ06;
 
@@ -61,6 +74,8 @@ public class PopularTimeCriteria implements Serializable, Criteria {
 
     private IntegerFilter occ23;
 
+    private IntegerFilter occ24;
+
     private LongFilter restaurantId;
 
     public PopularTimeCriteria() {
@@ -69,6 +84,11 @@ public class PopularTimeCriteria implements Serializable, Criteria {
     public PopularTimeCriteria(PopularTimeCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.dayOfWeek = other.dayOfWeek == null ? null : other.dayOfWeek.copy();
+        this.occ01 = other.occ01 == null ? null : other.occ01.copy();
+        this.occ02 = other.occ02 == null ? null : other.occ02.copy();
+        this.occ03 = other.occ03 == null ? null : other.occ03.copy();
+        this.occ04 = other.occ04 == null ? null : other.occ04.copy();
+        this.occ05 = other.occ05 == null ? null : other.occ05.copy();
         this.occ06 = other.occ06 == null ? null : other.occ06.copy();
         this.occ07 = other.occ07 == null ? null : other.occ07.copy();
         this.occ08 = other.occ08 == null ? null : other.occ08.copy();
@@ -87,6 +107,7 @@ public class PopularTimeCriteria implements Serializable, Criteria {
         this.occ21 = other.occ21 == null ? null : other.occ21.copy();
         this.occ22 = other.occ22 == null ? null : other.occ22.copy();
         this.occ23 = other.occ23 == null ? null : other.occ23.copy();
+        this.occ24 = other.occ24 == null ? null : other.occ24.copy();
         this.restaurantId = other.restaurantId == null ? null : other.restaurantId.copy();
     }
 
@@ -109,6 +130,46 @@ public class PopularTimeCriteria implements Serializable, Criteria {
 
     public void setDayOfWeek(StringFilter dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
+    }
+
+    public IntegerFilter getOcc01() {
+        return occ01;
+    }
+
+    public void setOcc01(IntegerFilter occ01) {
+        this.occ01 = occ01;
+    }
+
+    public IntegerFilter getOcc02() {
+        return occ02;
+    }
+
+    public void setOcc02(IntegerFilter occ02) {
+        this.occ02 = occ02;
+    }
+
+    public IntegerFilter getOcc03() {
+        return occ03;
+    }
+
+    public void setOcc03(IntegerFilter occ03) {
+        this.occ03 = occ03;
+    }
+
+    public IntegerFilter getOcc04() {
+        return occ04;
+    }
+
+    public void setOcc04(IntegerFilter occ04) {
+        this.occ04 = occ04;
+    }
+
+    public IntegerFilter getOcc05() {
+        return occ05;
+    }
+
+    public void setOcc05(IntegerFilter occ05) {
+        this.occ05 = occ05;
     }
 
     public IntegerFilter getOcc06() {
@@ -255,6 +316,14 @@ public class PopularTimeCriteria implements Serializable, Criteria {
         this.occ23 = occ23;
     }
 
+    public IntegerFilter getOcc24() {
+        return occ24;
+    }
+
+    public void setOcc24(IntegerFilter occ24) {
+        this.occ24 = occ24;
+    }
+
     public LongFilter getRestaurantId() {
         return restaurantId;
     }
@@ -276,6 +345,11 @@ public class PopularTimeCriteria implements Serializable, Criteria {
         return
             Objects.equals(id, that.id) &&
             Objects.equals(dayOfWeek, that.dayOfWeek) &&
+            Objects.equals(occ01, that.occ01) &&
+            Objects.equals(occ02, that.occ02) &&
+            Objects.equals(occ03, that.occ03) &&
+            Objects.equals(occ04, that.occ04) &&
+            Objects.equals(occ05, that.occ05) &&
             Objects.equals(occ06, that.occ06) &&
             Objects.equals(occ07, that.occ07) &&
             Objects.equals(occ08, that.occ08) &&
@@ -294,6 +368,7 @@ public class PopularTimeCriteria implements Serializable, Criteria {
             Objects.equals(occ21, that.occ21) &&
             Objects.equals(occ22, that.occ22) &&
             Objects.equals(occ23, that.occ23) &&
+            Objects.equals(occ24, that.occ24) &&
             Objects.equals(restaurantId, that.restaurantId);
     }
 
@@ -302,6 +377,11 @@ public class PopularTimeCriteria implements Serializable, Criteria {
         return Objects.hash(
         id,
         dayOfWeek,
+        occ01,
+        occ02,
+        occ03,
+        occ04,
+        occ05,
         occ06,
         occ07,
         occ08,
@@ -320,6 +400,7 @@ public class PopularTimeCriteria implements Serializable, Criteria {
         occ21,
         occ22,
         occ23,
+        occ24,
         restaurantId
         );
     }
@@ -330,6 +411,11 @@ public class PopularTimeCriteria implements Serializable, Criteria {
         return "PopularTimeCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
                 (dayOfWeek != null ? "dayOfWeek=" + dayOfWeek + ", " : "") +
+                (occ01 != null ? "occ01=" + occ01 + ", " : "") +
+                (occ02 != null ? "occ02=" + occ02 + ", " : "") +
+                (occ03 != null ? "occ03=" + occ03 + ", " : "") +
+                (occ04 != null ? "occ04=" + occ04 + ", " : "") +
+                (occ05 != null ? "occ05=" + occ05 + ", " : "") +
                 (occ06 != null ? "occ06=" + occ06 + ", " : "") +
                 (occ07 != null ? "occ07=" + occ07 + ", " : "") +
                 (occ08 != null ? "occ08=" + occ08 + ", " : "") +
@@ -348,6 +434,7 @@ public class PopularTimeCriteria implements Serializable, Criteria {
                 (occ21 != null ? "occ21=" + occ21 + ", " : "") +
                 (occ22 != null ? "occ22=" + occ22 + ", " : "") +
                 (occ23 != null ? "occ23=" + occ23 + ", " : "") +
+                (occ24 != null ? "occ24=" + occ24 + ", " : "") +
                 (restaurantId != null ? "restaurantId=" + restaurantId + ", " : "") +
             "}";
     }

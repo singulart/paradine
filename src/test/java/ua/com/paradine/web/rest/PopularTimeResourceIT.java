@@ -1,6 +1,5 @@
 package ua.com.paradine.web.rest;
 
-import ua.com.paradine.RedisTestContainerExtension;
 import ua.com.paradine.ParadineApp;
 import ua.com.paradine.domain.PopularTime;
 import ua.com.paradine.domain.Restaurant;
@@ -9,10 +8,12 @@ import ua.com.paradine.repository.search.PopularTimeSearchRepository;
 import ua.com.paradine.service.PopularTimeService;
 import ua.com.paradine.service.dto.PopularTimeDTO;
 import ua.com.paradine.service.mapper.PopularTimeMapper;
+import ua.com.paradine.service.dto.PopularTimeCriteria;
 import ua.com.paradine.service.PopularTimeQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,33 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link PopularTimeResource} REST controller.
  */
 @SpringBootTest(classes = ParadineApp.class)
-@ExtendWith({ RedisTestContainerExtension.class, MockitoExtension.class })
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 public class PopularTimeResourceIT {
 
     private static final String DEFAULT_DAY_OF_WEEK = "AA";
     private static final String UPDATED_DAY_OF_WEEK = "BB";
+
+    private static final Integer DEFAULT_OCC_01 = 0;
+    private static final Integer UPDATED_OCC_01 = 1;
+    private static final Integer SMALLER_OCC_01 = 0 - 1;
+
+    private static final Integer DEFAULT_OCC_02 = 0;
+    private static final Integer UPDATED_OCC_02 = 1;
+    private static final Integer SMALLER_OCC_02 = 0 - 1;
+
+    private static final Integer DEFAULT_OCC_03 = 0;
+    private static final Integer UPDATED_OCC_03 = 1;
+    private static final Integer SMALLER_OCC_03 = 0 - 1;
+
+    private static final Integer DEFAULT_OCC_04 = 0;
+    private static final Integer UPDATED_OCC_04 = 1;
+    private static final Integer SMALLER_OCC_04 = 0 - 1;
+
+    private static final Integer DEFAULT_OCC_05 = 0;
+    private static final Integer UPDATED_OCC_05 = 1;
+    private static final Integer SMALLER_OCC_05 = 0 - 1;
 
     private static final Integer DEFAULT_OCC_06 = 0;
     private static final Integer UPDATED_OCC_06 = 1;
@@ -117,6 +138,10 @@ public class PopularTimeResourceIT {
     private static final Integer UPDATED_OCC_23 = 1;
     private static final Integer SMALLER_OCC_23 = 0 - 1;
 
+    private static final Integer DEFAULT_OCC_24 = 0;
+    private static final Integer UPDATED_OCC_24 = 1;
+    private static final Integer SMALLER_OCC_24 = 0 - 1;
+
     @Autowired
     private PopularTimeRepository popularTimeRepository;
 
@@ -154,6 +179,11 @@ public class PopularTimeResourceIT {
     public static PopularTime createEntity(EntityManager em) {
         PopularTime popularTime = new PopularTime()
             .dayOfWeek(DEFAULT_DAY_OF_WEEK)
+            .occ01(DEFAULT_OCC_01)
+            .occ02(DEFAULT_OCC_02)
+            .occ03(DEFAULT_OCC_03)
+            .occ04(DEFAULT_OCC_04)
+            .occ05(DEFAULT_OCC_05)
             .occ06(DEFAULT_OCC_06)
             .occ07(DEFAULT_OCC_07)
             .occ08(DEFAULT_OCC_08)
@@ -171,7 +201,8 @@ public class PopularTimeResourceIT {
             .occ20(DEFAULT_OCC_20)
             .occ21(DEFAULT_OCC_21)
             .occ22(DEFAULT_OCC_22)
-            .occ23(DEFAULT_OCC_23);
+            .occ23(DEFAULT_OCC_23)
+            .occ24(DEFAULT_OCC_24);
         return popularTime;
     }
     /**
@@ -183,6 +214,11 @@ public class PopularTimeResourceIT {
     public static PopularTime createUpdatedEntity(EntityManager em) {
         PopularTime popularTime = new PopularTime()
             .dayOfWeek(UPDATED_DAY_OF_WEEK)
+            .occ01(UPDATED_OCC_01)
+            .occ02(UPDATED_OCC_02)
+            .occ03(UPDATED_OCC_03)
+            .occ04(UPDATED_OCC_04)
+            .occ05(UPDATED_OCC_05)
             .occ06(UPDATED_OCC_06)
             .occ07(UPDATED_OCC_07)
             .occ08(UPDATED_OCC_08)
@@ -200,7 +236,8 @@ public class PopularTimeResourceIT {
             .occ20(UPDATED_OCC_20)
             .occ21(UPDATED_OCC_21)
             .occ22(UPDATED_OCC_22)
-            .occ23(UPDATED_OCC_23);
+            .occ23(UPDATED_OCC_23)
+            .occ24(UPDATED_OCC_24);
         return popularTime;
     }
 
@@ -225,6 +262,11 @@ public class PopularTimeResourceIT {
         assertThat(popularTimeList).hasSize(databaseSizeBeforeCreate + 1);
         PopularTime testPopularTime = popularTimeList.get(popularTimeList.size() - 1);
         assertThat(testPopularTime.getDayOfWeek()).isEqualTo(DEFAULT_DAY_OF_WEEK);
+        assertThat(testPopularTime.getOcc01()).isEqualTo(DEFAULT_OCC_01);
+        assertThat(testPopularTime.getOcc02()).isEqualTo(DEFAULT_OCC_02);
+        assertThat(testPopularTime.getOcc03()).isEqualTo(DEFAULT_OCC_03);
+        assertThat(testPopularTime.getOcc04()).isEqualTo(DEFAULT_OCC_04);
+        assertThat(testPopularTime.getOcc05()).isEqualTo(DEFAULT_OCC_05);
         assertThat(testPopularTime.getOcc06()).isEqualTo(DEFAULT_OCC_06);
         assertThat(testPopularTime.getOcc07()).isEqualTo(DEFAULT_OCC_07);
         assertThat(testPopularTime.getOcc08()).isEqualTo(DEFAULT_OCC_08);
@@ -243,6 +285,7 @@ public class PopularTimeResourceIT {
         assertThat(testPopularTime.getOcc21()).isEqualTo(DEFAULT_OCC_21);
         assertThat(testPopularTime.getOcc22()).isEqualTo(DEFAULT_OCC_22);
         assertThat(testPopularTime.getOcc23()).isEqualTo(DEFAULT_OCC_23);
+        assertThat(testPopularTime.getOcc24()).isEqualTo(DEFAULT_OCC_24);
 
         // Validate the PopularTime in Elasticsearch
         verify(mockPopularTimeSearchRepository, times(1)).save(testPopularTime);
@@ -278,6 +321,106 @@ public class PopularTimeResourceIT {
         int databaseSizeBeforeTest = popularTimeRepository.findAll().size();
         // set the field null
         popularTime.setDayOfWeek(null);
+
+        // Create the PopularTime, which fails.
+        PopularTimeDTO popularTimeDTO = popularTimeMapper.toDto(popularTime);
+
+
+        restPopularTimeMockMvc.perform(post("/api/popular-times")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(popularTimeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<PopularTime> popularTimeList = popularTimeRepository.findAll();
+        assertThat(popularTimeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkOcc01IsRequired() throws Exception {
+        int databaseSizeBeforeTest = popularTimeRepository.findAll().size();
+        // set the field null
+        popularTime.setOcc01(null);
+
+        // Create the PopularTime, which fails.
+        PopularTimeDTO popularTimeDTO = popularTimeMapper.toDto(popularTime);
+
+
+        restPopularTimeMockMvc.perform(post("/api/popular-times")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(popularTimeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<PopularTime> popularTimeList = popularTimeRepository.findAll();
+        assertThat(popularTimeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkOcc02IsRequired() throws Exception {
+        int databaseSizeBeforeTest = popularTimeRepository.findAll().size();
+        // set the field null
+        popularTime.setOcc02(null);
+
+        // Create the PopularTime, which fails.
+        PopularTimeDTO popularTimeDTO = popularTimeMapper.toDto(popularTime);
+
+
+        restPopularTimeMockMvc.perform(post("/api/popular-times")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(popularTimeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<PopularTime> popularTimeList = popularTimeRepository.findAll();
+        assertThat(popularTimeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkOcc03IsRequired() throws Exception {
+        int databaseSizeBeforeTest = popularTimeRepository.findAll().size();
+        // set the field null
+        popularTime.setOcc03(null);
+
+        // Create the PopularTime, which fails.
+        PopularTimeDTO popularTimeDTO = popularTimeMapper.toDto(popularTime);
+
+
+        restPopularTimeMockMvc.perform(post("/api/popular-times")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(popularTimeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<PopularTime> popularTimeList = popularTimeRepository.findAll();
+        assertThat(popularTimeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkOcc04IsRequired() throws Exception {
+        int databaseSizeBeforeTest = popularTimeRepository.findAll().size();
+        // set the field null
+        popularTime.setOcc04(null);
+
+        // Create the PopularTime, which fails.
+        PopularTimeDTO popularTimeDTO = popularTimeMapper.toDto(popularTime);
+
+
+        restPopularTimeMockMvc.perform(post("/api/popular-times")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(popularTimeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<PopularTime> popularTimeList = popularTimeRepository.findAll();
+        assertThat(popularTimeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkOcc05IsRequired() throws Exception {
+        int databaseSizeBeforeTest = popularTimeRepository.findAll().size();
+        // set the field null
+        popularTime.setOcc05(null);
 
         // Create the PopularTime, which fails.
         PopularTimeDTO popularTimeDTO = popularTimeMapper.toDto(popularTime);
@@ -654,6 +797,26 @@ public class PopularTimeResourceIT {
 
     @Test
     @Transactional
+    public void checkOcc24IsRequired() throws Exception {
+        int databaseSizeBeforeTest = popularTimeRepository.findAll().size();
+        // set the field null
+        popularTime.setOcc24(null);
+
+        // Create the PopularTime, which fails.
+        PopularTimeDTO popularTimeDTO = popularTimeMapper.toDto(popularTime);
+
+
+        restPopularTimeMockMvc.perform(post("/api/popular-times")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(popularTimeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<PopularTime> popularTimeList = popularTimeRepository.findAll();
+        assertThat(popularTimeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllPopularTimes() throws Exception {
         // Initialize the database
         popularTimeRepository.saveAndFlush(popularTime);
@@ -664,6 +827,11 @@ public class PopularTimeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(popularTime.getId().intValue())))
             .andExpect(jsonPath("$.[*].dayOfWeek").value(hasItem(DEFAULT_DAY_OF_WEEK)))
+            .andExpect(jsonPath("$.[*].occ01").value(hasItem(DEFAULT_OCC_01)))
+            .andExpect(jsonPath("$.[*].occ02").value(hasItem(DEFAULT_OCC_02)))
+            .andExpect(jsonPath("$.[*].occ03").value(hasItem(DEFAULT_OCC_03)))
+            .andExpect(jsonPath("$.[*].occ04").value(hasItem(DEFAULT_OCC_04)))
+            .andExpect(jsonPath("$.[*].occ05").value(hasItem(DEFAULT_OCC_05)))
             .andExpect(jsonPath("$.[*].occ06").value(hasItem(DEFAULT_OCC_06)))
             .andExpect(jsonPath("$.[*].occ07").value(hasItem(DEFAULT_OCC_07)))
             .andExpect(jsonPath("$.[*].occ08").value(hasItem(DEFAULT_OCC_08)))
@@ -681,9 +849,10 @@ public class PopularTimeResourceIT {
             .andExpect(jsonPath("$.[*].occ20").value(hasItem(DEFAULT_OCC_20)))
             .andExpect(jsonPath("$.[*].occ21").value(hasItem(DEFAULT_OCC_21)))
             .andExpect(jsonPath("$.[*].occ22").value(hasItem(DEFAULT_OCC_22)))
-            .andExpect(jsonPath("$.[*].occ23").value(hasItem(DEFAULT_OCC_23)));
+            .andExpect(jsonPath("$.[*].occ23").value(hasItem(DEFAULT_OCC_23)))
+            .andExpect(jsonPath("$.[*].occ24").value(hasItem(DEFAULT_OCC_24)));
     }
-
+    
     @Test
     @Transactional
     public void getPopularTime() throws Exception {
@@ -696,6 +865,11 @@ public class PopularTimeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(popularTime.getId().intValue()))
             .andExpect(jsonPath("$.dayOfWeek").value(DEFAULT_DAY_OF_WEEK))
+            .andExpect(jsonPath("$.occ01").value(DEFAULT_OCC_01))
+            .andExpect(jsonPath("$.occ02").value(DEFAULT_OCC_02))
+            .andExpect(jsonPath("$.occ03").value(DEFAULT_OCC_03))
+            .andExpect(jsonPath("$.occ04").value(DEFAULT_OCC_04))
+            .andExpect(jsonPath("$.occ05").value(DEFAULT_OCC_05))
             .andExpect(jsonPath("$.occ06").value(DEFAULT_OCC_06))
             .andExpect(jsonPath("$.occ07").value(DEFAULT_OCC_07))
             .andExpect(jsonPath("$.occ08").value(DEFAULT_OCC_08))
@@ -713,7 +887,8 @@ public class PopularTimeResourceIT {
             .andExpect(jsonPath("$.occ20").value(DEFAULT_OCC_20))
             .andExpect(jsonPath("$.occ21").value(DEFAULT_OCC_21))
             .andExpect(jsonPath("$.occ22").value(DEFAULT_OCC_22))
-            .andExpect(jsonPath("$.occ23").value(DEFAULT_OCC_23));
+            .andExpect(jsonPath("$.occ23").value(DEFAULT_OCC_23))
+            .andExpect(jsonPath("$.occ24").value(DEFAULT_OCC_24));
     }
 
 
@@ -811,6 +986,531 @@ public class PopularTimeResourceIT {
 
         // Get all the popularTimeList where dayOfWeek does not contain UPDATED_DAY_OF_WEEK
         defaultPopularTimeShouldBeFound("dayOfWeek.doesNotContain=" + UPDATED_DAY_OF_WEEK);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc01IsEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ01 equals to DEFAULT_OCC_01
+        defaultPopularTimeShouldBeFound("occ01.equals=" + DEFAULT_OCC_01);
+
+        // Get all the popularTimeList where occ01 equals to UPDATED_OCC_01
+        defaultPopularTimeShouldNotBeFound("occ01.equals=" + UPDATED_OCC_01);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc01IsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ01 not equals to DEFAULT_OCC_01
+        defaultPopularTimeShouldNotBeFound("occ01.notEquals=" + DEFAULT_OCC_01);
+
+        // Get all the popularTimeList where occ01 not equals to UPDATED_OCC_01
+        defaultPopularTimeShouldBeFound("occ01.notEquals=" + UPDATED_OCC_01);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc01IsInShouldWork() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ01 in DEFAULT_OCC_01 or UPDATED_OCC_01
+        defaultPopularTimeShouldBeFound("occ01.in=" + DEFAULT_OCC_01 + "," + UPDATED_OCC_01);
+
+        // Get all the popularTimeList where occ01 equals to UPDATED_OCC_01
+        defaultPopularTimeShouldNotBeFound("occ01.in=" + UPDATED_OCC_01);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc01IsNullOrNotNull() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ01 is not null
+        defaultPopularTimeShouldBeFound("occ01.specified=true");
+
+        // Get all the popularTimeList where occ01 is null
+        defaultPopularTimeShouldNotBeFound("occ01.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc01IsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ01 is greater than or equal to DEFAULT_OCC_01
+        defaultPopularTimeShouldBeFound("occ01.greaterThanOrEqual=" + DEFAULT_OCC_01);
+
+        // Get all the popularTimeList where occ01 is greater than or equal to (DEFAULT_OCC_01 + 1)
+        defaultPopularTimeShouldNotBeFound("occ01.greaterThanOrEqual=" + (DEFAULT_OCC_01 + 1));
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc01IsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ01 is less than or equal to DEFAULT_OCC_01
+        defaultPopularTimeShouldBeFound("occ01.lessThanOrEqual=" + DEFAULT_OCC_01);
+
+        // Get all the popularTimeList where occ01 is less than or equal to SMALLER_OCC_01
+        defaultPopularTimeShouldNotBeFound("occ01.lessThanOrEqual=" + SMALLER_OCC_01);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc01IsLessThanSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ01 is less than DEFAULT_OCC_01
+        defaultPopularTimeShouldNotBeFound("occ01.lessThan=" + DEFAULT_OCC_01);
+
+        // Get all the popularTimeList where occ01 is less than (DEFAULT_OCC_01 + 1)
+        defaultPopularTimeShouldBeFound("occ01.lessThan=" + (DEFAULT_OCC_01 + 1));
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc01IsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ01 is greater than DEFAULT_OCC_01
+        defaultPopularTimeShouldNotBeFound("occ01.greaterThan=" + DEFAULT_OCC_01);
+
+        // Get all the popularTimeList where occ01 is greater than SMALLER_OCC_01
+        defaultPopularTimeShouldBeFound("occ01.greaterThan=" + SMALLER_OCC_01);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc02IsEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ02 equals to DEFAULT_OCC_02
+        defaultPopularTimeShouldBeFound("occ02.equals=" + DEFAULT_OCC_02);
+
+        // Get all the popularTimeList where occ02 equals to UPDATED_OCC_02
+        defaultPopularTimeShouldNotBeFound("occ02.equals=" + UPDATED_OCC_02);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc02IsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ02 not equals to DEFAULT_OCC_02
+        defaultPopularTimeShouldNotBeFound("occ02.notEquals=" + DEFAULT_OCC_02);
+
+        // Get all the popularTimeList where occ02 not equals to UPDATED_OCC_02
+        defaultPopularTimeShouldBeFound("occ02.notEquals=" + UPDATED_OCC_02);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc02IsInShouldWork() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ02 in DEFAULT_OCC_02 or UPDATED_OCC_02
+        defaultPopularTimeShouldBeFound("occ02.in=" + DEFAULT_OCC_02 + "," + UPDATED_OCC_02);
+
+        // Get all the popularTimeList where occ02 equals to UPDATED_OCC_02
+        defaultPopularTimeShouldNotBeFound("occ02.in=" + UPDATED_OCC_02);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc02IsNullOrNotNull() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ02 is not null
+        defaultPopularTimeShouldBeFound("occ02.specified=true");
+
+        // Get all the popularTimeList where occ02 is null
+        defaultPopularTimeShouldNotBeFound("occ02.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc02IsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ02 is greater than or equal to DEFAULT_OCC_02
+        defaultPopularTimeShouldBeFound("occ02.greaterThanOrEqual=" + DEFAULT_OCC_02);
+
+        // Get all the popularTimeList where occ02 is greater than or equal to (DEFAULT_OCC_02 + 1)
+        defaultPopularTimeShouldNotBeFound("occ02.greaterThanOrEqual=" + (DEFAULT_OCC_02 + 1));
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc02IsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ02 is less than or equal to DEFAULT_OCC_02
+        defaultPopularTimeShouldBeFound("occ02.lessThanOrEqual=" + DEFAULT_OCC_02);
+
+        // Get all the popularTimeList where occ02 is less than or equal to SMALLER_OCC_02
+        defaultPopularTimeShouldNotBeFound("occ02.lessThanOrEqual=" + SMALLER_OCC_02);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc02IsLessThanSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ02 is less than DEFAULT_OCC_02
+        defaultPopularTimeShouldNotBeFound("occ02.lessThan=" + DEFAULT_OCC_02);
+
+        // Get all the popularTimeList where occ02 is less than (DEFAULT_OCC_02 + 1)
+        defaultPopularTimeShouldBeFound("occ02.lessThan=" + (DEFAULT_OCC_02 + 1));
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc02IsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ02 is greater than DEFAULT_OCC_02
+        defaultPopularTimeShouldNotBeFound("occ02.greaterThan=" + DEFAULT_OCC_02);
+
+        // Get all the popularTimeList where occ02 is greater than SMALLER_OCC_02
+        defaultPopularTimeShouldBeFound("occ02.greaterThan=" + SMALLER_OCC_02);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc03IsEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ03 equals to DEFAULT_OCC_03
+        defaultPopularTimeShouldBeFound("occ03.equals=" + DEFAULT_OCC_03);
+
+        // Get all the popularTimeList where occ03 equals to UPDATED_OCC_03
+        defaultPopularTimeShouldNotBeFound("occ03.equals=" + UPDATED_OCC_03);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc03IsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ03 not equals to DEFAULT_OCC_03
+        defaultPopularTimeShouldNotBeFound("occ03.notEquals=" + DEFAULT_OCC_03);
+
+        // Get all the popularTimeList where occ03 not equals to UPDATED_OCC_03
+        defaultPopularTimeShouldBeFound("occ03.notEquals=" + UPDATED_OCC_03);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc03IsInShouldWork() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ03 in DEFAULT_OCC_03 or UPDATED_OCC_03
+        defaultPopularTimeShouldBeFound("occ03.in=" + DEFAULT_OCC_03 + "," + UPDATED_OCC_03);
+
+        // Get all the popularTimeList where occ03 equals to UPDATED_OCC_03
+        defaultPopularTimeShouldNotBeFound("occ03.in=" + UPDATED_OCC_03);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc03IsNullOrNotNull() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ03 is not null
+        defaultPopularTimeShouldBeFound("occ03.specified=true");
+
+        // Get all the popularTimeList where occ03 is null
+        defaultPopularTimeShouldNotBeFound("occ03.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc03IsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ03 is greater than or equal to DEFAULT_OCC_03
+        defaultPopularTimeShouldBeFound("occ03.greaterThanOrEqual=" + DEFAULT_OCC_03);
+
+        // Get all the popularTimeList where occ03 is greater than or equal to (DEFAULT_OCC_03 + 1)
+        defaultPopularTimeShouldNotBeFound("occ03.greaterThanOrEqual=" + (DEFAULT_OCC_03 + 1));
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc03IsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ03 is less than or equal to DEFAULT_OCC_03
+        defaultPopularTimeShouldBeFound("occ03.lessThanOrEqual=" + DEFAULT_OCC_03);
+
+        // Get all the popularTimeList where occ03 is less than or equal to SMALLER_OCC_03
+        defaultPopularTimeShouldNotBeFound("occ03.lessThanOrEqual=" + SMALLER_OCC_03);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc03IsLessThanSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ03 is less than DEFAULT_OCC_03
+        defaultPopularTimeShouldNotBeFound("occ03.lessThan=" + DEFAULT_OCC_03);
+
+        // Get all the popularTimeList where occ03 is less than (DEFAULT_OCC_03 + 1)
+        defaultPopularTimeShouldBeFound("occ03.lessThan=" + (DEFAULT_OCC_03 + 1));
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc03IsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ03 is greater than DEFAULT_OCC_03
+        defaultPopularTimeShouldNotBeFound("occ03.greaterThan=" + DEFAULT_OCC_03);
+
+        // Get all the popularTimeList where occ03 is greater than SMALLER_OCC_03
+        defaultPopularTimeShouldBeFound("occ03.greaterThan=" + SMALLER_OCC_03);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc04IsEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ04 equals to DEFAULT_OCC_04
+        defaultPopularTimeShouldBeFound("occ04.equals=" + DEFAULT_OCC_04);
+
+        // Get all the popularTimeList where occ04 equals to UPDATED_OCC_04
+        defaultPopularTimeShouldNotBeFound("occ04.equals=" + UPDATED_OCC_04);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc04IsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ04 not equals to DEFAULT_OCC_04
+        defaultPopularTimeShouldNotBeFound("occ04.notEquals=" + DEFAULT_OCC_04);
+
+        // Get all the popularTimeList where occ04 not equals to UPDATED_OCC_04
+        defaultPopularTimeShouldBeFound("occ04.notEquals=" + UPDATED_OCC_04);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc04IsInShouldWork() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ04 in DEFAULT_OCC_04 or UPDATED_OCC_04
+        defaultPopularTimeShouldBeFound("occ04.in=" + DEFAULT_OCC_04 + "," + UPDATED_OCC_04);
+
+        // Get all the popularTimeList where occ04 equals to UPDATED_OCC_04
+        defaultPopularTimeShouldNotBeFound("occ04.in=" + UPDATED_OCC_04);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc04IsNullOrNotNull() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ04 is not null
+        defaultPopularTimeShouldBeFound("occ04.specified=true");
+
+        // Get all the popularTimeList where occ04 is null
+        defaultPopularTimeShouldNotBeFound("occ04.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc04IsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ04 is greater than or equal to DEFAULT_OCC_04
+        defaultPopularTimeShouldBeFound("occ04.greaterThanOrEqual=" + DEFAULT_OCC_04);
+
+        // Get all the popularTimeList where occ04 is greater than or equal to (DEFAULT_OCC_04 + 1)
+        defaultPopularTimeShouldNotBeFound("occ04.greaterThanOrEqual=" + (DEFAULT_OCC_04 + 1));
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc04IsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ04 is less than or equal to DEFAULT_OCC_04
+        defaultPopularTimeShouldBeFound("occ04.lessThanOrEqual=" + DEFAULT_OCC_04);
+
+        // Get all the popularTimeList where occ04 is less than or equal to SMALLER_OCC_04
+        defaultPopularTimeShouldNotBeFound("occ04.lessThanOrEqual=" + SMALLER_OCC_04);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc04IsLessThanSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ04 is less than DEFAULT_OCC_04
+        defaultPopularTimeShouldNotBeFound("occ04.lessThan=" + DEFAULT_OCC_04);
+
+        // Get all the popularTimeList where occ04 is less than (DEFAULT_OCC_04 + 1)
+        defaultPopularTimeShouldBeFound("occ04.lessThan=" + (DEFAULT_OCC_04 + 1));
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc04IsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ04 is greater than DEFAULT_OCC_04
+        defaultPopularTimeShouldNotBeFound("occ04.greaterThan=" + DEFAULT_OCC_04);
+
+        // Get all the popularTimeList where occ04 is greater than SMALLER_OCC_04
+        defaultPopularTimeShouldBeFound("occ04.greaterThan=" + SMALLER_OCC_04);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc05IsEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ05 equals to DEFAULT_OCC_05
+        defaultPopularTimeShouldBeFound("occ05.equals=" + DEFAULT_OCC_05);
+
+        // Get all the popularTimeList where occ05 equals to UPDATED_OCC_05
+        defaultPopularTimeShouldNotBeFound("occ05.equals=" + UPDATED_OCC_05);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc05IsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ05 not equals to DEFAULT_OCC_05
+        defaultPopularTimeShouldNotBeFound("occ05.notEquals=" + DEFAULT_OCC_05);
+
+        // Get all the popularTimeList where occ05 not equals to UPDATED_OCC_05
+        defaultPopularTimeShouldBeFound("occ05.notEquals=" + UPDATED_OCC_05);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc05IsInShouldWork() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ05 in DEFAULT_OCC_05 or UPDATED_OCC_05
+        defaultPopularTimeShouldBeFound("occ05.in=" + DEFAULT_OCC_05 + "," + UPDATED_OCC_05);
+
+        // Get all the popularTimeList where occ05 equals to UPDATED_OCC_05
+        defaultPopularTimeShouldNotBeFound("occ05.in=" + UPDATED_OCC_05);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc05IsNullOrNotNull() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ05 is not null
+        defaultPopularTimeShouldBeFound("occ05.specified=true");
+
+        // Get all the popularTimeList where occ05 is null
+        defaultPopularTimeShouldNotBeFound("occ05.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc05IsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ05 is greater than or equal to DEFAULT_OCC_05
+        defaultPopularTimeShouldBeFound("occ05.greaterThanOrEqual=" + DEFAULT_OCC_05);
+
+        // Get all the popularTimeList where occ05 is greater than or equal to (DEFAULT_OCC_05 + 1)
+        defaultPopularTimeShouldNotBeFound("occ05.greaterThanOrEqual=" + (DEFAULT_OCC_05 + 1));
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc05IsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ05 is less than or equal to DEFAULT_OCC_05
+        defaultPopularTimeShouldBeFound("occ05.lessThanOrEqual=" + DEFAULT_OCC_05);
+
+        // Get all the popularTimeList where occ05 is less than or equal to SMALLER_OCC_05
+        defaultPopularTimeShouldNotBeFound("occ05.lessThanOrEqual=" + SMALLER_OCC_05);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc05IsLessThanSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ05 is less than DEFAULT_OCC_05
+        defaultPopularTimeShouldNotBeFound("occ05.lessThan=" + DEFAULT_OCC_05);
+
+        // Get all the popularTimeList where occ05 is less than (DEFAULT_OCC_05 + 1)
+        defaultPopularTimeShouldBeFound("occ05.lessThan=" + (DEFAULT_OCC_05 + 1));
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc05IsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ05 is greater than DEFAULT_OCC_05
+        defaultPopularTimeShouldNotBeFound("occ05.greaterThan=" + DEFAULT_OCC_05);
+
+        // Get all the popularTimeList where occ05 is greater than SMALLER_OCC_05
+        defaultPopularTimeShouldBeFound("occ05.greaterThan=" + SMALLER_OCC_05);
     }
 
 
@@ -2706,6 +3406,111 @@ public class PopularTimeResourceIT {
 
     @Test
     @Transactional
+    public void getAllPopularTimesByOcc24IsEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ24 equals to DEFAULT_OCC_24
+        defaultPopularTimeShouldBeFound("occ24.equals=" + DEFAULT_OCC_24);
+
+        // Get all the popularTimeList where occ24 equals to UPDATED_OCC_24
+        defaultPopularTimeShouldNotBeFound("occ24.equals=" + UPDATED_OCC_24);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc24IsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ24 not equals to DEFAULT_OCC_24
+        defaultPopularTimeShouldNotBeFound("occ24.notEquals=" + DEFAULT_OCC_24);
+
+        // Get all the popularTimeList where occ24 not equals to UPDATED_OCC_24
+        defaultPopularTimeShouldBeFound("occ24.notEquals=" + UPDATED_OCC_24);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc24IsInShouldWork() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ24 in DEFAULT_OCC_24 or UPDATED_OCC_24
+        defaultPopularTimeShouldBeFound("occ24.in=" + DEFAULT_OCC_24 + "," + UPDATED_OCC_24);
+
+        // Get all the popularTimeList where occ24 equals to UPDATED_OCC_24
+        defaultPopularTimeShouldNotBeFound("occ24.in=" + UPDATED_OCC_24);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc24IsNullOrNotNull() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ24 is not null
+        defaultPopularTimeShouldBeFound("occ24.specified=true");
+
+        // Get all the popularTimeList where occ24 is null
+        defaultPopularTimeShouldNotBeFound("occ24.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc24IsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ24 is greater than or equal to DEFAULT_OCC_24
+        defaultPopularTimeShouldBeFound("occ24.greaterThanOrEqual=" + DEFAULT_OCC_24);
+
+        // Get all the popularTimeList where occ24 is greater than or equal to (DEFAULT_OCC_24 + 1)
+        defaultPopularTimeShouldNotBeFound("occ24.greaterThanOrEqual=" + (DEFAULT_OCC_24 + 1));
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc24IsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ24 is less than or equal to DEFAULT_OCC_24
+        defaultPopularTimeShouldBeFound("occ24.lessThanOrEqual=" + DEFAULT_OCC_24);
+
+        // Get all the popularTimeList where occ24 is less than or equal to SMALLER_OCC_24
+        defaultPopularTimeShouldNotBeFound("occ24.lessThanOrEqual=" + SMALLER_OCC_24);
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc24IsLessThanSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ24 is less than DEFAULT_OCC_24
+        defaultPopularTimeShouldNotBeFound("occ24.lessThan=" + DEFAULT_OCC_24);
+
+        // Get all the popularTimeList where occ24 is less than (DEFAULT_OCC_24 + 1)
+        defaultPopularTimeShouldBeFound("occ24.lessThan=" + (DEFAULT_OCC_24 + 1));
+    }
+
+    @Test
+    @Transactional
+    public void getAllPopularTimesByOcc24IsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        popularTimeRepository.saveAndFlush(popularTime);
+
+        // Get all the popularTimeList where occ24 is greater than DEFAULT_OCC_24
+        defaultPopularTimeShouldNotBeFound("occ24.greaterThan=" + DEFAULT_OCC_24);
+
+        // Get all the popularTimeList where occ24 is greater than SMALLER_OCC_24
+        defaultPopularTimeShouldBeFound("occ24.greaterThan=" + SMALLER_OCC_24);
+    }
+
+
+    @Test
+    @Transactional
     public void getAllPopularTimesByRestaurantIsEqualToSomething() throws Exception {
         // Initialize the database
         popularTimeRepository.saveAndFlush(popularTime);
@@ -2732,6 +3537,11 @@ public class PopularTimeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(popularTime.getId().intValue())))
             .andExpect(jsonPath("$.[*].dayOfWeek").value(hasItem(DEFAULT_DAY_OF_WEEK)))
+            .andExpect(jsonPath("$.[*].occ01").value(hasItem(DEFAULT_OCC_01)))
+            .andExpect(jsonPath("$.[*].occ02").value(hasItem(DEFAULT_OCC_02)))
+            .andExpect(jsonPath("$.[*].occ03").value(hasItem(DEFAULT_OCC_03)))
+            .andExpect(jsonPath("$.[*].occ04").value(hasItem(DEFAULT_OCC_04)))
+            .andExpect(jsonPath("$.[*].occ05").value(hasItem(DEFAULT_OCC_05)))
             .andExpect(jsonPath("$.[*].occ06").value(hasItem(DEFAULT_OCC_06)))
             .andExpect(jsonPath("$.[*].occ07").value(hasItem(DEFAULT_OCC_07)))
             .andExpect(jsonPath("$.[*].occ08").value(hasItem(DEFAULT_OCC_08)))
@@ -2749,7 +3559,8 @@ public class PopularTimeResourceIT {
             .andExpect(jsonPath("$.[*].occ20").value(hasItem(DEFAULT_OCC_20)))
             .andExpect(jsonPath("$.[*].occ21").value(hasItem(DEFAULT_OCC_21)))
             .andExpect(jsonPath("$.[*].occ22").value(hasItem(DEFAULT_OCC_22)))
-            .andExpect(jsonPath("$.[*].occ23").value(hasItem(DEFAULT_OCC_23)));
+            .andExpect(jsonPath("$.[*].occ23").value(hasItem(DEFAULT_OCC_23)))
+            .andExpect(jsonPath("$.[*].occ24").value(hasItem(DEFAULT_OCC_24)));
 
         // Check, that the count call also returns 1
         restPopularTimeMockMvc.perform(get("/api/popular-times/count?sort=id,desc&" + filter))
@@ -2797,6 +3608,11 @@ public class PopularTimeResourceIT {
         em.detach(updatedPopularTime);
         updatedPopularTime
             .dayOfWeek(UPDATED_DAY_OF_WEEK)
+            .occ01(UPDATED_OCC_01)
+            .occ02(UPDATED_OCC_02)
+            .occ03(UPDATED_OCC_03)
+            .occ04(UPDATED_OCC_04)
+            .occ05(UPDATED_OCC_05)
             .occ06(UPDATED_OCC_06)
             .occ07(UPDATED_OCC_07)
             .occ08(UPDATED_OCC_08)
@@ -2814,7 +3630,8 @@ public class PopularTimeResourceIT {
             .occ20(UPDATED_OCC_20)
             .occ21(UPDATED_OCC_21)
             .occ22(UPDATED_OCC_22)
-            .occ23(UPDATED_OCC_23);
+            .occ23(UPDATED_OCC_23)
+            .occ24(UPDATED_OCC_24);
         PopularTimeDTO popularTimeDTO = popularTimeMapper.toDto(updatedPopularTime);
 
         restPopularTimeMockMvc.perform(put("/api/popular-times")
@@ -2827,6 +3644,11 @@ public class PopularTimeResourceIT {
         assertThat(popularTimeList).hasSize(databaseSizeBeforeUpdate);
         PopularTime testPopularTime = popularTimeList.get(popularTimeList.size() - 1);
         assertThat(testPopularTime.getDayOfWeek()).isEqualTo(UPDATED_DAY_OF_WEEK);
+        assertThat(testPopularTime.getOcc01()).isEqualTo(UPDATED_OCC_01);
+        assertThat(testPopularTime.getOcc02()).isEqualTo(UPDATED_OCC_02);
+        assertThat(testPopularTime.getOcc03()).isEqualTo(UPDATED_OCC_03);
+        assertThat(testPopularTime.getOcc04()).isEqualTo(UPDATED_OCC_04);
+        assertThat(testPopularTime.getOcc05()).isEqualTo(UPDATED_OCC_05);
         assertThat(testPopularTime.getOcc06()).isEqualTo(UPDATED_OCC_06);
         assertThat(testPopularTime.getOcc07()).isEqualTo(UPDATED_OCC_07);
         assertThat(testPopularTime.getOcc08()).isEqualTo(UPDATED_OCC_08);
@@ -2845,6 +3667,7 @@ public class PopularTimeResourceIT {
         assertThat(testPopularTime.getOcc21()).isEqualTo(UPDATED_OCC_21);
         assertThat(testPopularTime.getOcc22()).isEqualTo(UPDATED_OCC_22);
         assertThat(testPopularTime.getOcc23()).isEqualTo(UPDATED_OCC_23);
+        assertThat(testPopularTime.getOcc24()).isEqualTo(UPDATED_OCC_24);
 
         // Validate the PopularTime in Elasticsearch
         verify(mockPopularTimeSearchRepository, times(1)).save(testPopularTime);
@@ -2908,6 +3731,11 @@ public class PopularTimeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(popularTime.getId().intValue())))
             .andExpect(jsonPath("$.[*].dayOfWeek").value(hasItem(DEFAULT_DAY_OF_WEEK)))
+            .andExpect(jsonPath("$.[*].occ01").value(hasItem(DEFAULT_OCC_01)))
+            .andExpect(jsonPath("$.[*].occ02").value(hasItem(DEFAULT_OCC_02)))
+            .andExpect(jsonPath("$.[*].occ03").value(hasItem(DEFAULT_OCC_03)))
+            .andExpect(jsonPath("$.[*].occ04").value(hasItem(DEFAULT_OCC_04)))
+            .andExpect(jsonPath("$.[*].occ05").value(hasItem(DEFAULT_OCC_05)))
             .andExpect(jsonPath("$.[*].occ06").value(hasItem(DEFAULT_OCC_06)))
             .andExpect(jsonPath("$.[*].occ07").value(hasItem(DEFAULT_OCC_07)))
             .andExpect(jsonPath("$.[*].occ08").value(hasItem(DEFAULT_OCC_08)))
@@ -2925,6 +3753,7 @@ public class PopularTimeResourceIT {
             .andExpect(jsonPath("$.[*].occ20").value(hasItem(DEFAULT_OCC_20)))
             .andExpect(jsonPath("$.[*].occ21").value(hasItem(DEFAULT_OCC_21)))
             .andExpect(jsonPath("$.[*].occ22").value(hasItem(DEFAULT_OCC_22)))
-            .andExpect(jsonPath("$.[*].occ23").value(hasItem(DEFAULT_OCC_23)));
+            .andExpect(jsonPath("$.[*].occ23").value(hasItem(DEFAULT_OCC_23)))
+            .andExpect(jsonPath("$.[*].occ24").value(hasItem(DEFAULT_OCC_24)));
     }
 }

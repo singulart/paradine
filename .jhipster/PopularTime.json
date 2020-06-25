@@ -19,6 +19,41 @@
       "fieldValidateRulesMaxlength": "2"
     },
     {
+      "fieldName": "occ01",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMin": 0,
+      "fieldValidateRulesMax": 100
+    },
+    {
+      "fieldName": "occ02",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMin": 0,
+      "fieldValidateRulesMax": 100
+    },
+    {
+      "fieldName": "occ03",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMin": 0,
+      "fieldValidateRulesMax": 100
+    },
+    {
+      "fieldName": "occ04",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMin": 0,
+      "fieldValidateRulesMax": 100
+    },
+    {
+      "fieldName": "occ05",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMin": 0,
+      "fieldValidateRulesMax": 100
+    },
+    {
       "fieldName": "occ06",
       "fieldType": "Integer",
       "fieldValidateRules": ["required", "min", "max"],
@@ -139,6 +174,13 @@
     },
     {
       "fieldName": "occ23",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMin": 0,
+      "fieldValidateRulesMax": 100
+    },
+    {
+      "fieldName": "occ24",
       "fieldType": "Integer",
       "fieldValidateRules": ["required", "min", "max"],
       "fieldValidateRulesMin": 0,

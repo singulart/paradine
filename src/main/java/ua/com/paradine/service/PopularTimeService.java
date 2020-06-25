@@ -45,7 +45,7 @@ public interface PopularTimeService {
      * Search for the popularTime corresponding to the query.
      *
      * @param query the query of the search.
-     *
+     * 
      * @return the list of entities.
      */
     List<PopularTimeDTO> search(String query);

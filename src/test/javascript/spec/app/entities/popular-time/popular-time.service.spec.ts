@@ -20,7 +20,7 @@ describe('Service Tests', () => {
       service = injector.get(PopularTimeService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new PopularTime(0, 'AAAAAAA', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+      elemDefault = new PopularTime(0, 'AAAAAAA', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     });
 
     describe('Service methods', () => {
@@ -55,6 +55,11 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             dayOfWeek: 'BBBBBB',
+            occ01: 1,
+            occ02: 1,
+            occ03: 1,
+            occ04: 1,
+            occ05: 1,
             occ06: 1,
             occ07: 1,
             occ08: 1,
@@ -73,6 +78,7 @@ describe('Service Tests', () => {
             occ21: 1,
             occ22: 1,
             occ23: 1,
+            occ24: 1,
           },
           elemDefault
         );
@@ -90,6 +96,11 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             dayOfWeek: 'BBBBBB',
+            occ01: 1,
+            occ02: 1,
+            occ03: 1,
+            occ04: 1,
+            occ05: 1,
             occ06: 1,
             occ07: 1,
             occ08: 1,
@@ -108,6 +119,7 @@ describe('Service Tests', () => {
             occ21: 1,
             occ22: 1,
             occ23: 1,
+            occ24: 1,
           },
           elemDefault
         );

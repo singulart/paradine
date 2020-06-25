@@ -42,6 +42,11 @@
                 <tr>
                     <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
                     <th scope="col" ><span jhiTranslate="paradineApp.popularTime.dayOfWeek">Day Of Week</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ01">Occ 01</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ02">Occ 02</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ03">Occ 03</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ04">Occ 04</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ05">Occ 05</span></th>
                     <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ06">Occ 06</span></th>
                     <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ07">Occ 07</span></th>
                     <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ08">Occ 08</span></th>
@@ -60,6 +65,7 @@
                     <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ21">Occ 21</span></th>
                     <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ22">Occ 22</span></th>
                     <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ23">Occ 23</span></th>
+                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ24">Occ 24</span></th>
                     <th scope="col" ><span jhiTranslate="paradineApp.popularTime.restaurant">Restaurant</span></th>
                     <th scope="col"></th>
                 </tr>
@@ -68,6 +74,11 @@
                 <tr *ngFor="let popularTime of popularTimes ;trackBy: trackId">
                     <td><a [routerLink]="['/popular-time', popularTime.id, 'view']">{{ popularTime.id }}</a></td>
                     <td>{{ popularTime.dayOfWeek }}</td>
+                    <td>{{ popularTime.occ01 }}</td>
+                    <td>{{ popularTime.occ02 }}</td>
+                    <td>{{ popularTime.occ03 }}</td>
+                    <td>{{ popularTime.occ04 }}</td>
+                    <td>{{ popularTime.occ05 }}</td>
                     <td>{{ popularTime.occ06 }}</td>
                     <td>{{ popularTime.occ07 }}</td>
                     <td>{{ popularTime.occ08 }}</td>
@@ -86,6 +97,7 @@
                     <td>{{ popularTime.occ21 }}</td>
                     <td>{{ popularTime.occ22 }}</td>
                     <td>{{ popularTime.occ23 }}</td>
+                    <td>{{ popularTime.occ24 }}</td>
                     <td>
                         <div *ngIf="popularTime.restaurantId">
                             <a [routerLink]="['/restaurant', popularTime.restaurantId , 'view']" >{{ popularTime.restaurantName }}</a>

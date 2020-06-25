@@ -7,6 +7,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 
 /**
@@ -29,6 +30,36 @@ public class PopularTime implements Serializable {
     @Size(min = 2, max = 2)
     @Column(name = "day_of_week", length = 2, nullable = false)
     private String dayOfWeek;
+
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 100)
+    @Column(name = "occ_01", nullable = false)
+    private Integer occ01;
+
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 100)
+    @Column(name = "occ_02", nullable = false)
+    private Integer occ02;
+
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 100)
+    @Column(name = "occ_03", nullable = false)
+    private Integer occ03;
+
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 100)
+    @Column(name = "occ_04", nullable = false)
+    private Integer occ04;
+
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 100)
+    @Column(name = "occ_05", nullable = false)
+    private Integer occ05;
 
     @NotNull
     @Min(value = 0)
@@ -138,6 +169,12 @@ public class PopularTime implements Serializable {
     @Column(name = "occ_23", nullable = false)
     private Integer occ23;
 
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 100)
+    @Column(name = "occ_24", nullable = false)
+    private Integer occ24;
+
     @ManyToOne
     @JsonIgnoreProperties(value = "popularTimes", allowSetters = true)
     private Restaurant restaurant;
@@ -162,6 +199,71 @@ public class PopularTime implements Serializable {
 
     public void setDayOfWeek(String dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
+    }
+
+    public Integer getOcc01() {
+        return occ01;
+    }
+
+    public PopularTime occ01(Integer occ01) {
+        this.occ01 = occ01;
+        return this;
+    }
+
+    public void setOcc01(Integer occ01) {
+        this.occ01 = occ01;
+    }
+
+    public Integer getOcc02() {
+        return occ02;
+    }
+
+    public PopularTime occ02(Integer occ02) {
+        this.occ02 = occ02;
+        return this;
+    }
+
+    public void setOcc02(Integer occ02) {
+        this.occ02 = occ02;
+    }
+
+    public Integer getOcc03() {
+        return occ03;
+    }
+
+    public PopularTime occ03(Integer occ03) {
+        this.occ03 = occ03;
+        return this;
+    }
+
+    public void setOcc03(Integer occ03) {
+        this.occ03 = occ03;
+    }
+
+    public Integer getOcc04() {
+        return occ04;
+    }
+
+    public PopularTime occ04(Integer occ04) {
+        this.occ04 = occ04;
+        return this;
+    }
+
+    public void setOcc04(Integer occ04) {
+        this.occ04 = occ04;
+    }
+
+    public Integer getOcc05() {
+        return occ05;
+    }
+
+    public PopularTime occ05(Integer occ05) {
+        this.occ05 = occ05;
+        return this;
+    }
+
+    public void setOcc05(Integer occ05) {
+        this.occ05 = occ05;
     }
 
     public Integer getOcc06() {
@@ -398,6 +500,19 @@ public class PopularTime implements Serializable {
         this.occ23 = occ23;
     }
 
+    public Integer getOcc24() {
+        return occ24;
+    }
+
+    public PopularTime occ24(Integer occ24) {
+        this.occ24 = occ24;
+        return this;
+    }
+
+    public void setOcc24(Integer occ24) {
+        this.occ24 = occ24;
+    }
+
     public Restaurant getRestaurant() {
         return restaurant;
     }
@@ -434,6 +549,11 @@ public class PopularTime implements Serializable {
         return "PopularTime{" +
             "id=" + getId() +
             ", dayOfWeek='" + getDayOfWeek() + "'" +
+            ", occ01=" + getOcc01() +
+            ", occ02=" + getOcc02() +
+            ", occ03=" + getOcc03() +
+            ", occ04=" + getOcc04() +
+            ", occ05=" + getOcc05() +
             ", occ06=" + getOcc06() +
             ", occ07=" + getOcc07() +
             ", occ08=" + getOcc08() +
@@ -452,6 +572,7 @@ public class PopularTime implements Serializable {
             ", occ21=" + getOcc21() +
             ", occ22=" + getOcc22() +
             ", occ23=" + getOcc23() +
+            ", occ24=" + getOcc24() +
             "}";
     }
 }

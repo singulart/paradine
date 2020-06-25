@@ -21,6 +21,11 @@ export class PopularTimeUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     dayOfWeek: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+    occ01: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
+    occ02: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
+    occ03: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
+    occ04: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
+    occ05: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
     occ06: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
     occ07: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
     occ08: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
@@ -39,6 +44,7 @@ export class PopularTimeUpdateComponent implements OnInit {
     occ21: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
     occ22: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
     occ23: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
+    occ24: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
     restaurantId: [],
   });
 
@@ -61,6 +67,11 @@ export class PopularTimeUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: popularTime.id,
       dayOfWeek: popularTime.dayOfWeek,
+      occ01: popularTime.occ01,
+      occ02: popularTime.occ02,
+      occ03: popularTime.occ03,
+      occ04: popularTime.occ04,
+      occ05: popularTime.occ05,
       occ06: popularTime.occ06,
       occ07: popularTime.occ07,
       occ08: popularTime.occ08,
@@ -79,6 +90,7 @@ export class PopularTimeUpdateComponent implements OnInit {
       occ21: popularTime.occ21,
       occ22: popularTime.occ22,
       occ23: popularTime.occ23,
+      occ24: popularTime.occ24,
       restaurantId: popularTime.restaurantId,
     });
   }
@@ -102,6 +114,11 @@ export class PopularTimeUpdateComponent implements OnInit {
       ...new PopularTime(),
       id: this.editForm.get(['id'])!.value,
       dayOfWeek: this.editForm.get(['dayOfWeek'])!.value,
+      occ01: this.editForm.get(['occ01'])!.value,
+      occ02: this.editForm.get(['occ02'])!.value,
+      occ03: this.editForm.get(['occ03'])!.value,
+      occ04: this.editForm.get(['occ04'])!.value,
+      occ05: this.editForm.get(['occ05'])!.value,
       occ06: this.editForm.get(['occ06'])!.value,
       occ07: this.editForm.get(['occ07'])!.value,
       occ08: this.editForm.get(['occ08'])!.value,
@@ -120,6 +137,7 @@ export class PopularTimeUpdateComponent implements OnInit {
       occ21: this.editForm.get(['occ21'])!.value,
       occ22: this.editForm.get(['occ22'])!.value,
       occ23: this.editForm.get(['occ23'])!.value,
+      occ24: this.editForm.get(['occ24'])!.value,
       restaurantId: this.editForm.get(['restaurantId'])!.value,
     };
   }

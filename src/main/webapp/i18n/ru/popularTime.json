@@ -18,6 +18,11 @@
         "title": "Popular Time"
       },
       "dayOfWeek": "Day Of Week",
+      "occ01": "Occ 01",
+      "occ02": "Occ 02",
+      "occ03": "Occ 03",
+      "occ04": "Occ 04",
+      "occ05": "Occ 05",
       "occ06": "Occ 06",
       "occ07": "Occ 07",
       "occ08": "Occ 08",
@@ -36,6 +41,7 @@
       "occ21": "Occ 21",
       "occ22": "Occ 22",
       "occ23": "Occ 23",
+      "occ24": "Occ 24",
       "restaurant": "Restaurant"
     }
   }

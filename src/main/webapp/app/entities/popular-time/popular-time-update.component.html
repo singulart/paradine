@@ -32,6 +32,126 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.popularTime.occ01" for="field_occ01">Occ 01</label>
+                    <input type="number" class="form-control" name="occ01" id="field_occ01"
+                           formControlName="occ01"/>
+                    <div *ngIf="editForm.get('occ01')!.invalid && (editForm.get('occ01')!.dirty || editForm.get('occ01')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ01')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ01')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ01')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ01')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.popularTime.occ02" for="field_occ02">Occ 02</label>
+                    <input type="number" class="form-control" name="occ02" id="field_occ02"
+                           formControlName="occ02"/>
+                    <div *ngIf="editForm.get('occ02')!.invalid && (editForm.get('occ02')!.dirty || editForm.get('occ02')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ02')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ02')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ02')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ02')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.popularTime.occ03" for="field_occ03">Occ 03</label>
+                    <input type="number" class="form-control" name="occ03" id="field_occ03"
+                           formControlName="occ03"/>
+                    <div *ngIf="editForm.get('occ03')!.invalid && (editForm.get('occ03')!.dirty || editForm.get('occ03')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ03')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ03')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ03')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ03')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.popularTime.occ04" for="field_occ04">Occ 04</label>
+                    <input type="number" class="form-control" name="occ04" id="field_occ04"
+                           formControlName="occ04"/>
+                    <div *ngIf="editForm.get('occ04')!.invalid && (editForm.get('occ04')!.dirty || editForm.get('occ04')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ04')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ04')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ04')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ04')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.popularTime.occ05" for="field_occ05">Occ 05</label>
+                    <input type="number" class="form-control" name="occ05" id="field_occ05"
+                           formControlName="occ05"/>
+                    <div *ngIf="editForm.get('occ05')!.invalid && (editForm.get('occ05')!.dirty || editForm.get('occ05')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ05')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ05')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ05')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ05')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="paradineApp.popularTime.occ06" for="field_occ06">Occ 06</label>
                     <input type="number" class="form-control" name="occ06" id="field_occ06"
                            formControlName="occ06"/>
@@ -458,6 +578,30 @@
                         </small>
                         <small class="form-text text-danger"
                             [hidden]="!editForm.get('occ23')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.popularTime.occ24" for="field_occ24">Occ 24</label>
+                    <input type="number" class="form-control" name="occ24" id="field_occ24"
+                           formControlName="occ24"/>
+                    <div *ngIf="editForm.get('occ24')!.invalid && (editForm.get('occ24')!.dirty || editForm.get('occ24')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ24')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ24')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('occ24')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('occ24')?.errors?.number" jhiTranslate="entity.validation.number">
                             This field should be a number.
                         </small>
                     </div>

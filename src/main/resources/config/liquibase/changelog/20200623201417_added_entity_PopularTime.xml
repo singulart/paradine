@@ -18,6 +18,21 @@
             <column name="day_of_week" type="varchar(2)">
                 <constraints nullable="false" />
             </column>
+            <column name="occ_01" type="integer" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
+            <column name="occ_02" type="integer" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
+            <column name="occ_03" type="integer" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
+            <column name="occ_04" type="integer" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
+            <column name="occ_05" type="integer" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
             <column name="occ_06" type="integer" defaultValue="0">
                 <constraints nullable="false" />
             </column>
@@ -72,6 +87,9 @@
             <column name="occ_23" type="integer" defaultValue="0">
                 <constraints nullable="false" />
             </column>
+            <column name="occ_24" type="integer" defaultValue="0">
+                <constraints nullable="false" />
+            </column>
             <column name="restaurant_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -99,6 +117,11 @@
                   tableName="popular_time">
             <column name="id" type="numeric"/>
             <column name="day_of_week" type="string"/>
+            <column name="occ_01" type="numeric"/>
+            <column name="occ_02" type="numeric"/>
+            <column name="occ_03" type="numeric"/>
+            <column name="occ_04" type="numeric"/>
+            <column name="occ_05" type="numeric"/>
             <column name="occ_06" type="numeric"/>
             <column name="occ_07" type="numeric"/>
             <column name="occ_08" type="numeric"/>
@@ -117,6 +140,7 @@
             <column name="occ_21" type="numeric"/>
             <column name="occ_22" type="numeric"/>
             <column name="occ_23" type="numeric"/>
+            <column name="occ_24" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

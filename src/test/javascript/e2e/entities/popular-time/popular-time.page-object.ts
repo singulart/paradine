@@ -30,6 +30,11 @@ export class PopularTimeUpdatePage {
   cancelButton = element(by.id('cancel-save'));
 
   dayOfWeekInput = element(by.id('field_dayOfWeek'));
+  occ01Input = element(by.id('field_occ01'));
+  occ02Input = element(by.id('field_occ02'));
+  occ03Input = element(by.id('field_occ03'));
+  occ04Input = element(by.id('field_occ04'));
+  occ05Input = element(by.id('field_occ05'));
   occ06Input = element(by.id('field_occ06'));
   occ07Input = element(by.id('field_occ07'));
   occ08Input = element(by.id('field_occ08'));
@@ -48,6 +53,7 @@ export class PopularTimeUpdatePage {
   occ21Input = element(by.id('field_occ21'));
   occ22Input = element(by.id('field_occ22'));
   occ23Input = element(by.id('field_occ23'));
+  occ24Input = element(by.id('field_occ24'));
 
   restaurantSelect = element(by.id('field_restaurant'));
 
@@ -61,6 +67,46 @@ export class PopularTimeUpdatePage {
 
   async getDayOfWeekInput(): Promise<string> {
     return await this.dayOfWeekInput.getAttribute('value');
+  }
+
+  async setOcc01Input(occ01: string): Promise<void> {
+    await this.occ01Input.sendKeys(occ01);
+  }
+
+  async getOcc01Input(): Promise<string> {
+    return await this.occ01Input.getAttribute('value');
+  }
+
+  async setOcc02Input(occ02: string): Promise<void> {
+    await this.occ02Input.sendKeys(occ02);
+  }
+
+  async getOcc02Input(): Promise<string> {
+    return await this.occ02Input.getAttribute('value');
+  }
+
+  async setOcc03Input(occ03: string): Promise<void> {
+    await this.occ03Input.sendKeys(occ03);
+  }
+
+  async getOcc03Input(): Promise<string> {
+    return await this.occ03Input.getAttribute('value');
+  }
+
+  async setOcc04Input(occ04: string): Promise<void> {
+    await this.occ04Input.sendKeys(occ04);
+  }
+
+  async getOcc04Input(): Promise<string> {
+    return await this.occ04Input.getAttribute('value');
+  }
+
+  async setOcc05Input(occ05: string): Promise<void> {
+    await this.occ05Input.sendKeys(occ05);
+  }
+
+  async getOcc05Input(): Promise<string> {
+    return await this.occ05Input.getAttribute('value');
   }
 
   async setOcc06Input(occ06: string): Promise<void> {
@@ -205,6 +251,14 @@ export class PopularTimeUpdatePage {
 
   async getOcc23Input(): Promise<string> {
     return await this.occ23Input.getAttribute('value');
+  }
+
+  async setOcc24Input(occ24: string): Promise<void> {
+    await this.occ24Input.sendKeys(occ24);
+  }
+
+  async getOcc24Input(): Promise<string> {
+    return await this.occ24Input.getAttribute('value');
   }
 
   async restaurantSelectLastOption(): Promise<void> {

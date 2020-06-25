@@ -98,6 +98,21 @@ public class PopularTimeQueryService extends QueryService<PopularTime> {
             if (criteria.getDayOfWeek() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getDayOfWeek(), PopularTime_.dayOfWeek));
             }
+            if (criteria.getOcc01() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getOcc01(), PopularTime_.occ01));
+            }
+            if (criteria.getOcc02() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getOcc02(), PopularTime_.occ02));
+            }
+            if (criteria.getOcc03() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getOcc03(), PopularTime_.occ03));
+            }
+            if (criteria.getOcc04() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getOcc04(), PopularTime_.occ04));
+            }
+            if (criteria.getOcc05() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getOcc05(), PopularTime_.occ05));
+            }
             if (criteria.getOcc06() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getOcc06(), PopularTime_.occ06));
             }
@@ -151,6 +166,9 @@ public class PopularTimeQueryService extends QueryService<PopularTime> {
             }
             if (criteria.getOcc23() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getOcc23(), PopularTime_.occ23));
+            }
+            if (criteria.getOcc24() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getOcc24(), PopularTime_.occ24));
             }
             if (criteria.getRestaurantId() != null) {
                 specification = specification.and(buildSpecification(criteria.getRestaurantId(),

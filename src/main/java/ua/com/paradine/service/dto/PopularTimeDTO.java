@@ -7,12 +7,37 @@ import java.io.Serializable;
  * A DTO for the {@link ua.com.paradine.domain.PopularTime} entity.
  */
 public class PopularTimeDTO implements Serializable {
-
+    
     private Long id;
 
     @NotNull
     @Size(min = 2, max = 2)
     private String dayOfWeek;
+
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 100)
+    private Integer occ01;
+
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 100)
+    private Integer occ02;
+
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 100)
+    private Integer occ03;
+
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 100)
+    private Integer occ04;
+
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 100)
+    private Integer occ05;
 
     @NotNull
     @Min(value = 0)
@@ -104,11 +129,16 @@ public class PopularTimeDTO implements Serializable {
     @Max(value = 100)
     private Integer occ23;
 
+    @NotNull
+    @Min(value = 0)
+    @Max(value = 100)
+    private Integer occ24;
+
 
     private Long restaurantId;
 
     private String restaurantName;
-
+    
     public Long getId() {
         return id;
     }
@@ -123,6 +153,46 @@ public class PopularTimeDTO implements Serializable {
 
     public void setDayOfWeek(String dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
+    }
+
+    public Integer getOcc01() {
+        return occ01;
+    }
+
+    public void setOcc01(Integer occ01) {
+        this.occ01 = occ01;
+    }
+
+    public Integer getOcc02() {
+        return occ02;
+    }
+
+    public void setOcc02(Integer occ02) {
+        this.occ02 = occ02;
+    }
+
+    public Integer getOcc03() {
+        return occ03;
+    }
+
+    public void setOcc03(Integer occ03) {
+        this.occ03 = occ03;
+    }
+
+    public Integer getOcc04() {
+        return occ04;
+    }
+
+    public void setOcc04(Integer occ04) {
+        this.occ04 = occ04;
+    }
+
+    public Integer getOcc05() {
+        return occ05;
+    }
+
+    public void setOcc05(Integer occ05) {
+        this.occ05 = occ05;
     }
 
     public Integer getOcc06() {
@@ -269,6 +339,14 @@ public class PopularTimeDTO implements Serializable {
         this.occ23 = occ23;
     }
 
+    public Integer getOcc24() {
+        return occ24;
+    }
+
+    public void setOcc24(Integer occ24) {
+        this.occ24 = occ24;
+    }
+
     public Long getRestaurantId() {
         return restaurantId;
     }
@@ -308,6 +386,11 @@ public class PopularTimeDTO implements Serializable {
         return "PopularTimeDTO{" +
             "id=" + getId() +
             ", dayOfWeek='" + getDayOfWeek() + "'" +
+            ", occ01=" + getOcc01() +
+            ", occ02=" + getOcc02() +
+            ", occ03=" + getOcc03() +
+            ", occ04=" + getOcc04() +
+            ", occ05=" + getOcc05() +
             ", occ06=" + getOcc06() +
             ", occ07=" + getOcc07() +
             ", occ08=" + getOcc08() +
@@ -326,6 +409,7 @@ public class PopularTimeDTO implements Serializable {
             ", occ21=" + getOcc21() +
             ", occ22=" + getOcc22() +
             ", occ23=" + getOcc23() +
+            ", occ24=" + getOcc24() +
             ", restaurantId=" + getRestaurantId() +
             ", restaurantName='" + getRestaurantName() + "'" +
             "}";

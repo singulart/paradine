@@ -45,6 +45,11 @@ describe('PopularTime e2e test', () => {
 
     await promise.all([
       popularTimeUpdatePage.setDayOfWeekInput('dayOfWeek'),
+      popularTimeUpdatePage.setOcc01Input('5'),
+      popularTimeUpdatePage.setOcc02Input('5'),
+      popularTimeUpdatePage.setOcc03Input('5'),
+      popularTimeUpdatePage.setOcc04Input('5'),
+      popularTimeUpdatePage.setOcc05Input('5'),
       popularTimeUpdatePage.setOcc06Input('5'),
       popularTimeUpdatePage.setOcc07Input('5'),
       popularTimeUpdatePage.setOcc08Input('5'),
@@ -63,10 +68,16 @@ describe('PopularTime e2e test', () => {
       popularTimeUpdatePage.setOcc21Input('5'),
       popularTimeUpdatePage.setOcc22Input('5'),
       popularTimeUpdatePage.setOcc23Input('5'),
+      popularTimeUpdatePage.setOcc24Input('5'),
       popularTimeUpdatePage.restaurantSelectLastOption(),
     ]);
 
     expect(await popularTimeUpdatePage.getDayOfWeekInput()).to.eq('dayOfWeek', 'Expected DayOfWeek value to be equals to dayOfWeek');
+    expect(await popularTimeUpdatePage.getOcc01Input()).to.eq('5', 'Expected occ01 value to be equals to 5');
+    expect(await popularTimeUpdatePage.getOcc02Input()).to.eq('5', 'Expected occ02 value to be equals to 5');
+    expect(await popularTimeUpdatePage.getOcc03Input()).to.eq('5', 'Expected occ03 value to be equals to 5');
+    expect(await popularTimeUpdatePage.getOcc04Input()).to.eq('5', 'Expected occ04 value to be equals to 5');
+    expect(await popularTimeUpdatePage.getOcc05Input()).to.eq('5', 'Expected occ05 value to be equals to 5');
     expect(await popularTimeUpdatePage.getOcc06Input()).to.eq('5', 'Expected occ06 value to be equals to 5');
     expect(await popularTimeUpdatePage.getOcc07Input()).to.eq('5', 'Expected occ07 value to be equals to 5');
     expect(await popularTimeUpdatePage.getOcc08Input()).to.eq('5', 'Expected occ08 value to be equals to 5');
@@ -85,6 +96,7 @@ describe('PopularTime e2e test', () => {
     expect(await popularTimeUpdatePage.getOcc21Input()).to.eq('5', 'Expected occ21 value to be equals to 5');
     expect(await popularTimeUpdatePage.getOcc22Input()).to.eq('5', 'Expected occ22 value to be equals to 5');
     expect(await popularTimeUpdatePage.getOcc23Input()).to.eq('5', 'Expected occ23 value to be equals to 5');
+    expect(await popularTimeUpdatePage.getOcc24Input()).to.eq('5', 'Expected occ24 value to be equals to 5');
 
     await popularTimeUpdatePage.save();
     expect(await popularTimeUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;

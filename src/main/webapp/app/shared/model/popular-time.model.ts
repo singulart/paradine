@@ -1,6 +1,11 @@
 export interface IPopularTime {
   id?: number;
   dayOfWeek?: string;
+  occ01?: number;
+  occ02?: number;
+  occ03?: number;
+  occ04?: number;
+  occ05?: number;
   occ06?: number;
   occ07?: number;
   occ08?: number;
@@ -19,6 +24,7 @@ export interface IPopularTime {
   occ21?: number;
   occ22?: number;
   occ23?: number;
+  occ24?: number;
   restaurantName?: string;
   restaurantId?: number;
 }
@@ -27,6 +33,11 @@ export class PopularTime implements IPopularTime {
   constructor(
     public id?: number,
     public dayOfWeek?: string,
+    public occ01?: number,
+    public occ02?: number,
+    public occ03?: number,
+    public occ04?: number,
+    public occ05?: number,
     public occ06?: number,
     public occ07?: number,
     public occ08?: number,
@@ -45,6 +56,7 @@ export class PopularTime implements IPopularTime {
     public occ21?: number,
     public occ22?: number,
     public occ23?: number,
+    public occ24?: number,
     public restaurantName?: string,
     public restaurantId?: number
   ) {}
