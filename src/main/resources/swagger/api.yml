@@ -2,15 +2,91 @@
 # This file will be used at compile time to generate Spring-MVC endpoint stubs using openapi-generator
 openapi: '3.0.1'
 info:
-  title: 'paradine'
-  version: 0.0.1
+  title: Paradine
+  version: 2.0.0
+  termsOfService: https://localhost:8080/en/tos
+  contact:
+    name: API Support
+    url: https://localhost:8080/en/support
+    email: support@example.com
+#  license:
+#    name: Apache 2.0
+#    url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
-  - url: http://localhost:8080/api
+  - url: http://localhost:8080/api/paradine/v2
     description: Development server
-  - url: https://localhost:8080/api
+  - url: https://localhost:8080/api/paradine/v2
     description: Development server with TLS Profile
-paths: {}
+paths:
+  /restaurants:
+    get:
+      description: Returns a page of restaurants enriched with hourly safety indicators.
+      responses:
+        '200':
+          description: A page of restaurants.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestaurantsGetResponse'
 components:
+  schemas:
+    Envelope:
+      type: object
+      description: Properties of this object represent response metadata
+      required:
+        - version
+      properties:
+        version:
+          description: API version
+          type: string
+    RestaurantsGetResponse:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            restaurants:
+              type: array
+              items:
+                $ref: '#/components/schemas/Restaurant'
+    Restaurant:
+      type: object
+      required:
+        - id
+        - name
+        - image
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        image:
+          type: string
+        geolat:
+          type: float
+        geolng:
+          type: float
+        safetyToday:
+          type: array
+          items:
+            $ref: '#/components/schemas/HourlySafety'
+        safetyTomorrow:
+          type: array
+          items:
+            $ref: '#/components/schemas/HourlySafety'
+    HourlySafety:
+      type: object
+      description: Representation of a restaurants' safety at a certain hour
+      required:
+        - h
+        - value
+      properties:
+        h:
+          description: hour, from 0 to 23
+          type: integer
+        value:
+          description: safety indicator
+          type: integer
+
   responses:
     Problem:
       description: error occurred - see status code and problem object for more information.
