@@ -62,9 +62,11 @@ components:
         image:
           type: string
         geolat:
-          type: float
+          type: number
+          format: float
         geolng:
-          type: float
+          type: number
+          format: float
         safetyToday:
           type: array
           items:
