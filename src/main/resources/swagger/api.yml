@@ -20,14 +20,51 @@ servers:
 paths:
   /restaurants:
     get:
+      security: [] # No security
+      parameters:
+        - in: query
+          name: page
+          description: Page number, zero if not sent
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: q
+          description: Search term
+          required: false
+          schema:
+            type: string
+            maxLength: 42
+        - in: query
+          name: geolat
+          description: Latitude for geolocation search. If present, backend also expects non-null 'geolng'
+          required: false
+          schema:
+            type: number
+            format: float
+        - in: query
+          name: geolng
+          description: Longitude for geolocation search. If present, backend also expects non-null 'geolat'
+          required: false
+          schema:
+            type: number
+            format: float
       description: Returns a page of restaurants enriched with hourly safety indicators.
       responses:
         '200':
-          description: A page of restaurants.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/RestaurantsGetResponse'
+          description: >-
+          # A page of restaurants.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Problem'
+          description: >-
+          # Error response indicating incorrect / inconsistent query parameters.
 components:
   schemas:
     Envelope:
@@ -48,12 +85,125 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Restaurant'
+      example:
+        version: '2.0'
+        restaurants:
+          - id: aaaa-bbbb-cccc-dddd
+            name: Shoti
+            address:
+              ru_RU: ул. Шевченко 20
+              uk_UA: вул. Шевченка 20
+              en_US: 20 Schevchenka str
+            image: http://paradine.com/static/assets/5783853745/34587345934583.jpg
+            geolat: 50.304567
+            geolng: 30.344532
+            safetyToday:
+              - h: 0
+                value: -1
+              - h: 1
+                value: -1
+              - h: 2
+                value: -1
+              - h: 3
+                value: -1
+              - h: 4
+                value: -1
+              - h: 5
+                value: -1
+              - h: 6
+                value: -1
+              - h: 7
+                value: -1
+              - h: 8
+                value: -1
+              - h: 9
+                value: 0
+              - h: 10
+                value: 0
+              - h: 11
+                value: 0
+              - h: 12
+                value: 10
+              - h: 13
+                value: 10
+              - h: 14
+                value: 10
+              - h: 15
+                value: 10
+              - h: 16
+                value: 10
+              - h: 17
+                value: 10
+              - h: 18
+                value: 20
+              - h: 19
+                value: 20
+              - h: 20
+                value: 20
+              - h: 21
+                value: 20
+              - h: 22
+                value: 10
+              - h: 23
+                value: -1
+            safetyTomorrow:
+              - h: 0
+                value: -1
+              - h: 1
+                value: -1
+              - h: 2
+                value: -1
+              - h: 3
+                value: -1
+              - h: 4
+                value: -1
+              - h: 5
+                value: -1
+              - h: 6
+                value: -1
+              - h: 7
+                value: -1
+              - h: 8
+                value: -1
+              - h: 9
+                value: 0
+              - h: 10
+                value: 0
+              - h: 11
+                value: 0
+              - h: 12
+                value: 10
+              - h: 13
+                value: 10
+              - h: 14
+                value: 10
+              - h: 15
+                value: 10
+              - h: 16
+                value: 10
+              - h: 17
+                value: 10
+              - h: 18
+                value: 20
+              - h: 19
+                value: 20
+              - h: 20
+                value: 20
+              - h: 21
+                value: 20
+              - h: 22
+                value: 10
+              - h: 23
+                value: -1
     Restaurant:
       type: object
       required:
         - id
         - name
         - image
+        - address
+        - safetyToday
+        - safetyTomorrow
       properties:
         id:
           type: string
@@ -61,6 +211,13 @@ components:
           type: string
         image:
           type: string
+        address:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            ru_RU: 'ул. Шевченко 20'
+            uk_UA: 'вул. Шевченка 20'
         geolat:
           type: number
           format: float
@@ -88,6 +245,9 @@ components:
         value:
           description: safety indicator
           type: integer
+      example:
+        h: 17
+        value: 10
 
   responses:
     Problem:
