@@ -28,27 +28,34 @@ paths:
           required: false
           schema:
             type: integer
+            minimum: 0
         - in: query
           name: q
           description: Search term
           required: false
           schema:
             type: string
+            minLength: 3
             maxLength: 42
         - in: query
-          name: geolat
-          description: Latitude for geolocation search. If present, backend also expects non-null 'geolng'
+          name: lat
+          description: Latitude for geolocation search. Must be used in conbination with 'lng'
           required: false
           schema:
             type: number
             format: float
+            minimum: -90.0
+            maximum: 90.0
         - in: query
-          name: geolng
-          description: Longitude for geolocation search. If present, backend also expects non-null 'geolat'
+          name: lng
+          description: Longitude for geolocation search. Must be used in conbination with 'lat'
           required: false
           schema:
             type: number
             format: float
+            minimum: -180.0
+            maximum: 180.0
+      operationId: getRestaurants
       description: Returns a page of restaurants enriched with hourly safety indicators.
       responses:
         '200':
