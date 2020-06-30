@@ -22,7 +22,7 @@
     <properties>
         <!-- Build properties -->
         <maven.version>3.3.9</maven.version>
-        <java.version>1.8</java.version>
+        <java.version>1.11</java.version>
         <node.version>v12.16.1</node.version>
         <npm.version>6.14.5</npm.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -513,10 +513,6 @@
                             </path>
                             <!-- jhipster-needle-maven-add-annotation-processor -->
                         </annotationProcessorPaths>
-                        <compilerArgs>
-                            <compilerArg>-Amapstruct.unmappedTargetPolicy=ERROR</compilerArg>
-                            <arg>-parameters</arg>
-                        </compilerArgs>
                     </configuration>
                 </plugin>
                 <plugin>
