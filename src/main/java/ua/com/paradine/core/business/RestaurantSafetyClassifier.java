@@ -1,5 +1,8 @@
 package ua.com.paradine.core.business;
 
+import ua.com.paradine.core.business.vo.ClassifiedRestaurantVO;
+import ua.com.paradine.core.business.vo.RestaurantVO;
+
 public interface RestaurantSafetyClassifier {
 
     /**

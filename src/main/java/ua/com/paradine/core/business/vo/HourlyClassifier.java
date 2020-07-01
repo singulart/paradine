@@ -1,4 +1,6 @@
-package ua.com.paradine.core.business;
+package ua.com.paradine.core.business.vo;
+
+import ua.com.paradine.core.business.SafetyMarker;
 
 public class HourlyClassifier {
 

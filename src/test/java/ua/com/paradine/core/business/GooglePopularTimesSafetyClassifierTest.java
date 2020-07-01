@@ -7,6 +7,9 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
+import ua.com.paradine.core.business.vo.ClassifiedRestaurantVO;
+import ua.com.paradine.core.business.vo.PopularTimeVO;
+import ua.com.paradine.core.business.vo.RestaurantVO;
 
 @RunWith(MockitoJUnitRunner.class)
 class GooglePopularTimesSafetyClassifierTest {

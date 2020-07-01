@@ -1,9 +1,12 @@
 package ua.com.paradine.core.business;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+import ua.com.paradine.core.business.vo.ClassifiedRestaurantVO;
+import ua.com.paradine.core.business.vo.HourlyClassifier;
+import ua.com.paradine.core.business.vo.PopularTimeVO;
+import ua.com.paradine.core.business.vo.RestaurantVO;
 import ua.com.paradine.domain.PopularTime;
 import ua.com.paradine.domain.Restaurant;
 

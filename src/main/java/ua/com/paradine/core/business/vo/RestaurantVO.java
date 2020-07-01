@@ -1,4 +1,4 @@
-package ua.com.paradine.core.business;
+package ua.com.paradine.core.business.vo;
 
 import java.util.HashSet;
 import java.util.Set;

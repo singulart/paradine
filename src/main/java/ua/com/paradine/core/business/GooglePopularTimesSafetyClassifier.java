@@ -8,12 +8,18 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
+import ua.com.paradine.core.business.vo.ClassifiedRestaurantVO;
+import ua.com.paradine.core.business.vo.HourlyClassifier;
+import ua.com.paradine.core.business.vo.PopularTimeVO;
+import ua.com.paradine.core.business.vo.RestaurantVO;
 
 /**
  * Paradine 'safety' classification is based on user activity in the app. <br/>
  * However, initially the user activity will be insufficient to classify venues as RED/YELLOW/GREEN correctly.<br/>
  * Therefore, this class is used to build those indicators based purely on Popular Times data from Google Places.<br/>
  */
+@Component
 public class GooglePopularTimesSafetyClassifier implements RestaurantSafetyClassifier {
 
     public static final Integer GREEN = 25;
