@@ -6,6 +6,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -82,7 +84,7 @@ public class Restaurant implements Serializable {
     @Column(name = "uuid", length = 36, nullable = false, unique = true)
     private String uuid;
 
-    @OneToMany(mappedBy = "restaurant")
+    @Transient
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<PopularTime> popularTimes = new HashSet<>();
 
