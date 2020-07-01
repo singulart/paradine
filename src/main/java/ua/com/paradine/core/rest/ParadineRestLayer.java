@@ -18,7 +18,7 @@ import ua.com.paradine.web.api.model.RestaurantsGetResponse;
 @Component
 public class ParadineRestLayer implements RestaurantsApiDelegate {
 
-    @Value("${paradine.api.version}:2.0.0")
+    @Value("${paradine.api.version:2.0}")
     private String API_VERSION;
 
     private ViewClassifiedRestaurantsFlow viewListFlow;

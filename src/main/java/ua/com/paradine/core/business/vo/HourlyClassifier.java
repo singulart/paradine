@@ -2,7 +2,7 @@ package ua.com.paradine.core.business.vo;
 
 import ua.com.paradine.core.business.SafetyMarker;
 
-public class HourlyClassifier {
+public class HourlyClassifier implements Comparable<HourlyClassifier>{
 
     private Integer hour;
     private SafetyMarker marker;
@@ -26,5 +26,10 @@ public class HourlyClassifier {
 
     public void setMarker(SafetyMarker marker) {
         this.marker = marker;
+    }
+
+    @Override
+    public int compareTo(HourlyClassifier o) {
+        return this.hour.compareTo(o.hour);
     }
 }
