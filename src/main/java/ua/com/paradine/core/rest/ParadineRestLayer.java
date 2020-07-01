@@ -5,6 +5,7 @@ import java.util.Set;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.zalando.problem.Problem;
@@ -44,10 +45,13 @@ public class ParadineRestLayer implements RestaurantsApiDelegate {
             .withLng(geolng)
             .withQuery(q)
             .withPage(page).build();
-        Set<ClassifiedRestaurantVO> classifiedRestaurants = viewListFlow.fetchClassifiedRestaurants(searchCriteria);
+        Page<ClassifiedRestaurantVO> classifiedRestaurants = viewListFlow.fetchClassifiedRestaurants(searchCriteria);
 
-        return ResponseEntity.ok(new RestaurantsGetResponse()
+        return ResponseEntity.ok()
+            .header("X-Total-Count", classifiedRestaurants.getTotalElements() + "")
+            .header("X-Total-Pages", classifiedRestaurants.getTotalPages() + "")
+            .body(new RestaurantsGetResponse()
             .version(API_VERSION)
-            .restaurants(restMapper.map(classifiedRestaurants)));
+            .restaurants(restMapper.map(classifiedRestaurants.getContent())));
     }
 }

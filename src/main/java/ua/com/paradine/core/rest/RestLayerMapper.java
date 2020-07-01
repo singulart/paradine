@@ -19,7 +19,7 @@ public interface RestLayerMapper {
 //    @Mapping(target = "restaurants", source = "restaurants")
 //    RestaurantsGetResponse mapViewRestaurantsListResponse(Set<ClassifiedRestaurantVO> restaurants);
 
-    List<Restaurant> map(Set<ClassifiedRestaurantVO> restaurants);
+    List<Restaurant> map(List<ClassifiedRestaurantVO> restaurants);
 
     @Mapping(target = "id", source = "uuid")
     @Mapping(target = "image", source = "photoUrl")

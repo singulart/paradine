@@ -1,9 +1,11 @@
 package ua.com.paradine.core.rest;
 
+import static java.util.Arrays.asList;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -18,8 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.com.paradine.ParadineApp;
 import ua.com.paradine.core.business.SafetyMarker;
@@ -30,7 +33,6 @@ import ua.com.paradine.core.business.vo.HourlyClassifier;
 @SpringBootTest(classes = ParadineApp.class)
 @ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
-@WithMockUser
 public class ParadineRestLayerTest {
 
     @Autowired
@@ -41,12 +43,18 @@ public class ParadineRestLayerTest {
 
     @Test
     void getRestaurants() throws Exception {
+        when(viewListFlow.fetchClassifiedRestaurants(any())).thenReturn(
+            new PageImpl<>(asList(new ClassifiedRestaurantVO()), PageRequest.of(0, 1), 10)
+        );
         mockMvc.perform(get("/api/paradine/v2/restaurants"))
             .andExpect(status().isOk());
     }
 
     @Test
     void getRestaurantsWithValidQueryParams() throws Exception {
+        when(viewListFlow.fetchClassifiedRestaurants(any())).thenReturn(
+            new PageImpl<>(asList(new ClassifiedRestaurantVO()), PageRequest.of(0, 1), 10)
+        );
         mockMvc.perform(get("/api/paradine/v2/restaurants")
             .queryParam("q", "italian")
             .queryParam("page", "2")
@@ -141,11 +149,15 @@ public class ParadineRestLayerTest {
             new HourlyClassifier(22, SafetyMarker.CLOSED))
             .stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new))
         );
-        when(viewListFlow.fetchClassifiedRestaurants(any())).thenReturn(Set.of(rest1));
+        when(viewListFlow.fetchClassifiedRestaurants(any())).thenReturn(
+            new PageImpl<>(asList(rest1), PageRequest.of(0, 2), 100)
+        );
 
         mockMvc.perform(get("/api/paradine/v2/restaurants"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(header().string("X-Total-Count", "100"))
+            .andExpect(header().string("X-Total-Pages", "50"))
             .andExpect(jsonPath("$.version").value("2.0"))
             .andExpect(jsonPath("$.restaurants[0].id").value(rest1.getUuid()))
             .andExpect(jsonPath("$.restaurants[0].name").value(rest1.getName()))

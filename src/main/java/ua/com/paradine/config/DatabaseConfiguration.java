@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.sql.SQLException;
 
 @Configuration
-@EnableJpaRepositories("ua.com.paradine.repository")
+@EnableJpaRepositories({"ua.com.paradine.repository", "ua.com.paradine.core.dao"})
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 @EnableElasticsearchRepositories("ua.com.paradine.repository.search")
