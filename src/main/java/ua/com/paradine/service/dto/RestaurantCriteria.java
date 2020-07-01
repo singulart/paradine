@@ -1,16 +1,14 @@
 package ua.com.paradine.service.dto;
 
-import java.io.Serializable;
-import java.util.Objects;
 import io.github.jhipster.service.Criteria;
-import io.github.jhipster.service.filter.BooleanFilter;
-import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.Filter;
 import io.github.jhipster.service.filter.FloatFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
 import io.github.jhipster.service.filter.ZonedDateTimeFilter;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Criteria class for the {@link ua.com.paradine.domain.Restaurant} entity. This class is used
@@ -51,8 +49,6 @@ public class RestaurantCriteria implements Serializable, Criteria {
 
     private StringFilter uuid;
 
-    private LongFilter popularTimesId;
-
     public RestaurantCriteria() {
     }
 
@@ -70,7 +66,6 @@ public class RestaurantCriteria implements Serializable, Criteria {
         this.createdAt = other.createdAt == null ? null : other.createdAt.copy();
         this.updatedAt = other.updatedAt == null ? null : other.updatedAt.copy();
         this.uuid = other.uuid == null ? null : other.uuid.copy();
-        this.popularTimesId = other.popularTimesId == null ? null : other.popularTimesId.copy();
     }
 
     @Override
@@ -182,15 +177,6 @@ public class RestaurantCriteria implements Serializable, Criteria {
         this.uuid = uuid;
     }
 
-    public LongFilter getPopularTimesId() {
-        return popularTimesId;
-    }
-
-    public void setPopularTimesId(LongFilter popularTimesId) {
-        this.popularTimesId = popularTimesId;
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -213,8 +199,7 @@ public class RestaurantCriteria implements Serializable, Criteria {
             Objects.equals(capacity, that.capacity) &&
             Objects.equals(createdAt, that.createdAt) &&
             Objects.equals(updatedAt, that.updatedAt) &&
-            Objects.equals(uuid, that.uuid) &&
-            Objects.equals(popularTimesId, that.popularTimesId);
+            Objects.equals(uuid, that.uuid);
     }
 
     @Override
@@ -232,8 +217,7 @@ public class RestaurantCriteria implements Serializable, Criteria {
         capacity,
         createdAt,
         updatedAt,
-        uuid,
-        popularTimesId
+        uuid
         );
     }
 
@@ -254,7 +238,6 @@ public class RestaurantCriteria implements Serializable, Criteria {
                 (createdAt != null ? "createdAt=" + createdAt + ", " : "") +
                 (updatedAt != null ? "updatedAt=" + updatedAt + ", " : "") +
                 (uuid != null ? "uuid=" + uuid + ", " : "") +
-                (popularTimesId != null ? "popularTimesId=" + popularTimesId + ", " : "") +
             "}";
     }
 

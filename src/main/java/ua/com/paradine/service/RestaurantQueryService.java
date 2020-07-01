@@ -131,10 +131,6 @@ public class RestaurantQueryService extends QueryService<Restaurant> {
             if (criteria.getUuid() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getUuid(), Restaurant_.uuid));
             }
-            if (criteria.getPopularTimesId() != null) {
-                specification = specification.and(buildSpecification(criteria.getPopularTimesId(),
-                    root -> root.join(Restaurant_.popularTimes, JoinType.LEFT).get(PopularTime_.id)));
-            }
         }
         return specification;
     }
