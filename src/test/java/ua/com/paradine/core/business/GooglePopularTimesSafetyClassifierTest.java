@@ -31,6 +31,7 @@ class GooglePopularTimesSafetyClassifierTest {
     @Test
     void classifySafety() {
         when(classifier.getToday()).thenReturn("We");
+        when(classifier.getTomorrow()).thenReturn("Th");
 
         RestaurantVO restaurant1 = new RestaurantVO();
         restaurant1.setName("Astarta");

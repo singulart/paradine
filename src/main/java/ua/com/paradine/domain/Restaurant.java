@@ -1,16 +1,23 @@
 package ua.com.paradine.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Restaurant.
@@ -97,7 +104,7 @@ public class Restaurant implements Serializable {
 
     @Transient
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<PopularTime> popularTimes = new HashSet<>();
+    private List<PopularTime> popularTimes = new ArrayList<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -303,11 +310,11 @@ public class Restaurant implements Serializable {
         this.uuid = uuid;
     }
 
-    public Set<PopularTime> getPopularTimes() {
+    public List<PopularTime> getPopularTimes() {
         return popularTimes;
     }
 
-    public Restaurant popularTimes(Set<PopularTime> popularTimes) {
+    public Restaurant popularTimes(List<PopularTime> popularTimes) {
         this.popularTimes = popularTimes;
         return this;
     }
@@ -324,7 +331,7 @@ public class Restaurant implements Serializable {
         return this;
     }
 
-    public void setPopularTimes(Set<PopularTime> popularTimes) {
+    public void setPopularTimes(List<PopularTime> popularTimes) {
         this.popularTimes = popularTimes;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

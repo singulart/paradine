@@ -1,6 +1,7 @@
 package ua.com.paradine.core.business;
 
 import static java.util.Optional.ofNullable;
+import static java.util.stream.Collectors.toList;
 
 import java.util.List;
 import java.util.Set;
@@ -45,7 +46,7 @@ public class ViewClassifiedRestaurantsFlow {
         ViewRestaurantsListCriteria searchCriteria) {
         Page<Restaurant> jpaRestaurants = restaurantDao.searchByCriteria(
             PageRequest.of(ofNullable(searchCriteria.getPage()).orElse(0), pageSize));
-        List<Long> ids = jpaRestaurants.stream().map(Restaurant::getId).collect(Collectors.toList());
+        List<Long> ids = jpaRestaurants.stream().map(Restaurant::getId).collect(toList());
         if (!ids.isEmpty()) {
             List<PopularTime> jpaTimes = popularTimeRepository.fetchByRestaurantIdIn(ids);
             bindPopularTimes(jpaRestaurants, jpaTimes);
@@ -54,14 +55,14 @@ public class ViewClassifiedRestaurantsFlow {
             jpaRestaurants.stream()
                 .map(mapper::dbEntityToValueObject)
                 .map(classifier::classifySafety)
-                .collect(Collectors.toList()), jpaRestaurants.getPageable(), jpaRestaurants.getTotalElements()
+                .collect(toList()), jpaRestaurants.getPageable(), jpaRestaurants.getTotalElements()
         );
     }
 
     private void bindPopularTimes(Page<Restaurant> restaurants, List<PopularTime> popularTimes) {
         restaurants.forEach(r -> {
-           Set<PopularTime> times = popularTimes.stream()
-               .filter(pt -> pt.getRestaurant().getId().equals(r.getId())).collect(Collectors.toSet());
+           List<PopularTime> times = popularTimes.stream()
+               .filter(pt -> pt.getRestaurant().getId().equals(r.getId())).collect(toList());
            r.setPopularTimes(times);
         });
     }
