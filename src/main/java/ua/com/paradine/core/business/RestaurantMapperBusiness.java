@@ -1,5 +1,6 @@
 package ua.com.paradine.core.business;
 
+import java.util.List;
 import java.util.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -22,13 +23,8 @@ public interface RestaurantMapperBusiness {
 
     RestaurantVO dbEntityToValueObject(Restaurant restaurant);
 
-    ClassifiedRestaurantVO convertToSafety(RestaurantVO restaurant, Set<HourlyClassifier> classifiersToday,
-        Set<HourlyClassifier> classifiersTomorrow);
-
-//    default Set<ClassifiedRestaurantVO> convertToSafety(Set<RestaurantVO> restaurants, SafetyMarker marker) {
-//        return restaurants.stream().map(r -> convertToSafety(r, marker)).collect(Collectors.toSet());
-//    }
+    ClassifiedRestaurantVO convertToSafety(RestaurantVO restaurant, List<HourlyClassifier> classifiersToday,
+        List<HourlyClassifier> classifiersTomorrow);
 
     PopularTimeVO dbEntityToValueObject(PopularTime popularTime);
-    Set<PopularTimeVO> dbEntityToValueObject(Set<PopularTime> popularTime);
 }

@@ -9,10 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.Arrays;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -138,19 +136,17 @@ public class ParadineRestLayerTest {
         rest1.setAddressEn("1 Main str");
         rest1.setAddressRu("Главная 1");
         rest1.setAddressUa("Головна 1");
-        rest1.setClassifiersToday(Set.of(
+        rest1.setClassifiersToday(Arrays.asList(
             new HourlyClassifier(10, SafetyMarker.RED),
             new HourlyClassifier(15, SafetyMarker.YELLOW),
             new HourlyClassifier(20, SafetyMarker.GREEN),
             new HourlyClassifier(23, SafetyMarker.CLOSED))
-            .stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new))
         );
-        rest1.setClassifiersTomorrow(Set.of(
+        rest1.setClassifiersTomorrow(Arrays.asList(
             new HourlyClassifier(11, SafetyMarker.RED),
             new HourlyClassifier(16, SafetyMarker.YELLOW),
             new HourlyClassifier(21, SafetyMarker.GREEN),
             new HourlyClassifier(22, SafetyMarker.CLOSED))
-            .stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new))
         );
         when(viewListFlow.fetchClassifiedRestaurants(any())).thenReturn(
             new PageImpl<>(asList(rest1), PageRequest.of(0, 2), 100)

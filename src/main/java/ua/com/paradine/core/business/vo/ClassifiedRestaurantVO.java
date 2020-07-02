@@ -1,25 +1,26 @@
 package ua.com.paradine.core.business.vo;
 
+import java.util.List;
 import java.util.Set;
 
 public class ClassifiedRestaurantVO extends RestaurantVO {
 
-    private Set<HourlyClassifier> classifiersToday;
-    private Set<HourlyClassifier> classifiersTomorrow;
+    private List<HourlyClassifier> classifiersToday;
+    private List<HourlyClassifier> classifiersTomorrow;
 
-    public Set<HourlyClassifier> getClassifiersToday() {
+    public List<HourlyClassifier> getClassifiersToday() {
         return classifiersToday;
     }
 
-    public void setClassifiersToday(Set<HourlyClassifier> classifiersToday) {
+    public void setClassifiersToday(List<HourlyClassifier> classifiersToday) {
         this.classifiersToday = classifiersToday;
     }
 
-    public Set<HourlyClassifier> getClassifiersTomorrow() {
+    public List<HourlyClassifier> getClassifiersTomorrow() {
         return classifiersTomorrow;
     }
 
-    public void setClassifiersTomorrow(Set<HourlyClassifier> classifiersTomorrow) {
+    public void setClassifiersTomorrow(List<HourlyClassifier> classifiersTomorrow) {
         this.classifiersTomorrow = classifiersTomorrow;
     }
 }

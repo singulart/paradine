@@ -4,9 +4,10 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import static ua.com.paradine.core.util.DaysOfWeek.DOW;
 
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 import ua.com.paradine.core.business.vo.ClassifiedRestaurantVO;
@@ -29,19 +30,19 @@ public class GooglePopularTimesSafetyClassifier implements RestaurantSafetyClass
 
     @Override
     public ClassifiedRestaurantVO classifySafety(RestaurantVO restaurant) {
-        Set<HourlyClassifier> today = classify(restaurant, getToday());
-        Set<HourlyClassifier> tomorrow = classify(restaurant, getTomorrow());
+        List<HourlyClassifier> today = classify(restaurant, getToday());
+        List<HourlyClassifier> tomorrow = classify(restaurant, getTomorrow());
         return mapper.convertToSafety(restaurant, today, tomorrow);
     }
 
-    private Set<HourlyClassifier> classify(RestaurantVO restaurant, String dayCode) {
+    private List<HourlyClassifier> classify(RestaurantVO restaurant, String dayCode) {
         Optional<PopularTimeVO> popularTimesToday = restaurant.getPopularTimes().stream()
             .filter(pop -> pop.getDayOfWeek().equals(dayCode))
             .findFirst();
-        Set<HourlyClassifier> classifiers;
+        List<HourlyClassifier> classifiers;
         if (popularTimesToday.isPresent()) {
             PopularTimeVO vo = popularTimesToday.get();
-            classifiers = Set.of(
+            classifiers = Arrays.asList(
                 classifyOccupancy(0, vo.getOcc01()),
                 classifyOccupancy(1, vo.getOcc02()),
                 classifyOccupancy(2, vo.getOcc03()),
@@ -68,7 +69,7 @@ public class GooglePopularTimesSafetyClassifier implements RestaurantSafetyClass
                 classifyOccupancy(23, vo.getOcc24())
             );
         } else {
-            classifiers = new HashSet<>();
+            classifiers = new ArrayList<>();
             for (int i = 0; i < 24; i++) {
                 classifiers.add(new HourlyClassifier(i, SafetyMarker.CLOSED));
             }
