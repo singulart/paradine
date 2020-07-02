@@ -135,6 +135,9 @@ public class ParadineRestLayerTest {
         rest1.setName("Big Bang");
         rest1.setPhotoUrl("https://paradine.com/static/assets/000011/87843874.jpg");
         rest1.setUuid(UUID.randomUUID().toString());
+        rest1.setAddressEn("1 Main str");
+        rest1.setAddressRu("Главная 1");
+        rest1.setAddressUa("Головна 1");
         rest1.setClassifiersToday(Set.of(
             new HourlyClassifier(10, SafetyMarker.RED),
             new HourlyClassifier(15, SafetyMarker.YELLOW),
@@ -162,6 +165,9 @@ public class ParadineRestLayerTest {
             .andExpect(jsonPath("$.restaurants[0].id").value(rest1.getUuid()))
             .andExpect(jsonPath("$.restaurants[0].name").value(rest1.getName()))
             .andExpect(jsonPath("$.restaurants[0].image").value(rest1.getPhotoUrl()))
+            .andExpect(jsonPath("$.restaurants[0].address['ru_RU']").value(rest1.getAddressRu()))
+            .andExpect(jsonPath("$.restaurants[0].address['en_US']").value(rest1.getAddressEn()))
+            .andExpect(jsonPath("$.restaurants[0].address['uk_UA']").value(rest1.getAddressUa()))
             .andExpect(jsonPath("$.restaurants[0].safetyToday[0].h").value(10))
             .andExpect(jsonPath("$.restaurants[0].safetyToday[0].value").value(SafetyMarker.RED.getIndicator()))
             .andExpect(jsonPath("$.restaurants[0].safetyToday[1].h").value(15))

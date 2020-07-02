@@ -1,5 +1,7 @@
 package ua.com.paradine.core.business.vo;
 
+import static java.util.Optional.ofNullable;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,6 +9,9 @@ public class RestaurantVO {
 
     private String uuid;
     private String name;
+    private String addressEn;
+    private String addressRu;
+    private String addressUa;
     private Integer capacity;
     private Float geolat;
     private Float geolng;
@@ -76,5 +81,29 @@ public class RestaurantVO {
 
     public void setPopularTimes(Set<PopularTimeVO> popularTimes) {
         this.popularTimes = popularTimes;
+    }
+
+    public String getAddressUa() {
+        return ofNullable(addressUa).orElse("");
+    }
+
+    public void setAddressUa(String addressUa) {
+        this.addressUa = addressUa;
+    }
+
+    public String getAddressRu() {
+        return ofNullable(addressRu).orElse("");
+    }
+
+    public void setAddressRu(String addressRu) {
+        this.addressRu = addressRu;
+    }
+
+    public String getAddressEn() {
+        return ofNullable(addressEn).orElse("");
+    }
+
+    public void setAddressEn(String addressEn) {
+        this.addressEn = addressEn;
     }
 }
