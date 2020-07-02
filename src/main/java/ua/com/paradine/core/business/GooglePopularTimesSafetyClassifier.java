@@ -91,12 +91,12 @@ public class GooglePopularTimesSafetyClassifier implements RestaurantSafetyClass
         }
     }
 
-    String getToday() {
+    public String getToday() {
         LocalDate date = LocalDate.now();
         return DOW.get(date.getDayOfWeek());
     }
 
-    String getTomorrow() {
+    public String getTomorrow() {
         LocalDate date = LocalDate.now().plus(1, DAYS);
         return DOW.get(date.getDayOfWeek());
     }
