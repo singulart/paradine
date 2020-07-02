@@ -1,1 +1,1 @@
-id;name;alt_name_1;google_places_id;geolat;geolng;photo_url;alt_name_2;alt_name_3;capacity;created_at;updated_at;uuid
+id;name;alt_name_1;address_en;address_ru;address_ua;google_places_id;geolat;geolng;photo_url;alt_name_2;alt_name_3;capacity;created_at;updated_at;uuid

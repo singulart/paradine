@@ -18,6 +18,16 @@ public class RestaurantDTO implements Serializable {
     @Size(max = 128)
     private String altName1;
 
+    @NotNull
+    @Size(max = 200)
+    private String addressEn;
+
+    @Size(max = 200)
+    private String addressRu;
+
+    @Size(max = 200)
+    private String addressUa;
+
     @Size(max = 255)
     private String googlePlacesId;
 
@@ -76,6 +86,30 @@ public class RestaurantDTO implements Serializable {
 
     public void setAltName1(String altName1) {
         this.altName1 = altName1;
+    }
+
+    public String getAddressEn() {
+        return addressEn;
+    }
+
+    public void setAddressEn(String addressEn) {
+        this.addressEn = addressEn;
+    }
+
+    public String getAddressRu() {
+        return addressRu;
+    }
+
+    public void setAddressRu(String addressRu) {
+        this.addressRu = addressRu;
+    }
+
+    public String getAddressUa() {
+        return addressUa;
+    }
+
+    public void setAddressUa(String addressUa) {
+        this.addressUa = addressUa;
     }
 
     public String getGooglePlacesId() {
@@ -182,6 +216,9 @@ public class RestaurantDTO implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", altName1='" + getAltName1() + "'" +
+            ", addressEn='" + getAddressEn() + "'" +
+            ", addressRu='" + getAddressRu() + "'" +
+            ", addressUa='" + getAddressUa() + "'" +
             ", googlePlacesId='" + getGooglePlacesId() + "'" +
             ", geolat=" + getGeolat() +
             ", geolng=" + getGeolng() +

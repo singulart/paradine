@@ -31,6 +31,9 @@ export class RestaurantUpdatePage {
 
   nameInput = element(by.id('field_name'));
   altName1Input = element(by.id('field_altName1'));
+  addressEnInput = element(by.id('field_addressEn'));
+  addressRuInput = element(by.id('field_addressRu'));
+  addressUaInput = element(by.id('field_addressUa'));
   googlePlacesIdInput = element(by.id('field_googlePlacesId'));
   geolatInput = element(by.id('field_geolat'));
   geolngInput = element(by.id('field_geolng'));
@@ -60,6 +63,30 @@ export class RestaurantUpdatePage {
 
   async getAltName1Input(): Promise<string> {
     return await this.altName1Input.getAttribute('value');
+  }
+
+  async setAddressEnInput(addressEn: string): Promise<void> {
+    await this.addressEnInput.sendKeys(addressEn);
+  }
+
+  async getAddressEnInput(): Promise<string> {
+    return await this.addressEnInput.getAttribute('value');
+  }
+
+  async setAddressRuInput(addressRu: string): Promise<void> {
+    await this.addressRuInput.sendKeys(addressRu);
+  }
+
+  async getAddressRuInput(): Promise<string> {
+    return await this.addressRuInput.getAttribute('value');
+  }
+
+  async setAddressUaInput(addressUa: string): Promise<void> {
+    await this.addressUaInput.sendKeys(addressUa);
+  }
+
+  async getAddressUaInput(): Promise<string> {
+    return await this.addressUaInput.getAttribute('value');
   }
 
   async setGooglePlacesIdInput(googlePlacesId: string): Promise<void> {

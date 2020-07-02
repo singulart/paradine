@@ -1,18 +1,16 @@
 package ua.com.paradine.domain;
 
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A Restaurant.
@@ -38,6 +36,19 @@ public class Restaurant implements Serializable {
     @Size(max = 128)
     @Column(name = "alt_name_1", length = 128)
     private String altName1;
+
+    @NotNull
+    @Size(max = 200)
+    @Column(name = "address_en", length = 200, nullable = false)
+    private String addressEn;
+
+    @Size(max = 200)
+    @Column(name = "address_ru", length = 200)
+    private String addressRu;
+
+    @Size(max = 200)
+    @Column(name = "address_ua", length = 200)
+    private String addressUa;
 
     @Size(max = 255)
     @Column(name = "google_places_id", length = 255)
@@ -121,6 +132,45 @@ public class Restaurant implements Serializable {
 
     public void setAltName1(String altName1) {
         this.altName1 = altName1;
+    }
+
+    public String getAddressEn() {
+        return addressEn;
+    }
+
+    public Restaurant addressEn(String addressEn) {
+        this.addressEn = addressEn;
+        return this;
+    }
+
+    public void setAddressEn(String addressEn) {
+        this.addressEn = addressEn;
+    }
+
+    public String getAddressRu() {
+        return addressRu;
+    }
+
+    public Restaurant addressRu(String addressRu) {
+        this.addressRu = addressRu;
+        return this;
+    }
+
+    public void setAddressRu(String addressRu) {
+        this.addressRu = addressRu;
+    }
+
+    public String getAddressUa() {
+        return addressUa;
+    }
+
+    public Restaurant addressUa(String addressUa) {
+        this.addressUa = addressUa;
+        return this;
+    }
+
+    public void setAddressUa(String addressUa) {
+        this.addressUa = addressUa;
     }
 
     public String getGooglePlacesId() {
@@ -302,6 +352,9 @@ public class Restaurant implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", altName1='" + getAltName1() + "'" +
+            ", addressEn='" + getAddressEn() + "'" +
+            ", addressRu='" + getAddressRu() + "'" +
+            ", addressUa='" + getAddressUa() + "'" +
             ", googlePlacesId='" + getGooglePlacesId() + "'" +
             ", geolat=" + getGeolat() +
             ", geolng=" + getGeolng() +

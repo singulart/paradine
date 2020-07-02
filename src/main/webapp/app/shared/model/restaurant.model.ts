@@ -1,10 +1,12 @@
 import { Moment } from 'moment';
-import { IPopularTime } from 'app/shared/model/popular-time.model';
 
 export interface IRestaurant {
   id?: number;
   name?: string;
   altName1?: string;
+  addressEn?: string;
+  addressRu?: string;
+  addressUa?: string;
   googlePlacesId?: string;
   geolat?: number;
   geolng?: number;
@@ -15,7 +17,6 @@ export interface IRestaurant {
   createdAt?: Moment;
   updatedAt?: Moment;
   uuid?: string;
-  popularTimes?: IPopularTime[];
 }
 
 export class Restaurant implements IRestaurant {
@@ -23,6 +24,9 @@ export class Restaurant implements IRestaurant {
     public id?: number,
     public name?: string,
     public altName1?: string,
+    public addressEn?: string,
+    public addressRu?: string,
+    public addressUa?: string,
     public googlePlacesId?: string,
     public geolat?: number,
     public geolng?: number,
@@ -32,7 +36,6 @@ export class Restaurant implements IRestaurant {
     public capacity?: number,
     public createdAt?: Moment,
     public updatedAt?: Moment,
-    public uuid?: string,
-    public popularTimes?: IPopularTime[]
+    public uuid?: string
   ) {}
 }

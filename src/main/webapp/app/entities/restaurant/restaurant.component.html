@@ -43,6 +43,9 @@
                     <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="name"><span jhiTranslate="paradineApp.restaurant.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="altName1"><span jhiTranslate="paradineApp.restaurant.altName1">Alt Name 1</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="addressEn"><span jhiTranslate="paradineApp.restaurant.addressEn">Address En</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="addressRu"><span jhiTranslate="paradineApp.restaurant.addressRu">Address Ru</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="addressUa"><span jhiTranslate="paradineApp.restaurant.addressUa">Address Ua</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="googlePlacesId"><span jhiTranslate="paradineApp.restaurant.googlePlacesId">Google Places Id</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="geolat"><span jhiTranslate="paradineApp.restaurant.geolat">Geolat</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="geolng"><span jhiTranslate="paradineApp.restaurant.geolng">Geolng</span> <fa-icon icon="sort"></fa-icon></th>
@@ -61,6 +64,9 @@
                     <td><a [routerLink]="['/restaurant', restaurant.id, 'view']">{{ restaurant.id }}</a></td>
                     <td>{{ restaurant.name }}</td>
                     <td>{{ restaurant.altName1 }}</td>
+                    <td>{{ restaurant.addressEn }}</td>
+                    <td>{{ restaurant.addressRu }}</td>
+                    <td>{{ restaurant.addressUa }}</td>
                     <td>{{ restaurant.googlePlacesId }}</td>
                     <td>{{ restaurant.geolat }}</td>
                     <td>{{ restaurant.geolng }}</td>

@@ -19,6 +19,9 @@
       },
       "name": "Name",
       "altName1": "Alt Name 1",
+      "addressEn": "Address En",
+      "addressRu": "Address Ru",
+      "addressUa": "Address Ua",
       "googlePlacesId": "Google Places Id",
       "geolat": "Geolat",
       "geolng": "Geolng",
@@ -28,8 +31,7 @@
       "capacity": "Capacity",
       "createdAt": "Created At",
       "updatedAt": "Updated At",
-      "uuid": "Uuid",
-      "popularTimes": "Popular Times"
+      "uuid": "Uuid"
     }
   }
 }

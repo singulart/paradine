@@ -44,6 +44,46 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.restaurant.addressEn" for="field_addressEn">Address En</label>
+                    <input type="text" class="form-control" name="addressEn" id="field_addressEn"
+                           formControlName="addressEn"/>
+                    <div *ngIf="editForm.get('addressEn')!.invalid && (editForm.get('addressEn')!.dirty || editForm.get('addressEn')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('addressEn')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('addressEn')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 200 }">
+                        This field cannot be longer than 200 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.restaurant.addressRu" for="field_addressRu">Address Ru</label>
+                    <input type="text" class="form-control" name="addressRu" id="field_addressRu"
+                           formControlName="addressRu"/>
+                    <div *ngIf="editForm.get('addressRu')!.invalid && (editForm.get('addressRu')!.dirty || editForm.get('addressRu')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('addressRu')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 200 }">
+                        This field cannot be longer than 200 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.restaurant.addressUa" for="field_addressUa">Address Ua</label>
+                    <input type="text" class="form-control" name="addressUa" id="field_addressUa"
+                           formControlName="addressUa"/>
+                    <div *ngIf="editForm.get('addressUa')!.invalid && (editForm.get('addressUa')!.dirty || editForm.get('addressUa')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('addressUa')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 200 }">
+                        This field cannot be longer than 200 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="paradineApp.restaurant.googlePlacesId" for="field_googlePlacesId">Google Places Id</label>
                     <input type="text" class="form-control" name="googlePlacesId" id="field_googlePlacesId"
                            formControlName="googlePlacesId"/>

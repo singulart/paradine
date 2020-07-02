@@ -1,14 +1,6 @@
 {
   "fluentMethods": true,
   "clientRootFolder": "",
-  "relationships": [
-    {
-      "relationshipName": "popularTimes",
-      "otherEntityName": "popularTime",
-      "relationshipType": "one-to-many",
-      "otherEntityRelationshipName": "restaurant"
-    }
-  ],
   "fields": [
     {
       "fieldName": "name",
@@ -22,6 +14,24 @@
       "fieldType": "String",
       "fieldValidateRules": ["maxlength"],
       "fieldValidateRulesMaxlength": "128"
+    },
+    {
+      "fieldName": "addressEn",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "200"
+    },
+    {
+      "fieldName": "addressRu",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "200"
+    },
+    {
+      "fieldName": "addressUa",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "200"
     },
     {
       "fieldName": "googlePlacesId",
@@ -92,5 +102,6 @@
   "databaseType": "sql",
   "readOnly": false,
   "jpaMetamodelFiltering": true,
-  "pagination": "infinite-scroll"
+  "pagination": "infinite-scroll",
+  "relationships": []
 }

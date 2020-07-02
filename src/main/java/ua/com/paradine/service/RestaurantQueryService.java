@@ -101,6 +101,15 @@ public class RestaurantQueryService extends QueryService<Restaurant> {
             if (criteria.getAltName1() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getAltName1(), Restaurant_.altName1));
             }
+            if (criteria.getAddressEn() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getAddressEn(), Restaurant_.addressEn));
+            }
+            if (criteria.getAddressRu() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getAddressRu(), Restaurant_.addressRu));
+            }
+            if (criteria.getAddressUa() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getAddressUa(), Restaurant_.addressUa));
+            }
             if (criteria.getGooglePlacesId() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getGooglePlacesId(), Restaurant_.googlePlacesId));
             }

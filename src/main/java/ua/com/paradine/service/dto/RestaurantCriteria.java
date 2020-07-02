@@ -1,14 +1,16 @@
 package ua.com.paradine.service.dto;
 
+import java.io.Serializable;
+import java.util.Objects;
 import io.github.jhipster.service.Criteria;
+import io.github.jhipster.service.filter.BooleanFilter;
+import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.Filter;
 import io.github.jhipster.service.filter.FloatFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
 import io.github.jhipster.service.filter.ZonedDateTimeFilter;
-import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * Criteria class for the {@link ua.com.paradine.domain.Restaurant} entity. This class is used
@@ -28,6 +30,12 @@ public class RestaurantCriteria implements Serializable, Criteria {
     private StringFilter name;
 
     private StringFilter altName1;
+
+    private StringFilter addressEn;
+
+    private StringFilter addressRu;
+
+    private StringFilter addressUa;
 
     private StringFilter googlePlacesId;
 
@@ -56,6 +64,9 @@ public class RestaurantCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.name = other.name == null ? null : other.name.copy();
         this.altName1 = other.altName1 == null ? null : other.altName1.copy();
+        this.addressEn = other.addressEn == null ? null : other.addressEn.copy();
+        this.addressRu = other.addressRu == null ? null : other.addressRu.copy();
+        this.addressUa = other.addressUa == null ? null : other.addressUa.copy();
         this.googlePlacesId = other.googlePlacesId == null ? null : other.googlePlacesId.copy();
         this.geolat = other.geolat == null ? null : other.geolat.copy();
         this.geolng = other.geolng == null ? null : other.geolng.copy();
@@ -95,6 +106,30 @@ public class RestaurantCriteria implements Serializable, Criteria {
 
     public void setAltName1(StringFilter altName1) {
         this.altName1 = altName1;
+    }
+
+    public StringFilter getAddressEn() {
+        return addressEn;
+    }
+
+    public void setAddressEn(StringFilter addressEn) {
+        this.addressEn = addressEn;
+    }
+
+    public StringFilter getAddressRu() {
+        return addressRu;
+    }
+
+    public void setAddressRu(StringFilter addressRu) {
+        this.addressRu = addressRu;
+    }
+
+    public StringFilter getAddressUa() {
+        return addressUa;
+    }
+
+    public void setAddressUa(StringFilter addressUa) {
+        this.addressUa = addressUa;
     }
 
     public StringFilter getGooglePlacesId() {
@@ -177,6 +212,7 @@ public class RestaurantCriteria implements Serializable, Criteria {
         this.uuid = uuid;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -190,6 +226,9 @@ public class RestaurantCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
             Objects.equals(altName1, that.altName1) &&
+            Objects.equals(addressEn, that.addressEn) &&
+            Objects.equals(addressRu, that.addressRu) &&
+            Objects.equals(addressUa, that.addressUa) &&
             Objects.equals(googlePlacesId, that.googlePlacesId) &&
             Objects.equals(geolat, that.geolat) &&
             Objects.equals(geolng, that.geolng) &&
@@ -208,6 +247,9 @@ public class RestaurantCriteria implements Serializable, Criteria {
         id,
         name,
         altName1,
+        addressEn,
+        addressRu,
+        addressUa,
         googlePlacesId,
         geolat,
         geolng,
@@ -228,6 +270,9 @@ public class RestaurantCriteria implements Serializable, Criteria {
                 (id != null ? "id=" + id + ", " : "") +
                 (name != null ? "name=" + name + ", " : "") +
                 (altName1 != null ? "altName1=" + altName1 + ", " : "") +
+                (addressEn != null ? "addressEn=" + addressEn + ", " : "") +
+                (addressRu != null ? "addressRu=" + addressRu + ", " : "") +
+                (addressUa != null ? "addressUa=" + addressUa + ", " : "") +
                 (googlePlacesId != null ? "googlePlacesId=" + googlePlacesId + ", " : "") +
                 (geolat != null ? "geolat=" + geolat + ", " : "") +
                 (geolng != null ? "geolng=" + geolng + ", " : "") +

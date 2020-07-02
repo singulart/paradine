@@ -43,6 +43,9 @@ describe('Restaurant e2e test', () => {
     await promise.all([
       restaurantUpdatePage.setNameInput('name'),
       restaurantUpdatePage.setAltName1Input('altName1'),
+      restaurantUpdatePage.setAddressEnInput('addressEn'),
+      restaurantUpdatePage.setAddressRuInput('addressRu'),
+      restaurantUpdatePage.setAddressUaInput('addressUa'),
       restaurantUpdatePage.setGooglePlacesIdInput('googlePlacesId'),
       restaurantUpdatePage.setGeolatInput('5'),
       restaurantUpdatePage.setGeolngInput('5'),
@@ -57,6 +60,9 @@ describe('Restaurant e2e test', () => {
 
     expect(await restaurantUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
     expect(await restaurantUpdatePage.getAltName1Input()).to.eq('altName1', 'Expected AltName1 value to be equals to altName1');
+    expect(await restaurantUpdatePage.getAddressEnInput()).to.eq('addressEn', 'Expected AddressEn value to be equals to addressEn');
+    expect(await restaurantUpdatePage.getAddressRuInput()).to.eq('addressRu', 'Expected AddressRu value to be equals to addressRu');
+    expect(await restaurantUpdatePage.getAddressUaInput()).to.eq('addressUa', 'Expected AddressUa value to be equals to addressUa');
     expect(await restaurantUpdatePage.getGooglePlacesIdInput()).to.eq(
       'googlePlacesId',
       'Expected GooglePlacesId value to be equals to googlePlacesId'

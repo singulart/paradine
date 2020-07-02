@@ -2,7 +2,6 @@ package ua.com.paradine.web.rest;
 
 import ua.com.paradine.ParadineApp;
 import ua.com.paradine.domain.Restaurant;
-import ua.com.paradine.domain.PopularTime;
 import ua.com.paradine.repository.RestaurantRepository;
 import ua.com.paradine.repository.search.RestaurantSearchRepository;
 import ua.com.paradine.service.RestaurantService;
@@ -56,6 +55,15 @@ public class RestaurantResourceIT {
     private static final String DEFAULT_ALT_NAME_1 = "AAAAAAAAAA";
     private static final String UPDATED_ALT_NAME_1 = "BBBBBBBBBB";
 
+    private static final String DEFAULT_ADDRESS_EN = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS_EN = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ADDRESS_RU = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS_RU = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ADDRESS_UA = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS_UA = "BBBBBBBBBB";
+
     private static final String DEFAULT_GOOGLE_PLACES_ID = "AAAAAAAAAA";
     private static final String UPDATED_GOOGLE_PLACES_ID = "BBBBBBBBBB";
 
@@ -67,8 +75,8 @@ public class RestaurantResourceIT {
     private static final Float UPDATED_GEOLNG = 2F;
     private static final Float SMALLER_GEOLNG = 1F - 1F;
 
-    private static final String DEFAULT_PHOTO_URL = "Iy#C2FH~xZdPgFkO_UR06KN5))5_TNpWmp+(H+yNb:_)JrI#Lw?:vfqPDMw#MY8vSr#BVXYN#Pd6whHS_C3HeUmfNnFq1HI14evLr57j_0h4RwtJ5St%iMY9lyFa/t/2DFuT7UPbt4)~J@KIwd(4V2?)hjxmI:U3ScBaXVogg@)W+:YAZy4:6U?)Q1s_8L8=Hm%whBBH33GKguwMw2o2EwLkU(.cuvff";
-    private static final String UPDATED_PHOTO_URL = "FH?Vt#gFyPU2twi_On:32_jqc76#1.+#V:%gA7A_bOGa4iK3@b=8g3wkFMXy65XIH7uwGXfj.eGk8QSllxsXMk.WqSwF+:NNHDQ9+=gatBPqQL#umwT/wup2Ob67kv0#IhVfNEITs2hTXnABBCrtnCbIPQ8w.dwb9CG8";
+    private static final String DEFAULT_PHOTO_URL = "rCKfE@3qs%T9c6vv_sA+G9%XkgKR8Ih(C#DDs7#y6ZuM2=9OLhCBush1OACrZ8bkMXIx2ZJugZ:4sn(_8t7Z(FtQoku57iohYzPQDkTZWF4.dh";
+    private static final String UPDATED_PHOTO_URL = "IT#md1g:lzf3RtzZK#L3sKW00KvH)ea8~6Hd8F3zNl~PxFyc?2BYrB8ZbQg%(BfMPGol+RqVwC@5Jvlr0oMbuaE.sbc";
 
     private static final String DEFAULT_ALT_NAME_2 = "AAAAAAAAAA";
     private static final String UPDATED_ALT_NAME_2 = "BBBBBBBBBB";
@@ -88,8 +96,8 @@ public class RestaurantResourceIT {
     private static final ZonedDateTime UPDATED_UPDATED_AT = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
     private static final ZonedDateTime SMALLER_UPDATED_AT = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
 
-    private static final String DEFAULT_UUID = "7F6E3188-8738-cA2c-E96C-289e92eBdC3B";
-    private static final String UPDATED_UUID = "E8f2C87F-6674-CeC2-A1BB-7DfBcdBBfE2a";
+    private static final String DEFAULT_UUID = "63C5Cdcb-74eE-AAEC-E8B6-ea1FdB393611";
+    private static final String UPDATED_UUID = "c4B457Db-FA25-bb2D-DAD5-AFA9ABFb7BEb";
 
     @Autowired
     private RestaurantRepository restaurantRepository;
@@ -129,6 +137,9 @@ public class RestaurantResourceIT {
         Restaurant restaurant = new Restaurant()
             .name(DEFAULT_NAME)
             .altName1(DEFAULT_ALT_NAME_1)
+            .addressEn(DEFAULT_ADDRESS_EN)
+            .addressRu(DEFAULT_ADDRESS_RU)
+            .addressUa(DEFAULT_ADDRESS_UA)
             .googlePlacesId(DEFAULT_GOOGLE_PLACES_ID)
             .geolat(DEFAULT_GEOLAT)
             .geolng(DEFAULT_GEOLNG)
@@ -151,6 +162,9 @@ public class RestaurantResourceIT {
         Restaurant restaurant = new Restaurant()
             .name(UPDATED_NAME)
             .altName1(UPDATED_ALT_NAME_1)
+            .addressEn(UPDATED_ADDRESS_EN)
+            .addressRu(UPDATED_ADDRESS_RU)
+            .addressUa(UPDATED_ADDRESS_UA)
             .googlePlacesId(UPDATED_GOOGLE_PLACES_ID)
             .geolat(UPDATED_GEOLAT)
             .geolng(UPDATED_GEOLNG)
@@ -186,6 +200,9 @@ public class RestaurantResourceIT {
         Restaurant testRestaurant = restaurantList.get(restaurantList.size() - 1);
         assertThat(testRestaurant.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testRestaurant.getAltName1()).isEqualTo(DEFAULT_ALT_NAME_1);
+        assertThat(testRestaurant.getAddressEn()).isEqualTo(DEFAULT_ADDRESS_EN);
+        assertThat(testRestaurant.getAddressRu()).isEqualTo(DEFAULT_ADDRESS_RU);
+        assertThat(testRestaurant.getAddressUa()).isEqualTo(DEFAULT_ADDRESS_UA);
         assertThat(testRestaurant.getGooglePlacesId()).isEqualTo(DEFAULT_GOOGLE_PLACES_ID);
         assertThat(testRestaurant.getGeolat()).isEqualTo(DEFAULT_GEOLAT);
         assertThat(testRestaurant.getGeolng()).isEqualTo(DEFAULT_GEOLNG);
@@ -231,6 +248,26 @@ public class RestaurantResourceIT {
         int databaseSizeBeforeTest = restaurantRepository.findAll().size();
         // set the field null
         restaurant.setName(null);
+
+        // Create the Restaurant, which fails.
+        RestaurantDTO restaurantDTO = restaurantMapper.toDto(restaurant);
+
+
+        restRestaurantMockMvc.perform(post("/api/restaurants")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(restaurantDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Restaurant> restaurantList = restaurantRepository.findAll();
+        assertThat(restaurantList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAddressEnIsRequired() throws Exception {
+        int databaseSizeBeforeTest = restaurantRepository.findAll().size();
+        // set the field null
+        restaurant.setAddressEn(null);
 
         // Create the Restaurant, which fails.
         RestaurantDTO restaurantDTO = restaurantMapper.toDto(restaurant);
@@ -398,6 +435,9 @@ public class RestaurantResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(restaurant.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].altName1").value(hasItem(DEFAULT_ALT_NAME_1)))
+            .andExpect(jsonPath("$.[*].addressEn").value(hasItem(DEFAULT_ADDRESS_EN)))
+            .andExpect(jsonPath("$.[*].addressRu").value(hasItem(DEFAULT_ADDRESS_RU)))
+            .andExpect(jsonPath("$.[*].addressUa").value(hasItem(DEFAULT_ADDRESS_UA)))
             .andExpect(jsonPath("$.[*].googlePlacesId").value(hasItem(DEFAULT_GOOGLE_PLACES_ID)))
             .andExpect(jsonPath("$.[*].geolat").value(hasItem(DEFAULT_GEOLAT.doubleValue())))
             .andExpect(jsonPath("$.[*].geolng").value(hasItem(DEFAULT_GEOLNG.doubleValue())))
@@ -423,6 +463,9 @@ public class RestaurantResourceIT {
             .andExpect(jsonPath("$.id").value(restaurant.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.altName1").value(DEFAULT_ALT_NAME_1))
+            .andExpect(jsonPath("$.addressEn").value(DEFAULT_ADDRESS_EN))
+            .andExpect(jsonPath("$.addressRu").value(DEFAULT_ADDRESS_RU))
+            .andExpect(jsonPath("$.addressUa").value(DEFAULT_ADDRESS_UA))
             .andExpect(jsonPath("$.googlePlacesId").value(DEFAULT_GOOGLE_PLACES_ID))
             .andExpect(jsonPath("$.geolat").value(DEFAULT_GEOLAT.doubleValue()))
             .andExpect(jsonPath("$.geolng").value(DEFAULT_GEOLNG.doubleValue()))
@@ -608,6 +651,240 @@ public class RestaurantResourceIT {
 
         // Get all the restaurantList where altName1 does not contain UPDATED_ALT_NAME_1
         defaultRestaurantShouldBeFound("altName1.doesNotContain=" + UPDATED_ALT_NAME_1);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByAddressEnIsEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressEn equals to DEFAULT_ADDRESS_EN
+        defaultRestaurantShouldBeFound("addressEn.equals=" + DEFAULT_ADDRESS_EN);
+
+        // Get all the restaurantList where addressEn equals to UPDATED_ADDRESS_EN
+        defaultRestaurantShouldNotBeFound("addressEn.equals=" + UPDATED_ADDRESS_EN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByAddressEnIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressEn not equals to DEFAULT_ADDRESS_EN
+        defaultRestaurantShouldNotBeFound("addressEn.notEquals=" + DEFAULT_ADDRESS_EN);
+
+        // Get all the restaurantList where addressEn not equals to UPDATED_ADDRESS_EN
+        defaultRestaurantShouldBeFound("addressEn.notEquals=" + UPDATED_ADDRESS_EN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByAddressEnIsInShouldWork() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressEn in DEFAULT_ADDRESS_EN or UPDATED_ADDRESS_EN
+        defaultRestaurantShouldBeFound("addressEn.in=" + DEFAULT_ADDRESS_EN + "," + UPDATED_ADDRESS_EN);
+
+        // Get all the restaurantList where addressEn equals to UPDATED_ADDRESS_EN
+        defaultRestaurantShouldNotBeFound("addressEn.in=" + UPDATED_ADDRESS_EN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByAddressEnIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressEn is not null
+        defaultRestaurantShouldBeFound("addressEn.specified=true");
+
+        // Get all the restaurantList where addressEn is null
+        defaultRestaurantShouldNotBeFound("addressEn.specified=false");
+    }
+                @Test
+    @Transactional
+    public void getAllRestaurantsByAddressEnContainsSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressEn contains DEFAULT_ADDRESS_EN
+        defaultRestaurantShouldBeFound("addressEn.contains=" + DEFAULT_ADDRESS_EN);
+
+        // Get all the restaurantList where addressEn contains UPDATED_ADDRESS_EN
+        defaultRestaurantShouldNotBeFound("addressEn.contains=" + UPDATED_ADDRESS_EN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByAddressEnNotContainsSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressEn does not contain DEFAULT_ADDRESS_EN
+        defaultRestaurantShouldNotBeFound("addressEn.doesNotContain=" + DEFAULT_ADDRESS_EN);
+
+        // Get all the restaurantList where addressEn does not contain UPDATED_ADDRESS_EN
+        defaultRestaurantShouldBeFound("addressEn.doesNotContain=" + UPDATED_ADDRESS_EN);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByAddressRuIsEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressRu equals to DEFAULT_ADDRESS_RU
+        defaultRestaurantShouldBeFound("addressRu.equals=" + DEFAULT_ADDRESS_RU);
+
+        // Get all the restaurantList where addressRu equals to UPDATED_ADDRESS_RU
+        defaultRestaurantShouldNotBeFound("addressRu.equals=" + UPDATED_ADDRESS_RU);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByAddressRuIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressRu not equals to DEFAULT_ADDRESS_RU
+        defaultRestaurantShouldNotBeFound("addressRu.notEquals=" + DEFAULT_ADDRESS_RU);
+
+        // Get all the restaurantList where addressRu not equals to UPDATED_ADDRESS_RU
+        defaultRestaurantShouldBeFound("addressRu.notEquals=" + UPDATED_ADDRESS_RU);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByAddressRuIsInShouldWork() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressRu in DEFAULT_ADDRESS_RU or UPDATED_ADDRESS_RU
+        defaultRestaurantShouldBeFound("addressRu.in=" + DEFAULT_ADDRESS_RU + "," + UPDATED_ADDRESS_RU);
+
+        // Get all the restaurantList where addressRu equals to UPDATED_ADDRESS_RU
+        defaultRestaurantShouldNotBeFound("addressRu.in=" + UPDATED_ADDRESS_RU);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByAddressRuIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressRu is not null
+        defaultRestaurantShouldBeFound("addressRu.specified=true");
+
+        // Get all the restaurantList where addressRu is null
+        defaultRestaurantShouldNotBeFound("addressRu.specified=false");
+    }
+                @Test
+    @Transactional
+    public void getAllRestaurantsByAddressRuContainsSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressRu contains DEFAULT_ADDRESS_RU
+        defaultRestaurantShouldBeFound("addressRu.contains=" + DEFAULT_ADDRESS_RU);
+
+        // Get all the restaurantList where addressRu contains UPDATED_ADDRESS_RU
+        defaultRestaurantShouldNotBeFound("addressRu.contains=" + UPDATED_ADDRESS_RU);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByAddressRuNotContainsSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressRu does not contain DEFAULT_ADDRESS_RU
+        defaultRestaurantShouldNotBeFound("addressRu.doesNotContain=" + DEFAULT_ADDRESS_RU);
+
+        // Get all the restaurantList where addressRu does not contain UPDATED_ADDRESS_RU
+        defaultRestaurantShouldBeFound("addressRu.doesNotContain=" + UPDATED_ADDRESS_RU);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByAddressUaIsEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressUa equals to DEFAULT_ADDRESS_UA
+        defaultRestaurantShouldBeFound("addressUa.equals=" + DEFAULT_ADDRESS_UA);
+
+        // Get all the restaurantList where addressUa equals to UPDATED_ADDRESS_UA
+        defaultRestaurantShouldNotBeFound("addressUa.equals=" + UPDATED_ADDRESS_UA);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByAddressUaIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressUa not equals to DEFAULT_ADDRESS_UA
+        defaultRestaurantShouldNotBeFound("addressUa.notEquals=" + DEFAULT_ADDRESS_UA);
+
+        // Get all the restaurantList where addressUa not equals to UPDATED_ADDRESS_UA
+        defaultRestaurantShouldBeFound("addressUa.notEquals=" + UPDATED_ADDRESS_UA);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByAddressUaIsInShouldWork() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressUa in DEFAULT_ADDRESS_UA or UPDATED_ADDRESS_UA
+        defaultRestaurantShouldBeFound("addressUa.in=" + DEFAULT_ADDRESS_UA + "," + UPDATED_ADDRESS_UA);
+
+        // Get all the restaurantList where addressUa equals to UPDATED_ADDRESS_UA
+        defaultRestaurantShouldNotBeFound("addressUa.in=" + UPDATED_ADDRESS_UA);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByAddressUaIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressUa is not null
+        defaultRestaurantShouldBeFound("addressUa.specified=true");
+
+        // Get all the restaurantList where addressUa is null
+        defaultRestaurantShouldNotBeFound("addressUa.specified=false");
+    }
+                @Test
+    @Transactional
+    public void getAllRestaurantsByAddressUaContainsSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressUa contains DEFAULT_ADDRESS_UA
+        defaultRestaurantShouldBeFound("addressUa.contains=" + DEFAULT_ADDRESS_UA);
+
+        // Get all the restaurantList where addressUa contains UPDATED_ADDRESS_UA
+        defaultRestaurantShouldNotBeFound("addressUa.contains=" + UPDATED_ADDRESS_UA);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByAddressUaNotContainsSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where addressUa does not contain DEFAULT_ADDRESS_UA
+        defaultRestaurantShouldNotBeFound("addressUa.doesNotContain=" + DEFAULT_ADDRESS_UA);
+
+        // Get all the restaurantList where addressUa does not contain UPDATED_ADDRESS_UA
+        defaultRestaurantShouldBeFound("addressUa.doesNotContain=" + UPDATED_ADDRESS_UA);
     }
 
 
@@ -1525,26 +1802,6 @@ public class RestaurantResourceIT {
         defaultRestaurantShouldBeFound("uuid.doesNotContain=" + UPDATED_UUID);
     }
 
-
-    @Test
-    @Transactional
-    public void getAllRestaurantsByPopularTimesIsEqualToSomething() throws Exception {
-        // Initialize the database
-        restaurantRepository.saveAndFlush(restaurant);
-        PopularTime popularTimes = PopularTimeResourceIT.createEntity(em);
-        em.persist(popularTimes);
-        em.flush();
-        restaurant.addPopularTimes(popularTimes);
-        restaurantRepository.saveAndFlush(restaurant);
-        Long popularTimesId = popularTimes.getId();
-
-        // Get all the restaurantList where popularTimes equals to popularTimesId
-        defaultRestaurantShouldBeFound("popularTimesId.equals=" + popularTimesId);
-
-        // Get all the restaurantList where popularTimes equals to popularTimesId + 1
-        defaultRestaurantShouldNotBeFound("popularTimesId.equals=" + (popularTimesId + 1));
-    }
-
     /**
      * Executes the search, and checks that the default entity is returned.
      */
@@ -1555,6 +1812,9 @@ public class RestaurantResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(restaurant.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].altName1").value(hasItem(DEFAULT_ALT_NAME_1)))
+            .andExpect(jsonPath("$.[*].addressEn").value(hasItem(DEFAULT_ADDRESS_EN)))
+            .andExpect(jsonPath("$.[*].addressRu").value(hasItem(DEFAULT_ADDRESS_RU)))
+            .andExpect(jsonPath("$.[*].addressUa").value(hasItem(DEFAULT_ADDRESS_UA)))
             .andExpect(jsonPath("$.[*].googlePlacesId").value(hasItem(DEFAULT_GOOGLE_PLACES_ID)))
             .andExpect(jsonPath("$.[*].geolat").value(hasItem(DEFAULT_GEOLAT.doubleValue())))
             .andExpect(jsonPath("$.[*].geolng").value(hasItem(DEFAULT_GEOLNG.doubleValue())))
@@ -1613,6 +1873,9 @@ public class RestaurantResourceIT {
         updatedRestaurant
             .name(UPDATED_NAME)
             .altName1(UPDATED_ALT_NAME_1)
+            .addressEn(UPDATED_ADDRESS_EN)
+            .addressRu(UPDATED_ADDRESS_RU)
+            .addressUa(UPDATED_ADDRESS_UA)
             .googlePlacesId(UPDATED_GOOGLE_PLACES_ID)
             .geolat(UPDATED_GEOLAT)
             .geolng(UPDATED_GEOLNG)
@@ -1636,6 +1899,9 @@ public class RestaurantResourceIT {
         Restaurant testRestaurant = restaurantList.get(restaurantList.size() - 1);
         assertThat(testRestaurant.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testRestaurant.getAltName1()).isEqualTo(UPDATED_ALT_NAME_1);
+        assertThat(testRestaurant.getAddressEn()).isEqualTo(UPDATED_ADDRESS_EN);
+        assertThat(testRestaurant.getAddressRu()).isEqualTo(UPDATED_ADDRESS_RU);
+        assertThat(testRestaurant.getAddressUa()).isEqualTo(UPDATED_ADDRESS_UA);
         assertThat(testRestaurant.getGooglePlacesId()).isEqualTo(UPDATED_GOOGLE_PLACES_ID);
         assertThat(testRestaurant.getGeolat()).isEqualTo(UPDATED_GEOLAT);
         assertThat(testRestaurant.getGeolng()).isEqualTo(UPDATED_GEOLNG);
@@ -1710,6 +1976,9 @@ public class RestaurantResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(restaurant.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].altName1").value(hasItem(DEFAULT_ALT_NAME_1)))
+            .andExpect(jsonPath("$.[*].addressEn").value(hasItem(DEFAULT_ADDRESS_EN)))
+            .andExpect(jsonPath("$.[*].addressRu").value(hasItem(DEFAULT_ADDRESS_RU)))
+            .andExpect(jsonPath("$.[*].addressUa").value(hasItem(DEFAULT_ADDRESS_UA)))
             .andExpect(jsonPath("$.[*].googlePlacesId").value(hasItem(DEFAULT_GOOGLE_PLACES_ID)))
             .andExpect(jsonPath("$.[*].geolat").value(hasItem(DEFAULT_GEOLAT.doubleValue())))
             .andExpect(jsonPath("$.[*].geolng").value(hasItem(DEFAULT_GEOLNG.doubleValue())))
