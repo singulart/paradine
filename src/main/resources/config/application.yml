@@ -40,6 +40,11 @@
 #ribbon:
 #  eureka:
 #    enabled: true
+paradine:
+  api:
+    version: 2.0
+  page:
+    size: 10
 management:
   endpoints:
     web:

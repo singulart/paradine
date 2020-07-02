@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "paradine.api.version",
+      "type": "java.lang.String",
+      "description": "API version in a form of x.y, where 'x' is a major, 'y' is a minor version."
+    },
+    {
+      "name": "paradine.page.size",
+      "type": "java.lang.Integer",
+      "description": "Number of restaurants to fetch in a single API call."
+    }
+  ]
+}

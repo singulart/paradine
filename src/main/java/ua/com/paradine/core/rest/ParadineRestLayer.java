@@ -1,7 +1,5 @@
 package ua.com.paradine.core.rest;
 
-import java.util.Collections;
-import java.util.Set;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
