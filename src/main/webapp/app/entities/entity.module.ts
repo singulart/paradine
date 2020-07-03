@@ -12,6 +12,10 @@ import { RouterModule } from '@angular/router';
         path: 'popular-time',
         loadChildren: () => import('./popular-time/popular-time.module').then(m => m.ParadinePopularTimeModule),
       },
+      {
+        path: 'working-hours',
+        loadChildren: () => import('./working-hours/working-hours.module').then(m => m.ParadineWorkingHoursModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

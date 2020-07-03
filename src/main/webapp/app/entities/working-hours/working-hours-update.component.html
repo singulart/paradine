@@ -1,0 +1,106 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-working-hours-heading" jhiTranslate="paradineApp.workingHours.home.createOrEditLabel">Create or edit a Working Hours</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.workingHours.dayOfWeek" for="field_dayOfWeek">Day Of Week</label>
+                    <input type="text" class="form-control" name="dayOfWeek" id="field_dayOfWeek"
+                           formControlName="dayOfWeek"/>
+                    <div *ngIf="editForm.get('dayOfWeek')!.invalid && (editForm.get('dayOfWeek')!.dirty || editForm.get('dayOfWeek')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('dayOfWeek')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('dayOfWeek')?.errors?.minlength" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 2 }">
+                        This field is required to be at least 2 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('dayOfWeek')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 2 }">
+                        This field cannot be longer than 2 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.workingHours.closed" for="field_closed">Closed</label>
+                    <input type="checkbox" class="form-control" name="closed" id="field_closed"
+                           formControlName="closed"/>
+                    <div *ngIf="editForm.get('closed')!.invalid && (editForm.get('closed')!.dirty || editForm.get('closed')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('closed')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.workingHours.openingHour" for="field_openingHour">Opening Hour</label>
+                    <input type="number" class="form-control" name="openingHour" id="field_openingHour"
+                           formControlName="openingHour"/>
+                    <div *ngIf="editForm.get('openingHour')!.invalid && (editForm.get('openingHour')!.dirty || editForm.get('openingHour')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('openingHour')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('openingHour')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 24 }">
+                            This field cannot be more than 24.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('openingHour')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.workingHours.closingHour" for="field_closingHour">Closing Hour</label>
+                    <input type="number" class="form-control" name="closingHour" id="field_closingHour"
+                           formControlName="closingHour"/>
+                    <div *ngIf="editForm.get('closingHour')!.invalid && (editForm.get('closingHour')!.dirty || editForm.get('closingHour')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('closingHour')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('closingHour')?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 24 }">
+                            This field cannot be more than 24.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('closingHour')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.workingHours.restaurant" for="field_restaurant">Restaurant</label>
+                    <select class="form-control" id="field_restaurant" name="restaurant" formControlName="restaurantId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="restaurantOption.id" *ngFor="let restaurantOption of restaurants; trackBy: trackById">{{ restaurantOption.name }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

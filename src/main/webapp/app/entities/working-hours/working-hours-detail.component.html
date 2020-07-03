@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="workingHours">
+            <h2><span jhiTranslate="paradineApp.workingHours.detail.title">Working Hours</span> {{ workingHours.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="paradineApp.workingHours.dayOfWeek">Day Of Week</span></dt>
+                <dd>
+                    <span>{{ workingHours.dayOfWeek }}</span>
+                </dd>
+                <dt><span jhiTranslate="paradineApp.workingHours.closed">Closed</span></dt>
+                <dd>
+                    <span>{{ workingHours.closed }}</span>
+                </dd>
+                <dt><span jhiTranslate="paradineApp.workingHours.openingHour">Opening Hour</span></dt>
+                <dd>
+                    <span>{{ workingHours.openingHour }}</span>
+                </dd>
+                <dt><span jhiTranslate="paradineApp.workingHours.closingHour">Closing Hour</span></dt>
+                <dd>
+                    <span>{{ workingHours.closingHour }}</span>
+                </dd>
+                <dt><span jhiTranslate="paradineApp.workingHours.restaurant">Restaurant</span></dt>
+                <dd>
+                    <div *ngIf="workingHours.restaurantId">
+                        <a [routerLink]="['/restaurant', workingHours.restaurantId, 'view']">{{ workingHours.restaurantName }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/working-hours', workingHours.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

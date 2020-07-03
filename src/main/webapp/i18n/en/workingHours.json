@@ -1,0 +1,27 @@
+{
+  "paradineApp": {
+    "workingHours": {
+      "home": {
+        "title": "Working Hours",
+        "createLabel": "Create a new Working Hours",
+        "createOrEditLabel": "Create or edit a Working Hours",
+        "search": "Search for Working Hours",
+        "notFound": "No Working Hours found"
+      },
+      "created": "A new Working Hours is created with identifier {{ param }}",
+      "updated": "A Working Hours is updated with identifier {{ param }}",
+      "deleted": "A Working Hours is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Working Hours {{ id }}?"
+      },
+      "detail": {
+        "title": "Working Hours"
+      },
+      "dayOfWeek": "Day Of Week",
+      "closed": "Closed",
+      "openingHour": "Opening Hour",
+      "closingHour": "Closing Hour",
+      "restaurant": "Restaurant"
+    }
+  }
+}

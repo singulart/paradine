@@ -1,0 +1,27 @@
+{
+  "paradineApp": {
+    "workingHours": {
+      "home": {
+        "title": "Working Hours",
+        "createLabel": "Створити новий Working Hours",
+        "createOrEditLabel": "Створити чи редагувати Working Hours",
+        "search": "Знайти Working Hours",
+        "notFound": "No Working Hours found"
+      },
+      "created": "Новий Working Hours створений з ідентифікатором {{ param }}",
+      "updated": "Working Hours оновлений з ідентифікатором {{ param }}",
+      "deleted": "Working Hours видалений з ідентифікатором {{ param }}",
+      "delete": {
+        "question": "Ви впевнені, що хочете видалити Working Hours {{ id }}?"
+      },
+      "detail": {
+        "title": "Working Hours"
+      },
+      "dayOfWeek": "Day Of Week",
+      "closed": "Closed",
+      "openingHour": "Opening Hour",
+      "closingHour": "Closing Hour",
+      "restaurant": "Restaurant"
+    }
+  }
+}
