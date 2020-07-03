@@ -14,6 +14,7 @@ import ua.com.paradine.core.business.vo.ClassifiedRestaurantVO;
 import ua.com.paradine.core.business.vo.HourlyClassifier;
 import ua.com.paradine.core.business.vo.PopularTimeVO;
 import ua.com.paradine.core.business.vo.RestaurantVO;
+import ua.com.paradine.core.business.vo.WorkingHoursVO;
 
 /**
  * Paradine 'safety' classification is based on user activity in the app. <br/>
@@ -36,37 +37,40 @@ public class GooglePopularTimesSafetyClassifier implements RestaurantSafetyClass
     }
 
     private List<HourlyClassifier> classify(RestaurantVO restaurant, String dayCode) {
-        Optional<PopularTimeVO> popularTimesToday = restaurant.getPopularTimes().stream()
+        Optional<PopularTimeVO> popularTimesAtDayCode = restaurant.getPopularTimes().stream()
             .filter(pop -> pop.getDayOfWeek().equals(dayCode))
             .findFirst();
+        WorkingHoursVO workHoursAtDayCode = restaurant.getWorkingHours().stream()
+            .filter(wh -> wh.getDayOfWeek().equals(dayCode))
+            .findFirst().orElse(new WorkingHoursVO(dayCode, 0, 24));
         List<HourlyClassifier> classifiers;
-        if (popularTimesToday.isPresent()) {
-            PopularTimeVO vo = popularTimesToday.get();
+        if (popularTimesAtDayCode.isPresent()) {
+            PopularTimeVO vo = popularTimesAtDayCode.get();
             classifiers = Arrays.asList(
-                classifyOccupancy(0, vo.getOcc01()),
-                classifyOccupancy(1, vo.getOcc02()),
-                classifyOccupancy(2, vo.getOcc03()),
-                classifyOccupancy(3, vo.getOcc04()),
-                classifyOccupancy(4, vo.getOcc05()),
-                classifyOccupancy(5, vo.getOcc06()),
-                classifyOccupancy(6, vo.getOcc07()),
-                classifyOccupancy(7, vo.getOcc08()),
-                classifyOccupancy(8, vo.getOcc09()),
-                classifyOccupancy(9, vo.getOcc10()),
-                classifyOccupancy(10, vo.getOcc11()),
-                classifyOccupancy(11, vo.getOcc12()),
-                classifyOccupancy(12, vo.getOcc13()),
-                classifyOccupancy(13, vo.getOcc14()),
-                classifyOccupancy(14, vo.getOcc15()),
-                classifyOccupancy(15, vo.getOcc16()),
-                classifyOccupancy(16, vo.getOcc17()),
-                classifyOccupancy(17, vo.getOcc18()),
-                classifyOccupancy(18, vo.getOcc19()),
-                classifyOccupancy(19, vo.getOcc20()),
-                classifyOccupancy(20, vo.getOcc21()),
-                classifyOccupancy(21, vo.getOcc22()),
-                classifyOccupancy(22, vo.getOcc23()),
-                classifyOccupancy(23, vo.getOcc24())
+                classifyOccupancy(0, vo.getOcc01(), workHoursAtDayCode),
+                classifyOccupancy(1, vo.getOcc02(), workHoursAtDayCode),
+                classifyOccupancy(2, vo.getOcc03(), workHoursAtDayCode),
+                classifyOccupancy(3, vo.getOcc04(), workHoursAtDayCode),
+                classifyOccupancy(4, vo.getOcc05(), workHoursAtDayCode),
+                classifyOccupancy(5, vo.getOcc06(), workHoursAtDayCode),
+                classifyOccupancy(6, vo.getOcc07(), workHoursAtDayCode),
+                classifyOccupancy(7, vo.getOcc08(), workHoursAtDayCode),
+                classifyOccupancy(8, vo.getOcc09(), workHoursAtDayCode),
+                classifyOccupancy(9, vo.getOcc10(), workHoursAtDayCode),
+                classifyOccupancy(10, vo.getOcc11(), workHoursAtDayCode),
+                classifyOccupancy(11, vo.getOcc12(), workHoursAtDayCode),
+                classifyOccupancy(12, vo.getOcc13(), workHoursAtDayCode),
+                classifyOccupancy(13, vo.getOcc14(), workHoursAtDayCode),
+                classifyOccupancy(14, vo.getOcc15(), workHoursAtDayCode),
+                classifyOccupancy(15, vo.getOcc16(), workHoursAtDayCode),
+                classifyOccupancy(16, vo.getOcc17(), workHoursAtDayCode),
+                classifyOccupancy(17, vo.getOcc18(), workHoursAtDayCode),
+                classifyOccupancy(18, vo.getOcc19(), workHoursAtDayCode),
+                classifyOccupancy(19, vo.getOcc20(), workHoursAtDayCode),
+                classifyOccupancy(20, vo.getOcc21(), workHoursAtDayCode),
+                classifyOccupancy(21, vo.getOcc22(), workHoursAtDayCode),
+                classifyOccupancy(22, vo.getOcc23(), workHoursAtDayCode),
+                classifyOccupancy(23, vo.getOcc24(), workHoursAtDayCode)
             );
         } else {
             classifiers = new ArrayList<>();
@@ -77,7 +81,10 @@ public class GooglePopularTimesSafetyClassifier implements RestaurantSafetyClass
         return classifiers;
     }
 
-    HourlyClassifier classifyOccupancy(Integer hour, Integer occupancyPercentage) {
+    HourlyClassifier classifyOccupancy(Integer hour, Integer occupancyPercentage, WorkingHoursVO workHoursAtDayCode) {
+        if(!isDuringWorkingTime(hour, workHoursAtDayCode)) {
+            return new HourlyClassifier(hour, SafetyMarker.CLOSED);
+        }
         if(occupancyPercentage == null) {
             occupancyPercentage = 0;
         }
@@ -89,6 +96,17 @@ public class GooglePopularTimesSafetyClassifier implements RestaurantSafetyClass
             return new HourlyClassifier(hour, SafetyMarker.RED);
         } else {
             return new HourlyClassifier(hour, SafetyMarker.CLOSED);
+        }
+    }
+
+    private boolean isDuringWorkingTime(Integer hour, WorkingHoursVO workingHoursVO) {
+        if(workingHoursVO.getClosed()) {
+            return false;
+        }
+        if(workingHoursVO.getClosingHour() < workingHoursVO.getOpeningHour()) {
+            return hour <= workingHoursVO.getClosingHour() || hour >= workingHoursVO.getOpeningHour();
+        } else {
+            return hour <= workingHoursVO.getClosingHour() && hour >= workingHoursVO.getOpeningHour();
         }
     }
 

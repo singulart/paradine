@@ -8,8 +8,10 @@ import ua.com.paradine.core.business.vo.ClassifiedRestaurantVO;
 import ua.com.paradine.core.business.vo.HourlyClassifier;
 import ua.com.paradine.core.business.vo.PopularTimeVO;
 import ua.com.paradine.core.business.vo.RestaurantVO;
+import ua.com.paradine.core.business.vo.WorkingHoursVO;
 import ua.com.paradine.domain.PopularTime;
 import ua.com.paradine.domain.Restaurant;
+import ua.com.paradine.domain.WorkingHours;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR)
 /*
@@ -17,7 +19,7 @@ import ua.com.paradine.domain.Restaurant;
   I've decided to create a separate set of symmetrical value objects to use in business operations. <br/>
   This mapper converts DAO objects (JPA entities) into value objects. <br/>
   <br/>
-  Note that the data fields in value objects are *not* the same as in JPA Entities. <br/>
+  Note that the data fields in value objects are *not* always the same as in JPA Entities. <br/>
  */
 public interface RestaurantMapperBusiness {
 
@@ -27,4 +29,6 @@ public interface RestaurantMapperBusiness {
         List<HourlyClassifier> classifiersTomorrow);
 
     PopularTimeVO dbEntityToValueObject(PopularTime popularTime);
+
+    WorkingHoursVO dbEntityToValueObject(WorkingHours workingHours);
 }

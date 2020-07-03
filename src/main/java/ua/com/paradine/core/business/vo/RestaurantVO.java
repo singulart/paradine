@@ -20,6 +20,7 @@ public class RestaurantVO {
     private String photoUrl;
     private String googlePlacesId;
     private Set<PopularTimeVO> popularTimes = new HashSet<>();
+    private Set<WorkingHoursVO> workingHours = new HashSet<>();
 
     public String getUuid() {
         return uuid;
@@ -107,5 +108,13 @@ public class RestaurantVO {
 
     public void setAddressEn(String addressEn) {
         this.addressEn = addressEn;
+    }
+
+    public Set<WorkingHoursVO> getWorkingHours() {
+        return workingHours;
+    }
+
+    public void setWorkingHours(Set<WorkingHoursVO> workingHours) {
+        this.workingHours = workingHours;
     }
 }

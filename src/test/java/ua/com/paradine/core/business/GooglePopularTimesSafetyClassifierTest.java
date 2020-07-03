@@ -10,6 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ua.com.paradine.core.business.vo.ClassifiedRestaurantVO;
 import ua.com.paradine.core.business.vo.PopularTimeVO;
 import ua.com.paradine.core.business.vo.RestaurantVO;
+import ua.com.paradine.core.business.vo.WorkingHoursVO;
 
 @RunWith(MockitoJUnitRunner.class)
 class GooglePopularTimesSafetyClassifierTest {
@@ -26,6 +27,82 @@ class GooglePopularTimesSafetyClassifierTest {
             assessSafetyToday(classified, i, SafetyMarker.CLOSED);
             assessSafetyTomorrow(classified, i, SafetyMarker.CLOSED);
         }
+    }
+
+    @Test
+    void venueClosedShouldClassifyAsClosedForAllTimeSlotsOnThatDay() {
+        when(classifier.getToday()).thenReturn("We");
+        when(classifier.getTomorrow()).thenReturn("Th");
+
+        WorkingHoursVO todaysWH = new WorkingHoursVO();
+        todaysWH.setClosed(true);
+        todaysWH.setDayOfWeek("We");
+
+        WorkingHoursVO tomorrowsWH = new WorkingHoursVO();
+        tomorrowsWH.setClosed(true);
+        tomorrowsWH.setDayOfWeek("Th");
+
+        RestaurantVO restaurant1 = new RestaurantVO();
+
+        PopularTimeVO pop1 = new PopularTimeVO();
+        pop1.setDayOfWeek("We");
+        pop1.setOcc11(35);
+
+        PopularTimeVO pop2 = new PopularTimeVO();
+        pop2.setDayOfWeek("Th");
+        pop2.setOcc09(25);
+
+        restaurant1.getPopularTimes().add(pop1);
+        restaurant1.getPopularTimes().add(pop2);
+        restaurant1.getWorkingHours().add(todaysWH);
+        restaurant1.getWorkingHours().add(tomorrowsWH);
+
+        ClassifiedRestaurantVO classified = classifier.classifySafety(restaurant1);
+
+        for (int i = 0; i < 24; i++) {
+            assessSafetyToday(classified, i, SafetyMarker.CLOSED);
+            assessSafetyTomorrow(classified, i, SafetyMarker.CLOSED);
+        }
+    }
+
+    @Test
+    void venueShouldClassifyAsClosedForAllTimeSlotsOutsideWorkingHours() {
+        when(classifier.getToday()).thenReturn("We");
+        when(classifier.getTomorrow()).thenReturn("Th");
+
+        WorkingHoursVO todaysWH = new WorkingHoursVO();
+        todaysWH.setDayOfWeek("We");
+        todaysWH.setOpeningHour(10);
+        todaysWH.setClosingHour(23);
+
+        WorkingHoursVO tomorrowsWH = new WorkingHoursVO();
+        tomorrowsWH.setDayOfWeek("Th");
+        tomorrowsWH.setOpeningHour(8);
+        tomorrowsWH.setClosingHour(20);
+
+        RestaurantVO restaurant1 = new RestaurantVO();
+
+        PopularTimeVO pop1 = new PopularTimeVO();
+        pop1.setDayOfWeek("We");
+        pop1.setOcc01(35);
+        pop1.setOcc12(35);
+
+        PopularTimeVO pop2 = new PopularTimeVO();
+        pop2.setDayOfWeek("Th");
+        pop2.setOcc10(25);
+        pop2.setOcc24(25);
+
+        restaurant1.getPopularTimes().add(pop1);
+        restaurant1.getPopularTimes().add(pop2);
+        restaurant1.getWorkingHours().add(todaysWH);
+        restaurant1.getWorkingHours().add(tomorrowsWH);
+
+        ClassifiedRestaurantVO classified = classifier.classifySafety(restaurant1);
+
+        assessSafetyToday(classified, 0, SafetyMarker.CLOSED);
+        assessSafetyToday(classified, 11, SafetyMarker.YELLOW);
+        assessSafetyTomorrow(classified, 9, SafetyMarker.YELLOW);
+        assessSafetyTomorrow(classified, 23, SafetyMarker.CLOSED);
     }
 
     @Test
