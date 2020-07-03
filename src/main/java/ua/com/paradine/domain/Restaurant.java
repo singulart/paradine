@@ -103,8 +103,10 @@ public class Restaurant implements Serializable {
     private String uuid;
 
     @Transient
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private List<PopularTime> popularTimes = new ArrayList<>();
+
+    @Transient
+    private List<WorkingHours> workingHours = new ArrayList<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -329,6 +331,14 @@ public class Restaurant implements Serializable {
         this.popularTimes.remove(popularTime);
         popularTime.setRestaurant(null);
         return this;
+    }
+
+    public List<WorkingHours> getWorkingHours() {
+        return workingHours;
+    }
+
+    public void setWorkingHours(List<WorkingHours> workingHours) {
+        this.workingHours = workingHours;
     }
 
     public void setPopularTimes(List<PopularTime> popularTimes) {
