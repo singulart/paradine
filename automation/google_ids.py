@@ -1,3 +1,7 @@
+"""
+Extracts Google Place IDs from Restaurants H2 database and creates
+a set of 'place_id:<GOOGLE PLACE ID>' queries.
+"""
 import jaydebeapi
 conn = jaydebeapi.connect(
     'org.h2.Driver',
