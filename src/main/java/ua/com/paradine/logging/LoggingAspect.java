@@ -44,7 +44,10 @@ public class LoggingAspect {
      */
     @Pointcut("within(ua.com.paradine.repository..*)"+
         " || within(ua.com.paradine.service..*)"+
-        " || within(ua.com.paradine.web.rest..*)")
+        " || within(ua.com.paradine.core.business..*)" +
+        " || within(ua.com.paradine.core.rest..*)" +
+        " || within(ua.com.paradine.core.dao..*)"
+    )
     public void applicationPackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }
