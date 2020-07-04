@@ -55,8 +55,8 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:file:./h2/paradine;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1
-    username: thehipsta
+    url: jdbc:h2:file:./h2/paradine_prod;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1
+    username: paradine
     password:
     hikari:
       poolName: Hikari
