@@ -16,6 +16,10 @@ import { RouterModule } from '@angular/router';
         path: 'working-hours',
         loadChildren: () => import('./working-hours/working-hours.module').then(m => m.ParadineWorkingHoursModule),
       },
+      {
+        path: 'achievement',
+        loadChildren: () => import('./achievement/achievement.module').then(m => m.ParadineAchievementModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

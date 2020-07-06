@@ -38,6 +38,6 @@
     "nativeLanguage": "en",
     "languages": ["en", "ru", "ua"],
     "blueprints": [],
-    "lastLiquibaseTimestamp": 1593771929000
+    "lastLiquibaseTimestamp": 1594049851000
   }
 }

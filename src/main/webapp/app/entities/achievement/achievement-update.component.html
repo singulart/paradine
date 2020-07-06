@@ -1,0 +1,80 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-achievement-heading" jhiTranslate="paradineApp.achievement.home.createOrEditLabel">Create or edit a Achievement</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.achievement.slug" for="field_slug">Slug</label>
+                    <input type="text" class="form-control" name="slug" id="field_slug"
+                           formControlName="slug"/>
+                    <div *ngIf="editForm.get('slug')!.invalid && (editForm.get('slug')!.dirty || editForm.get('slug')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('slug')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.achievement.nameEn" for="field_nameEn">Name En</label>
+                    <input type="text" class="form-control" name="nameEn" id="field_nameEn"
+                           formControlName="nameEn"/>
+                    <div *ngIf="editForm.get('nameEn')!.invalid && (editForm.get('nameEn')!.dirty || editForm.get('nameEn')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('nameEn')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.achievement.nameRu" for="field_nameRu">Name Ru</label>
+                    <input type="text" class="form-control" name="nameRu" id="field_nameRu"
+                           formControlName="nameRu"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.achievement.nameUa" for="field_nameUa">Name Ua</label>
+                    <input type="text" class="form-control" name="nameUa" id="field_nameUa"
+                           formControlName="nameUa"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.achievement.descriptionEn" for="field_descriptionEn">Description En</label>
+                    <input type="text" class="form-control" name="descriptionEn" id="field_descriptionEn"
+                           formControlName="descriptionEn"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.achievement.descriptionRu" for="field_descriptionRu">Description Ru</label>
+                    <input type="text" class="form-control" name="descriptionRu" id="field_descriptionRu"
+                           formControlName="descriptionRu"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.achievement.descriptionUa" for="field_descriptionUa">Description Ua</label>
+                    <input type="text" class="form-control" name="descriptionUa" id="field_descriptionUa"
+                           formControlName="descriptionUa"/>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

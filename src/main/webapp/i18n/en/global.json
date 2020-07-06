@@ -10,6 +10,7 @@
         "restaurant": "Restaurant",
         "popularTime": "Popular Time",
         "workingHours": "Working Hours",
+        "achievement": "Achievement",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

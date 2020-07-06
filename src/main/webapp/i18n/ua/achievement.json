@@ -1,0 +1,29 @@
+{
+  "paradineApp": {
+    "achievement": {
+      "home": {
+        "title": "Achievements",
+        "createLabel": "Створити новий Achievement",
+        "createOrEditLabel": "Створити чи редагувати Achievement",
+        "search": "Знайти Achievement",
+        "notFound": "No Achievements found"
+      },
+      "created": "Новий Achievement створений з ідентифікатором {{ param }}",
+      "updated": "Achievement оновлений з ідентифікатором {{ param }}",
+      "deleted": "Achievement видалений з ідентифікатором {{ param }}",
+      "delete": {
+        "question": "Ви впевнені, що хочете видалити Achievement {{ id }}?"
+      },
+      "detail": {
+        "title": "Achievement"
+      },
+      "slug": "Slug",
+      "nameEn": "Name En",
+      "nameRu": "Name Ru",
+      "nameUa": "Name Ua",
+      "descriptionEn": "Description En",
+      "descriptionRu": "Description Ru",
+      "descriptionUa": "Description Ua"
+    }
+  }
+}

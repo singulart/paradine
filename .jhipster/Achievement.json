@@ -1,0 +1,46 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "slug",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "nameEn",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nameRu",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nameUa",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "descriptionEn",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "descriptionRu",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "descriptionUa",
+      "fieldType": "String"
+    }
+  ],
+  "changelogDate": "20200706153731",
+  "dto": "mapstruct",
+  "searchEngine": "elasticsearch",
+  "service": "serviceImpl",
+  "entityTableName": "achievement",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": true,
+  "pagination": "no"
+}

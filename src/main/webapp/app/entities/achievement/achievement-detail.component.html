@@ -1,0 +1,54 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="achievement">
+            <h2><span jhiTranslate="paradineApp.achievement.detail.title">Achievement</span> {{ achievement.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="paradineApp.achievement.slug">Slug</span></dt>
+                <dd>
+                    <span>{{ achievement.slug }}</span>
+                </dd>
+                <dt><span jhiTranslate="paradineApp.achievement.nameEn">Name En</span></dt>
+                <dd>
+                    <span>{{ achievement.nameEn }}</span>
+                </dd>
+                <dt><span jhiTranslate="paradineApp.achievement.nameRu">Name Ru</span></dt>
+                <dd>
+                    <span>{{ achievement.nameRu }}</span>
+                </dd>
+                <dt><span jhiTranslate="paradineApp.achievement.nameUa">Name Ua</span></dt>
+                <dd>
+                    <span>{{ achievement.nameUa }}</span>
+                </dd>
+                <dt><span jhiTranslate="paradineApp.achievement.descriptionEn">Description En</span></dt>
+                <dd>
+                    <span>{{ achievement.descriptionEn }}</span>
+                </dd>
+                <dt><span jhiTranslate="paradineApp.achievement.descriptionRu">Description Ru</span></dt>
+                <dd>
+                    <span>{{ achievement.descriptionRu }}</span>
+                </dd>
+                <dt><span jhiTranslate="paradineApp.achievement.descriptionUa">Description Ua</span></dt>
+                <dd>
+                    <span>{{ achievement.descriptionUa }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/achievement', achievement.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
