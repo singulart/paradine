@@ -72,6 +72,88 @@ paths:
                 $ref: '#/components/responses/Problem'
           description: >-
           # Error response indicating incorrect / inconsistent query parameters.
+  /restaurants/intended_visits:
+    get:
+      operationId: getMyIntendedVisits
+      description: Returns the full list of intended visits for a logged-in user.
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntendedVisitsGetResponse'
+          description: >-
+          # A list of intended visits.
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Problem'
+          description: >-
+          # Error response indicating unauthorized access.
+    post:
+      operationId: createIntendedVisit
+      description: Creates a new intended visit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateIntendedVisitRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: >-
+          # UUID of the stored visit intention.
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Problem'
+          description: >-
+          # Error response indicating unauthorized access.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Problem'
+          description: >
+            Error response for cases when the backend rejects the attempt to add a new visit intention.
+
+  /restaurants/intended_visits/{id}:
+    delete:
+      operationId: cancelIntendedVisit
+      description: Cancels previously created intended visit
+      parameters:
+        - in: path
+          name: id
+          description: UUID of the stored visit intention
+          required: true
+          schema:
+            type: string
+            minLength: 36
+            maxLength: 36
+      responses:
+        '200':
+          description: >
+            Visit intention was cancelled.
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Problem'
+          description: >
+            Error response indicating unauthorized access.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Problem'
+          description: >
+            Error response when the visit intent wasn't found.
+
 components:
   schemas:
     Envelope:
@@ -255,6 +337,70 @@ components:
       example:
         h: 17
         value: 10
+
+    CreateIntendedVisitRequest:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            visit:
+              $ref: '#/components/schemas/IntendedVisit'
+
+    IntendedVisitsGetResponse:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            visits:
+              type: array
+              items:
+                $ref: '#/components/schemas/StoredIntendedVisit'
+      example:
+        version: '2.0'
+        visits:
+          - id: 551f9da9-e0d9-468c-bb5d-a4a761c63dba
+            when: 2020-07-28T17:00:00Z
+            restaurantId: 5190ccd1-9b7b-4c5c-9025-495c7d9fa687
+          - id: 2ac715d1-467b-472f-9bcb-e1c88c879cd4
+            when: 2020-07-29T17:00:00Z
+            restaurantId: 50e26c12-ff82-4131-adfc-9f377857bdf0
+
+    StoredIntendedVisit:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: string
+              minLength: 36
+              maxLength: 36
+              description: UUID of an intended visit.
+        - $ref: '#/components/schemas/IntendedVisit'
+      required:
+        - id
+        - when
+        - restaurantId
+      description: Representation of a user's intention to go to a particular restaurant stored under a unique id.
+      example:
+        id: aaa1-bbb1-ccc1-ddd2
+        when: 2020-07-28T17:00:00Z
+        restaurantId: aaaa-bbbb-cccc-dddd
+
+    IntendedVisit:
+      type: object
+      description: Representation of a user's intention to go to a particular restaurant.
+      required:
+        - when
+        - restaurantId
+      properties:
+        when:
+          description: Date and time of an intended visit. Minutes are ignored.
+          type: string
+          format: date-time
+        restaurantId:
+          description: UUID of a particular existing restaurant.
+          type: string
+          minLength: 36
+          maxLength: 36
 
   responses:
     Problem:
