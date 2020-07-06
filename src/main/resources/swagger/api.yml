@@ -64,14 +64,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/RestaurantsGetResponse'
           description: >-
-          # A page of restaurants.
+            A page of restaurants.
         '400':
           content:
             application/json:
               schema:
                 $ref: '#/components/responses/Problem'
           description: >-
-          # Error response indicating incorrect / inconsistent query parameters.
+            Error response indicating incorrect / inconsistent query parameters.
   /restaurants/intended_visits:
     get:
       operationId: getMyIntendedVisits
@@ -83,14 +83,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/IntendedVisitsGetResponse'
           description: >-
-          # A list of intended visits.
+            A list of intended visits.
         '401':
           content:
             application/json:
               schema:
                 $ref: '#/components/responses/Problem'
           description: >-
-          # Error response indicating unauthorized access.
+            Error response indicating unauthorized access.
     post:
       operationId: createIntendedVisit
       description: Creates a new intended visit
@@ -106,14 +106,14 @@ paths:
               schema:
                 type: string
           description: >-
-          # UUID of the stored visit intention.
+            UUID of the stored visit intention.
         '401':
           content:
             application/json:
               schema:
                 $ref: '#/components/responses/Problem'
           description: >-
-          # Error response indicating unauthorized access.
+            Error response indicating unauthorized access.
         '400':
           content:
             application/json:
