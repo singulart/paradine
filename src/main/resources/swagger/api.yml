@@ -63,6 +63,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RestaurantsGetResponse'
+          headers:
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of items. Non-negative number.
+            X-Total-Pages:
+              schema:
+                type: integer
+              description: Total number of pages. Non-negative number.
           description: >-
             A page of restaurants.
         '400':
