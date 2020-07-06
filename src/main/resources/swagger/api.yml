@@ -83,6 +83,8 @@ paths:
             Error response indicating incorrect / inconsistent query parameters.
   /restaurants/intended_visits:
     get:
+      security:
+        - jwt: []
       operationId: getMyIntendedVisits
       description: Returns the full list of intended visits for a logged-in user.
       responses:
@@ -101,6 +103,8 @@ paths:
           description: >-
             Error response indicating unauthorized access.
     post:
+      security:
+        - jwt: []
       operationId: createIntendedVisit
       description: Creates a new intended visit
       requestBody:
@@ -133,6 +137,8 @@ paths:
 
   /restaurants/intended_visits/{id}:
     delete:
+      security:
+        - jwt: []
       operationId: cancelIntendedVisit
       description: Cancels previously created intended visit
       parameters:
