@@ -13,5 +13,8 @@ public interface ExtendedWorkingHoursRepository extends WorkingHoursRepository {
     List<WorkingHours> fetchByRestaurantIdIn(@Param("restaurantIds") List<Long> restaurantIds);
 
     @Query(value = "FROM WorkingHours wh WHERE wh.restaurant.id = :restaurantId AND wh.dayOfWeek = :dayOfWeek")
-    Optional<WorkingHours> fetchByRestaurantIdAndDayOfWeek(Long restaurantId, String dayOfWeek);
+    Optional<WorkingHours> fetchByRestaurantIdAndDayOfWeek(
+                                @Param("restaurantId") Long restaurantId,
+                                @Param("dayOfWeek") String dayOfWeek
+    );
 }

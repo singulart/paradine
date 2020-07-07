@@ -44,12 +44,12 @@ public class IntendedVisit implements Serializable {
     @Column(name = "cancelled", nullable = false)
     private Boolean cancelled;
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     @NotNull
     @JoinColumn(unique = true)
     private User visitingUser;
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     @NotNull
     @JoinColumn(unique = true)
     private Restaurant restaurant;

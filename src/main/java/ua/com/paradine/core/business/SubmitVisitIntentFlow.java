@@ -1,12 +1,18 @@
 package ua.com.paradine.core.business;
 
+import static java.lang.Math.abs;
 import static java.time.OffsetDateTime.now;
+import static ua.com.paradine.core.Errors.TOO_CLOSE_TO_EXISTING_VISIT;
+import static ua.com.paradine.core.Errors.TOO_MANY_INTENDED_VISITS;
 import static ua.com.paradine.core.Errors.VISIT_IN_NON_BUSINESS_HOURS_NOT_ALLOWED;
+import static ua.com.paradine.core.ParadineConstants.DEFAULT_ZONE;
 import static ua.com.paradine.core.util.DaysOfWeek.DOW;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.mapstruct.factory.Mappers;
@@ -38,6 +44,8 @@ public class SubmitVisitIntentFlow {
     private final RestaurantMapperBusiness mapper = Mappers.getMapper(RestaurantMapperBusiness.class);
 
     public static final Integer VISIT_DURATION_HOURS = 2;
+    public static final Integer MAX_VISITS_PER_DAY = 3;
+    public static final Integer MINIMAL_INTERVAL_BETWEEN_VISITS_HOURS = 3;
 
     @Autowired
     public SubmitVisitIntentFlow(ExtendedVisitIntentionRepository visitIntentionRepository,
@@ -79,6 +87,26 @@ public class SubmitVisitIntentFlow {
                 return new SubmitVisitIntentOutcome(
                     Problem.valueOf(Status.BAD_REQUEST, VISIT_IN_NON_BUSINESS_HOURS_NOT_ALLOWED));
             }
+        }
+
+        ZonedDateTime startOfDay = plannedVisitDate.toLocalDate().atStartOfDay(DEFAULT_ZONE);
+        List<IntendedVisit> visitsForTargetDay = visitIntentionRepository
+            .findActiveVisitsByUserAndDay(user.get(), startOfDay, startOfDay.plusDays(1));
+        if(visitsForTargetDay.size() >= MAX_VISITS_PER_DAY) {
+            return new SubmitVisitIntentOutcome(
+                Problem.valueOf(Status.BAD_REQUEST, TOO_MANY_INTENDED_VISITS));
+        }
+
+        Optional<IntendedVisit> tooCloseTo = visitsForTargetDay.stream().filter(iv ->
+            abs(Duration.between(iv.getVisitEndDate(),
+                plannedVisitDate).toHours()) > MINIMAL_INTERVAL_BETWEEN_VISITS_HOURS
+            ||
+            abs(Duration.between(iv.getVisitStartDate(),
+                plannedVisitDate).toHours()) > MINIMAL_INTERVAL_BETWEEN_VISITS_HOURS
+        ).findFirst();
+        if(tooCloseTo.isPresent()) {
+            return new SubmitVisitIntentOutcome(
+                Problem.valueOf(Status.BAD_REQUEST, TOO_CLOSE_TO_EXISTING_VISIT));
         }
 
         IntendedVisit visit = new IntendedVisit();

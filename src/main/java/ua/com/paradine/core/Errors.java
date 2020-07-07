@@ -14,5 +14,8 @@ public class Errors {
     public static final String TOO_MANY_INTENDED_VISITS = "paradine.api.errors.too.many.visits";
 
     // possible from normal app usage
+    public static final String TOO_CLOSE_TO_EXISTING_VISIT = "paradine.api.errors.too.close.to.existing.visit";
+
+    // possible from normal app usage
     public static final String NOT_FOUND = "paradine.api.errors.not.found";
 }

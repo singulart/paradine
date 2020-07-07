@@ -1,9 +1,7 @@
 package ua.com.paradine.core.e2e;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -12,6 +10,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
 import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -23,11 +22,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.com.paradine.ParadineApp;
-import ua.com.paradine.core.business.SafetyMarker;
+import ua.com.paradine.core.business.SubmitVisitIntentFlow;
 import ua.com.paradine.web.api.model.CreateIntendedVisitRequest;
 import ua.com.paradine.web.api.model.IntendedVisit;
 
@@ -35,7 +36,8 @@ import ua.com.paradine.web.api.model.IntendedVisit;
 @ExtendWith({MockitoExtension.class, SpringExtension.class})
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-@Sql(scripts = {"/db/test_data.sql"})
+@Sql(scripts = {"/db/test_data.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = {"/db/cleanup.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 @WithMockUser
 public class SubmitVisitIntentionE2ETest {
 
@@ -45,34 +47,117 @@ public class SubmitVisitIntentionE2ETest {
     @MockBean
     private  JestElasticsearchTemplate elasticsearchTemplate;
 
+    private ObjectMapper mapper = new ObjectMapper()
+        .registerModule(new JavaTimeModule())
+        .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
     @Test
-    public void testSubmitVisitIntent() throws Exception {
+    public void testSubmitVisitIntent_200OK() throws Exception {
         IntendedVisit intendedVisit = new IntendedVisit()
             .restaurantId("117c0823-4d31-437d-8d14-e2686fa8c594")
-            .when(OffsetDateTime.now());
+            .when(OffsetDateTime.now().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(14));
         CreateIntendedVisitRequest createIntendedVisitRequest = new CreateIntendedVisitRequest()
             .version("x.y")
             .visit(intendedVisit);
-
-        ObjectMapper mapper = new ObjectMapper()
-            .registerModule(new JavaTimeModule())
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         mockMvc.perform(post("/api/paradine/v2/restaurants/intended_visits")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(createIntendedVisitRequest))
             )
             .andExpect(status().isOk())
-//            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//            .andExpect(header().string("X-Total-Count", "10"))
-//            .andExpect(header().string("X-Total-Pages", "1"))
-//            .andExpect(jsonPath("$.version").value("2.0"))
-//            .andExpect(jsonPath("$.restaurants[?(@.name=='Musafir')].safetyToday[?(@.h=='09')].value")
-//                .value(SafetyMarker.GREEN.getIndicator()))
-//            .andExpect(jsonPath("$.restaurants[?(@.name=='Musafir')].safetyTomorrow[?(@.h=='09')].value")
-//                .value(SafetyMarker.YELLOW.getIndicator()))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.version").value("2.0"))
+            .andExpect(jsonPath("$.id").isNotEmpty())
         ;
 
     }
 
+    @Test
+    public void testSubmitTooManyVisits_400() throws Exception {
+        IntendedVisit intendedVisit = new IntendedVisit()
+            .restaurantId("117c0823-4d31-437d-8d14-e2686fa8c594")
+            .when(OffsetDateTime.now().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(14));
+        CreateIntendedVisitRequest createIntendedVisitRequest = new CreateIntendedVisitRequest()
+            .version("x.y")
+            .visit(intendedVisit);
+
+        for(int i = 0; i < SubmitVisitIntentFlow.MAX_VISITS_PER_DAY; i++) {
+            mockMvc.perform(post("/api/paradine/v2/restaurants/intended_visits")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(createIntendedVisitRequest))
+            )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.version").value("2.0"))
+                .andExpect(jsonPath("$.id").isNotEmpty())
+            ;
+        }
+
+        mockMvc.perform(post("/api/paradine/v2/restaurants/intended_visits")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(mapper.writeValueAsString(createIntendedVisitRequest))
+        )
+            .andExpect(status().isBadRequest())
+        ;
+
+    }
+
+    @Test
+    public void testSubmitTwoVisitsWhichAreTooClose_400() throws Exception {
+        IntendedVisit intendedVisit = new IntendedVisit()
+            .restaurantId("117c0823-4d31-437d-8d14-e2686fa8c594")
+            .when(OffsetDateTime.now().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(14));
+
+        CreateIntendedVisitRequest createIntendedVisitRequest = new CreateIntendedVisitRequest()
+            .version("x.y")
+            .visit(intendedVisit);
+
+        mockMvc.perform(post("/api/paradine/v2/restaurants/intended_visits")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(mapper.writeValueAsString(createIntendedVisitRequest))
+        )
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.id").isNotEmpty())
+        ;
+
+        intendedVisit.setWhen(OffsetDateTime.now().plusDays(1).plusHours(4)); // 2h after the previous visit supposed to end
+
+        mockMvc.perform(post("/api/paradine/v2/restaurants/intended_visits")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(mapper.writeValueAsString(createIntendedVisitRequest))
+        )
+            .andExpect(status().isBadRequest())
+        ;
+
+    }
+
+    @Test
+    public void testMinimalLegitimateIntervalBetweenTwoVisits_is_3h_200() throws Exception {
+        IntendedVisit intendedVisit = new IntendedVisit()
+            .restaurantId("117c0823-4d31-437d-8d14-e2686fa8c594")
+            .when(OffsetDateTime.now().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(14));
+        CreateIntendedVisitRequest createIntendedVisitRequest = new CreateIntendedVisitRequest()
+            .version("x.y")
+            .visit(intendedVisit);
+
+        mockMvc.perform(post("/api/paradine/v2/restaurants/intended_visits")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(mapper.writeValueAsString(createIntendedVisitRequest))
+        )
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.id").isNotEmpty())
+        ;
+
+        intendedVisit.setWhen(OffsetDateTime.now().plusHours(5)); // 3h after the previous visit supposed to end
+
+        mockMvc.perform(post("/api/paradine/v2/restaurants/intended_visits")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(mapper.writeValueAsString(createIntendedVisitRequest))
+        )
+            .andExpect(status().isOk())
+        ;
+
+    }
 }

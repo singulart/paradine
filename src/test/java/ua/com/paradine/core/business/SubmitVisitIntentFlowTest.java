@@ -1,16 +1,20 @@
 package ua.com.paradine.core.business;
 
+import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import io.undertow.util.StatusCodes;
 import java.time.Duration;
 import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -170,6 +174,60 @@ class SubmitVisitIntentFlowTest {
         assertEquals(Errors.VISIT_IN_NON_BUSINESS_HOURS_NOT_ALLOWED, outcome.getError().getDetail());
 
         verifyNoInteractions(visitIntentionRepository);
+    }
+
+    @Test
+    void usersAllowedToHavePredefinedNumberOfScheduledVisitsEachDay() {
+
+        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
+            .thenReturn(Optional.of(1000L));
+
+        lenient().when(userRepository.findIdByLogin(eq("hito")))
+            .thenReturn(Optional.of(42L));
+
+        SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
+        cmd.setWhen(OffsetDateTime.now().truncatedTo(ChronoUnit.DAYS).plusHours(22)); //22:00
+        cmd.setRestaurantId("123");
+        cmd.setUser("hito");
+
+        lenient().when(visitIntentionRepository.findActiveVisitsByUserAndDay(eq(42L), any(), any()))
+            .thenReturn(asList(new IntendedVisit(), new IntendedVisit(), new IntendedVisit()));
+
+        SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
+
+        assertNotNull(outcome.getError());
+        assertEquals(StatusCodes.BAD_REQUEST, outcome.getError().getStatus().getStatusCode());
+        assertEquals(Errors.TOO_MANY_INTENDED_VISITS, outcome.getError().getDetail());
+    }
+
+    @Test
+    void minimalIntervalsBetweenVisitsMustBeValidated() {
+
+        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
+            .thenReturn(Optional.of(1000L));
+
+        lenient().when(userRepository.findIdByLogin(eq("hito")))
+            .thenReturn(Optional.of(42L));
+
+        SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
+        cmd.setWhen(OffsetDateTime.now().truncatedTo(ChronoUnit.DAYS).plusHours(22)); //22:00
+        cmd.setRestaurantId("123");
+        cmd.setUser("hito");
+
+        IntendedVisit intendedVisit = new IntendedVisit();
+        intendedVisit.setCancelled(Boolean.FALSE);
+        //scheduled visit from 18:00 to 20:00
+        intendedVisit.setVisitStartDate(ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).plusHours(18));
+        intendedVisit.setVisitEndDate(ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).plusHours(20));
+
+        lenient().when(visitIntentionRepository.findActiveVisitsByUserAndDay(eq(42L), any(), any()))
+            .thenReturn(asList(intendedVisit));
+
+        SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
+
+        assertNotNull(outcome.getError());
+        assertEquals(StatusCodes.BAD_REQUEST, outcome.getError().getStatus().getStatusCode());
+        assertEquals(Errors.TOO_CLOSE_TO_EXISTING_VISIT, outcome.getError().getDetail());
     }
 
     @Test

@@ -25,6 +25,14 @@
   ],
   "fields": [
     {
+      "fieldName": "uuid",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "minlength", "maxlength", "pattern"],
+      "fieldValidateRulesMinlength": "36",
+      "fieldValidateRulesMaxlength": "36",
+      "fieldValidateRulesPattern": "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}"
+    },
+    {
       "fieldName": "visitStartDate",
       "fieldType": "ZonedDateTime",
       "fieldValidateRules": ["required"]
