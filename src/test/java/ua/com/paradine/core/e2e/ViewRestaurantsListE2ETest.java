@@ -31,7 +31,7 @@ import ua.com.paradine.core.business.SafetyMarker;
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @Sql(scripts = {"/db/test_data.sql"})
-public class ViewRestaurantsListE2E {
+public class ViewRestaurantsListE2ETest {
 
     @Autowired
     private MockMvc mockMvc;

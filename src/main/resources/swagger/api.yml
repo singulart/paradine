@@ -117,7 +117,7 @@ paths:
           content:
             application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/UuidResponse'
           description: >-
             UUID of the stored visit intention.
         '401':
@@ -180,6 +180,22 @@ components:
         version:
           description: API version
           type: string
+
+    UuidResponse:
+      description: Response for POST operation returning uuid of the created resource.
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            id:
+              type: string
+              minLength: 36
+              maxLength: 36
+              description: UUID of the created resource assigned by server.
+      example:
+        version: 2.0
+        id: 50e26c12-ff82-4131-adfc-9f377857bdf0
+
     RestaurantsGetResponse:
       allOf:
         - $ref: '#/components/schemas/Envelope'

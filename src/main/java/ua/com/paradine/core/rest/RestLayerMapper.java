@@ -6,6 +6,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import ua.com.paradine.core.business.vo.ClassifiedRestaurantVO;
 import ua.com.paradine.core.business.vo.HourlyClassifier;
+import ua.com.paradine.core.business.vo.commands.SubmitVisitIntentCommand;
+import ua.com.paradine.web.api.model.CreateIntendedVisitRequest;
 import ua.com.paradine.web.api.model.HourlySafety;
 import ua.com.paradine.web.api.model.Restaurant;
 
@@ -30,4 +32,8 @@ public interface RestLayerMapper {
     @Mapping(target = "value", source = "marker.indicator")
     HourlySafety map(HourlyClassifier classifier);
 
+
+    @Mapping(target = "when", source = "request.visit.when")
+    @Mapping(target = "restaurantId", source = "request.visit.restaurantId")
+    SubmitVisitIntentCommand map(CreateIntendedVisitRequest request, String user);
 }
