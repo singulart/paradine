@@ -27,6 +27,12 @@ public class IntendedVisit implements Serializable {
     private Long id;
 
     @NotNull
+    @Size(min = 36, max = 36)
+    @Pattern(regexp = "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
+    @Column(name = "uuid", length = 36, nullable = false, unique = true)
+    private String uuid;
+
+    @NotNull
     @Column(name = "visit_start_date", nullable = false)
     private ZonedDateTime visitStartDate;
 
@@ -55,6 +61,19 @@ public class IntendedVisit implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public IntendedVisit uuid(String uuid) {
+        this.uuid = uuid;
+        return this;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public ZonedDateTime getVisitStartDate() {
@@ -144,6 +163,7 @@ public class IntendedVisit implements Serializable {
     public String toString() {
         return "IntendedVisit{" +
             "id=" + getId() +
+            ", uuid='" + getUuid() + "'" +
             ", visitStartDate='" + getVisitStartDate() + "'" +
             ", visitEndDate='" + getVisitEndDate() + "'" +
             ", cancelled='" + isCancelled() + "'" +

@@ -29,6 +29,7 @@ export class IntendedVisitUpdatePage {
   saveButton = element(by.id('save-entity'));
   cancelButton = element(by.id('cancel-save'));
 
+  uuidInput = element(by.id('field_uuid'));
   visitStartDateInput = element(by.id('field_visitStartDate'));
   visitEndDateInput = element(by.id('field_visitEndDate'));
   cancelledInput = element(by.id('field_cancelled'));
@@ -38,6 +39,14 @@ export class IntendedVisitUpdatePage {
 
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
+  }
+
+  async setUuidInput(uuid: string): Promise<void> {
+    await this.uuidInput.sendKeys(uuid);
+  }
+
+  async getUuidInput(): Promise<string> {
+    return await this.uuidInput.getAttribute('value');
   }
 
   async setVisitStartDateInput(visitStartDate: string): Promise<void> {

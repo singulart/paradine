@@ -12,6 +12,30 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.intendedVisit.uuid" for="field_uuid">Uuid</label>
+                    <input type="text" class="form-control" name="uuid" id="field_uuid"
+                           formControlName="uuid"/>
+                    <div *ngIf="editForm.get('uuid')!.invalid && (editForm.get('uuid')!.dirty || editForm.get('uuid')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('uuid')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('uuid')?.errors?.minlength" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 36 }">
+                        This field is required to be at least 36 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('uuid')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 36 }">
+                        This field cannot be longer than 36 characters.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('uuid')?.errors?.pattern" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Uuid' }">
+                            This field should follow pattern for "Uuid".
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="paradineApp.intendedVisit.visitStartDate" for="field_visitStartDate">Visit Start Date</label>
                     <div class="d-flex">
                         <input id="field_visitStartDate" type="datetime-local" class="form-control" name="visitStartDate" formControlName="visitStartDate" placeholder="YYYY-MM-DD HH:mm"/>

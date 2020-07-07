@@ -15,6 +15,9 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="uuid" type="varchar(36)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_intended_visit_uuid" />
+            </column>
             <column name="visit_start_date" type="datetime">
                 <constraints nullable="false" />
             </column>
@@ -55,6 +58,7 @@
                   separator=";"
                   tableName="intended_visit">
             <column name="id" type="numeric"/>
+            <column name="uuid" type="string"/>
             <column name="visit_start_date" type="datetime"/>
             <column name="visit_end_date" type="datetime"/>
             <column name="cancelled" type="boolean"/>

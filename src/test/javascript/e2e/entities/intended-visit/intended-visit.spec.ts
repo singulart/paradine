@@ -48,12 +48,14 @@ describe('IntendedVisit e2e test', () => {
         await intendedVisitComponentsPage.clickOnCreateButton();
 
         await promise.all([
+            intendedVisitUpdatePage.setUuidInput('b825A3C1-4E31-D2ba-DDf9-bB2d50cfabAF'),
             intendedVisitUpdatePage.setVisitStartDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
             intendedVisitUpdatePage.setVisitEndDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
             intendedVisitUpdatePage.visitingUserSelectLastOption(),
             intendedVisitUpdatePage.restaurantSelectLastOption(),
         ]);
 
+        expect(await intendedVisitUpdatePage.getUuidInput()).to.eq('b825A3C1-4E31-D2ba-DDf9-bB2d50cfabAF', 'Expected Uuid value to be equals to b825A3C1-4E31-D2ba-DDf9-bB2d50cfabAF');
         expect(await intendedVisitUpdatePage.getVisitStartDateInput()).to.contain('2001-01-01T02:30', 'Expected visitStartDate value to be equals to 2000-12-31');
         expect(await intendedVisitUpdatePage.getVisitEndDateInput()).to.contain('2001-01-01T02:30', 'Expected visitEndDate value to be equals to 2000-12-31');
         const selectedCancelled = intendedVisitUpdatePage.getCancelledInput();

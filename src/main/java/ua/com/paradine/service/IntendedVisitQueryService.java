@@ -95,6 +95,9 @@ public class IntendedVisitQueryService extends QueryService<IntendedVisit> {
             if (criteria.getId() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getId(), IntendedVisit_.id));
             }
+            if (criteria.getUuid() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getUuid(), IntendedVisit_.uuid));
+            }
             if (criteria.getVisitStartDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getVisitStartDate(), IntendedVisit_.visitStartDate));
             }

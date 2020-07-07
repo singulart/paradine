@@ -27,6 +27,8 @@ public class IntendedVisitCriteria implements Serializable, Criteria {
 
     private LongFilter id;
 
+    private StringFilter uuid;
+
     private ZonedDateTimeFilter visitStartDate;
 
     private ZonedDateTimeFilter visitEndDate;
@@ -42,6 +44,7 @@ public class IntendedVisitCriteria implements Serializable, Criteria {
 
     public IntendedVisitCriteria(IntendedVisitCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
+        this.uuid = other.uuid == null ? null : other.uuid.copy();
         this.visitStartDate = other.visitStartDate == null ? null : other.visitStartDate.copy();
         this.visitEndDate = other.visitEndDate == null ? null : other.visitEndDate.copy();
         this.cancelled = other.cancelled == null ? null : other.cancelled.copy();
@@ -60,6 +63,14 @@ public class IntendedVisitCriteria implements Serializable, Criteria {
 
     public void setId(LongFilter id) {
         this.id = id;
+    }
+
+    public StringFilter getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(StringFilter uuid) {
+        this.uuid = uuid;
     }
 
     public ZonedDateTimeFilter getVisitStartDate() {
@@ -114,6 +125,7 @@ public class IntendedVisitCriteria implements Serializable, Criteria {
         final IntendedVisitCriteria that = (IntendedVisitCriteria) o;
         return
             Objects.equals(id, that.id) &&
+            Objects.equals(uuid, that.uuid) &&
             Objects.equals(visitStartDate, that.visitStartDate) &&
             Objects.equals(visitEndDate, that.visitEndDate) &&
             Objects.equals(cancelled, that.cancelled) &&
@@ -125,6 +137,7 @@ public class IntendedVisitCriteria implements Serializable, Criteria {
     public int hashCode() {
         return Objects.hash(
         id,
+        uuid,
         visitStartDate,
         visitEndDate,
         cancelled,
@@ -138,6 +151,7 @@ public class IntendedVisitCriteria implements Serializable, Criteria {
     public String toString() {
         return "IntendedVisitCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
+                (uuid != null ? "uuid=" + uuid + ", " : "") +
                 (visitStartDate != null ? "visitStartDate=" + visitStartDate + ", " : "") +
                 (visitEndDate != null ? "visitEndDate=" + visitEndDate + ", " : "") +
                 (cancelled != null ? "cancelled=" + cancelled + ", " : "") +

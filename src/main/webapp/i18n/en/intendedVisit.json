@@ -17,6 +17,7 @@
       "detail": {
         "title": "Intended Visit"
       },
+      "uuid": "Uuid",
       "visitStartDate": "Visit Start Date",
       "visitEndDate": "Visit End Date",
       "cancelled": "Cancelled",

@@ -12,6 +12,11 @@ public class IntendedVisitDTO implements Serializable {
     private Long id;
 
     @NotNull
+    @Size(min = 36, max = 36)
+    @Pattern(regexp = "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
+    private String uuid;
+
+    @NotNull
     private ZonedDateTime visitStartDate;
 
     @NotNull
@@ -35,6 +40,14 @@ public class IntendedVisitDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public ZonedDateTime getVisitStartDate() {
@@ -115,6 +128,7 @@ public class IntendedVisitDTO implements Serializable {
     public String toString() {
         return "IntendedVisitDTO{" +
             "id=" + getId() +
+            ", uuid='" + getUuid() + "'" +
             ", visitStartDate='" + getVisitStartDate() + "'" +
             ", visitEndDate='" + getVisitEndDate() + "'" +
             ", cancelled='" + isCancelled() + "'" +

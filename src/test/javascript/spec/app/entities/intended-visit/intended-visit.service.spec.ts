@@ -24,7 +24,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new IntendedVisit(0, currentDate, currentDate, false);
+      elemDefault = new IntendedVisit(0, 'AAAAAAA', currentDate, currentDate, false);
     });
 
     describe('Service methods', () => {
@@ -72,6 +72,7 @@ describe('Service Tests', () => {
       it('should update a IntendedVisit', () => {
         const returnedFromService = Object.assign(
           {
+            uuid: 'BBBBBB',
             visitStartDate: currentDate.format(DATE_TIME_FORMAT),
             visitEndDate: currentDate.format(DATE_TIME_FORMAT),
             cancelled: true,
@@ -97,6 +98,7 @@ describe('Service Tests', () => {
       it('should return a list of IntendedVisit', () => {
         const returnedFromService = Object.assign(
           {
+            uuid: 'BBBBBB',
             visitStartDate: currentDate.format(DATE_TIME_FORMAT),
             visitEndDate: currentDate.format(DATE_TIME_FORMAT),
             cancelled: true,

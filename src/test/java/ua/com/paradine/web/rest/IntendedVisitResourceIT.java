@@ -51,6 +51,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WithMockUser
 public class IntendedVisitResourceIT {
 
+    private static final String DEFAULT_UUID = "dA5D4F6a-c5f7-92Af-Fa0D-35fD1eA795fD";
+    private static final String UPDATED_UUID = "c58cA680-57c7-673A-E1d4-e8D1F7Fd0bB9";
+
     private static final ZonedDateTime DEFAULT_VISIT_START_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_VISIT_START_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
     private static final ZonedDateTime SMALLER_VISIT_START_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
@@ -98,6 +101,7 @@ public class IntendedVisitResourceIT {
      */
     public static IntendedVisit createEntity(EntityManager em) {
         IntendedVisit intendedVisit = new IntendedVisit()
+            .uuid(DEFAULT_UUID)
             .visitStartDate(DEFAULT_VISIT_START_DATE)
             .visitEndDate(DEFAULT_VISIT_END_DATE)
             .cancelled(DEFAULT_CANCELLED);
@@ -126,6 +130,7 @@ public class IntendedVisitResourceIT {
      */
     public static IntendedVisit createUpdatedEntity(EntityManager em) {
         IntendedVisit intendedVisit = new IntendedVisit()
+            .uuid(UPDATED_UUID)
             .visitStartDate(UPDATED_VISIT_START_DATE)
             .visitEndDate(UPDATED_VISIT_END_DATE)
             .cancelled(UPDATED_CANCELLED);
@@ -167,6 +172,7 @@ public class IntendedVisitResourceIT {
         List<IntendedVisit> intendedVisitList = intendedVisitRepository.findAll();
         assertThat(intendedVisitList).hasSize(databaseSizeBeforeCreate + 1);
         IntendedVisit testIntendedVisit = intendedVisitList.get(intendedVisitList.size() - 1);
+        assertThat(testIntendedVisit.getUuid()).isEqualTo(DEFAULT_UUID);
         assertThat(testIntendedVisit.getVisitStartDate()).isEqualTo(DEFAULT_VISIT_START_DATE);
         assertThat(testIntendedVisit.getVisitEndDate()).isEqualTo(DEFAULT_VISIT_END_DATE);
         assertThat(testIntendedVisit.isCancelled()).isEqualTo(DEFAULT_CANCELLED);
@@ -198,6 +204,26 @@ public class IntendedVisitResourceIT {
         verify(mockIntendedVisitSearchRepository, times(0)).save(intendedVisit);
     }
 
+
+    @Test
+    @Transactional
+    public void checkUuidIsRequired() throws Exception {
+        int databaseSizeBeforeTest = intendedVisitRepository.findAll().size();
+        // set the field null
+        intendedVisit.setUuid(null);
+
+        // Create the IntendedVisit, which fails.
+        IntendedVisitDTO intendedVisitDTO = intendedVisitMapper.toDto(intendedVisit);
+
+
+        restIntendedVisitMockMvc.perform(post("/api/intended-visits")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(intendedVisitDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<IntendedVisit> intendedVisitList = intendedVisitRepository.findAll();
+        assertThat(intendedVisitList).hasSize(databaseSizeBeforeTest);
+    }
 
     @Test
     @Transactional
@@ -270,6 +296,7 @@ public class IntendedVisitResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(intendedVisit.getId().intValue())))
+            .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID)))
             .andExpect(jsonPath("$.[*].visitStartDate").value(hasItem(sameInstant(DEFAULT_VISIT_START_DATE))))
             .andExpect(jsonPath("$.[*].visitEndDate").value(hasItem(sameInstant(DEFAULT_VISIT_END_DATE))))
             .andExpect(jsonPath("$.[*].cancelled").value(hasItem(DEFAULT_CANCELLED.booleanValue())));
@@ -286,6 +313,7 @@ public class IntendedVisitResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(intendedVisit.getId().intValue()))
+            .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID))
             .andExpect(jsonPath("$.visitStartDate").value(sameInstant(DEFAULT_VISIT_START_DATE)))
             .andExpect(jsonPath("$.visitEndDate").value(sameInstant(DEFAULT_VISIT_END_DATE)))
             .andExpect(jsonPath("$.cancelled").value(DEFAULT_CANCELLED.booleanValue()));
@@ -308,6 +336,84 @@ public class IntendedVisitResourceIT {
 
         defaultIntendedVisitShouldBeFound("id.lessThanOrEqual=" + id);
         defaultIntendedVisitShouldNotBeFound("id.lessThan=" + id);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllIntendedVisitsByUuidIsEqualToSomething() throws Exception {
+        // Initialize the database
+        intendedVisitRepository.saveAndFlush(intendedVisit);
+
+        // Get all the intendedVisitList where uuid equals to DEFAULT_UUID
+        defaultIntendedVisitShouldBeFound("uuid.equals=" + DEFAULT_UUID);
+
+        // Get all the intendedVisitList where uuid equals to UPDATED_UUID
+        defaultIntendedVisitShouldNotBeFound("uuid.equals=" + UPDATED_UUID);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIntendedVisitsByUuidIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        intendedVisitRepository.saveAndFlush(intendedVisit);
+
+        // Get all the intendedVisitList where uuid not equals to DEFAULT_UUID
+        defaultIntendedVisitShouldNotBeFound("uuid.notEquals=" + DEFAULT_UUID);
+
+        // Get all the intendedVisitList where uuid not equals to UPDATED_UUID
+        defaultIntendedVisitShouldBeFound("uuid.notEquals=" + UPDATED_UUID);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIntendedVisitsByUuidIsInShouldWork() throws Exception {
+        // Initialize the database
+        intendedVisitRepository.saveAndFlush(intendedVisit);
+
+        // Get all the intendedVisitList where uuid in DEFAULT_UUID or UPDATED_UUID
+        defaultIntendedVisitShouldBeFound("uuid.in=" + DEFAULT_UUID + "," + UPDATED_UUID);
+
+        // Get all the intendedVisitList where uuid equals to UPDATED_UUID
+        defaultIntendedVisitShouldNotBeFound("uuid.in=" + UPDATED_UUID);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIntendedVisitsByUuidIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        intendedVisitRepository.saveAndFlush(intendedVisit);
+
+        // Get all the intendedVisitList where uuid is not null
+        defaultIntendedVisitShouldBeFound("uuid.specified=true");
+
+        // Get all the intendedVisitList where uuid is null
+        defaultIntendedVisitShouldNotBeFound("uuid.specified=false");
+    }
+                @Test
+    @Transactional
+    public void getAllIntendedVisitsByUuidContainsSomething() throws Exception {
+        // Initialize the database
+        intendedVisitRepository.saveAndFlush(intendedVisit);
+
+        // Get all the intendedVisitList where uuid contains DEFAULT_UUID
+        defaultIntendedVisitShouldBeFound("uuid.contains=" + DEFAULT_UUID);
+
+        // Get all the intendedVisitList where uuid contains UPDATED_UUID
+        defaultIntendedVisitShouldNotBeFound("uuid.contains=" + UPDATED_UUID);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIntendedVisitsByUuidNotContainsSomething() throws Exception {
+        // Initialize the database
+        intendedVisitRepository.saveAndFlush(intendedVisit);
+
+        // Get all the intendedVisitList where uuid does not contain DEFAULT_UUID
+        defaultIntendedVisitShouldNotBeFound("uuid.doesNotContain=" + DEFAULT_UUID);
+
+        // Get all the intendedVisitList where uuid does not contain UPDATED_UUID
+        defaultIntendedVisitShouldBeFound("uuid.doesNotContain=" + UPDATED_UUID);
     }
 
 
@@ -612,6 +718,7 @@ public class IntendedVisitResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(intendedVisit.getId().intValue())))
+            .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID)))
             .andExpect(jsonPath("$.[*].visitStartDate").value(hasItem(sameInstant(DEFAULT_VISIT_START_DATE))))
             .andExpect(jsonPath("$.[*].visitEndDate").value(hasItem(sameInstant(DEFAULT_VISIT_END_DATE))))
             .andExpect(jsonPath("$.[*].cancelled").value(hasItem(DEFAULT_CANCELLED.booleanValue())));
@@ -661,6 +768,7 @@ public class IntendedVisitResourceIT {
         // Disconnect from session so that the updates on updatedIntendedVisit are not directly saved in db
         em.detach(updatedIntendedVisit);
         updatedIntendedVisit
+            .uuid(UPDATED_UUID)
             .visitStartDate(UPDATED_VISIT_START_DATE)
             .visitEndDate(UPDATED_VISIT_END_DATE)
             .cancelled(UPDATED_CANCELLED);
@@ -675,6 +783,7 @@ public class IntendedVisitResourceIT {
         List<IntendedVisit> intendedVisitList = intendedVisitRepository.findAll();
         assertThat(intendedVisitList).hasSize(databaseSizeBeforeUpdate);
         IntendedVisit testIntendedVisit = intendedVisitList.get(intendedVisitList.size() - 1);
+        assertThat(testIntendedVisit.getUuid()).isEqualTo(UPDATED_UUID);
         assertThat(testIntendedVisit.getVisitStartDate()).isEqualTo(UPDATED_VISIT_START_DATE);
         assertThat(testIntendedVisit.getVisitEndDate()).isEqualTo(UPDATED_VISIT_END_DATE);
         assertThat(testIntendedVisit.isCancelled()).isEqualTo(UPDATED_CANCELLED);
@@ -740,6 +849,7 @@ public class IntendedVisitResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(intendedVisit.getId().intValue())))
+            .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID)))
             .andExpect(jsonPath("$.[*].visitStartDate").value(hasItem(sameInstant(DEFAULT_VISIT_START_DATE))))
             .andExpect(jsonPath("$.[*].visitEndDate").value(hasItem(sameInstant(DEFAULT_VISIT_END_DATE))))
             .andExpect(jsonPath("$.[*].cancelled").value(hasItem(DEFAULT_CANCELLED.booleanValue())));

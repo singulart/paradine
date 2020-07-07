@@ -2,6 +2,7 @@ import { Moment } from 'moment';
 
 export interface IIntendedVisit {
   id?: number;
+  uuid?: string;
   visitStartDate?: Moment;
   visitEndDate?: Moment;
   cancelled?: boolean;
@@ -14,6 +15,7 @@ export interface IIntendedVisit {
 export class IntendedVisit implements IIntendedVisit {
   constructor(
     public id?: number,
+    public uuid?: string,
     public visitStartDate?: Moment,
     public visitEndDate?: Moment,
     public cancelled?: boolean,

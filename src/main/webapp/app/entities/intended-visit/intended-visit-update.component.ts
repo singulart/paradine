@@ -28,6 +28,15 @@ export class IntendedVisitUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
+    uuid: [
+      null,
+      [
+        Validators.required,
+        Validators.minLength(36),
+        Validators.maxLength(36),
+        Validators.pattern('[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}'),
+      ],
+    ],
     visitStartDate: [null, [Validators.required]],
     visitEndDate: [null, [Validators.required]],
     cancelled: [null, [Validators.required]],
@@ -82,6 +91,7 @@ export class IntendedVisitUpdateComponent implements OnInit {
   updateForm(intendedVisit: IIntendedVisit): void {
     this.editForm.patchValue({
       id: intendedVisit.id,
+      uuid: intendedVisit.uuid,
       visitStartDate: intendedVisit.visitStartDate ? intendedVisit.visitStartDate.format(DATE_TIME_FORMAT) : null,
       visitEndDate: intendedVisit.visitEndDate ? intendedVisit.visitEndDate.format(DATE_TIME_FORMAT) : null,
       cancelled: intendedVisit.cancelled,
@@ -108,6 +118,7 @@ export class IntendedVisitUpdateComponent implements OnInit {
     return {
       ...new IntendedVisit(),
       id: this.editForm.get(['id'])!.value,
+      uuid: this.editForm.get(['uuid'])!.value,
       visitStartDate: this.editForm.get(['visitStartDate'])!.value
         ? moment(this.editForm.get(['visitStartDate'])!.value, DATE_TIME_FORMAT)
         : undefined,

@@ -82,7 +82,7 @@ public class GooglePopularTimesSafetyClassifier implements RestaurantSafetyClass
     }
 
     HourlyClassifier classifyOccupancy(Integer hour, Integer occupancyPercentage, WorkingHoursVO workHoursAtDayCode) {
-        if(!isDuringWorkingTime(hour, workHoursAtDayCode)) {
+        if( !new WorkingHoursChecker().isDuringWorkingTime(hour, workHoursAtDayCode)) {
             return new HourlyClassifier(hour, SafetyMarker.CLOSED);
         }
         if(occupancyPercentage == null) {
@@ -96,17 +96,6 @@ public class GooglePopularTimesSafetyClassifier implements RestaurantSafetyClass
             return new HourlyClassifier(hour, SafetyMarker.RED);
         } else {
             return new HourlyClassifier(hour, SafetyMarker.CLOSED);
-        }
-    }
-
-    private boolean isDuringWorkingTime(Integer hour, WorkingHoursVO workingHoursVO) {
-        if(workingHoursVO.getClosed()) {
-            return false;
-        }
-        if(workingHoursVO.getClosingHour() < workingHoursVO.getOpeningHour()) {
-            return hour <= workingHoursVO.getClosingHour() || hour >= workingHoursVO.getOpeningHour();
-        } else {
-            return hour <= workingHoursVO.getClosingHour() && hour >= workingHoursVO.getOpeningHour();
         }
     }
 

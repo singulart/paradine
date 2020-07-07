@@ -41,6 +41,7 @@
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
                     <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="uuid"><span jhiTranslate="paradineApp.intendedVisit.uuid">Uuid</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="visitStartDate"><span jhiTranslate="paradineApp.intendedVisit.visitStartDate">Visit Start Date</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="visitEndDate"><span jhiTranslate="paradineApp.intendedVisit.visitEndDate">Visit End Date</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="cancelled"><span jhiTranslate="paradineApp.intendedVisit.cancelled">Cancelled</span> <fa-icon icon="sort"></fa-icon></th>
@@ -52,6 +53,7 @@
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                 <tr *ngFor="let intendedVisit of intendedVisits ;trackBy: trackId">
                     <td><a [routerLink]="['/intended-visit', intendedVisit.id, 'view']">{{ intendedVisit.id }}</a></td>
+                    <td>{{ intendedVisit.uuid }}</td>
                     <td>{{ intendedVisit.visitStartDate | date:'medium' }}</td>
                     <td>{{ intendedVisit.visitEndDate | date:'medium' }}</td>
                     <td>{{ intendedVisit.cancelled }}</td>

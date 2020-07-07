@@ -5,14 +5,14 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ua.com.paradine.core.business.vo.ClassifiedRestaurantVO;
 import ua.com.paradine.core.business.vo.PopularTimeVO;
 import ua.com.paradine.core.business.vo.RestaurantVO;
 import ua.com.paradine.core.business.vo.WorkingHoursVO;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 class GooglePopularTimesSafetyClassifierTest {
 
     private GooglePopularTimesSafetyClassifier classifier = spy(new GooglePopularTimesSafetyClassifier());
@@ -20,6 +20,7 @@ class GooglePopularTimesSafetyClassifierTest {
     @Test
     void classifySafetyNoPopularTimesData() {
         when(classifier.getToday()).thenReturn("We");
+        when(classifier.getTomorrow()).thenReturn("Th");
         RestaurantVO restaurant1 = new RestaurantVO();
         ClassifiedRestaurantVO classified = classifier.classifySafety(restaurant1);
 
