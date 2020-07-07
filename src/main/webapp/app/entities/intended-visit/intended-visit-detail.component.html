@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="intendedVisit">
+            <h2><span jhiTranslate="paradineApp.intendedVisit.detail.title">Intended Visit</span> {{ intendedVisit.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="paradineApp.intendedVisit.visitStartDate">Visit Start Date</span></dt>
+                <dd>
+                    <span>{{ intendedVisit.visitStartDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="paradineApp.intendedVisit.visitEndDate">Visit End Date</span></dt>
+                <dd>
+                    <span>{{ intendedVisit.visitEndDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="paradineApp.intendedVisit.cancelled">Cancelled</span></dt>
+                <dd>
+                    <span>{{ intendedVisit.cancelled }}</span>
+                </dd>
+                <dt><span jhiTranslate="paradineApp.intendedVisit.visitingUser">Visiting User</span></dt>
+                <dd>
+                    {{ intendedVisit.visitingUserLogin }}
+                </dd>
+                <dt><span jhiTranslate="paradineApp.intendedVisit.restaurant">Restaurant</span></dt>
+                <dd>
+                    <div *ngIf="intendedVisit.restaurantId">
+                        <a [routerLink]="['/restaurant', intendedVisit.restaurantId, 'view']">{{ intendedVisit.restaurantName }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/intended-visit', intendedVisit.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

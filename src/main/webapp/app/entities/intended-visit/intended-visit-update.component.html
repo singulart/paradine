@@ -1,0 +1,100 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-intended-visit-heading" jhiTranslate="paradineApp.intendedVisit.home.createOrEditLabel">Create or edit a Intended Visit</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.intendedVisit.visitStartDate" for="field_visitStartDate">Visit Start Date</label>
+                    <div class="d-flex">
+                        <input id="field_visitStartDate" type="datetime-local" class="form-control" name="visitStartDate" formControlName="visitStartDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                    <div *ngIf="editForm.get('visitStartDate')!.invalid && (editForm.get('visitStartDate')!.dirty || editForm.get('visitStartDate')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('visitStartDate')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('visitStartDate')?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.intendedVisit.visitEndDate" for="field_visitEndDate">Visit End Date</label>
+                    <div class="d-flex">
+                        <input id="field_visitEndDate" type="datetime-local" class="form-control" name="visitEndDate" formControlName="visitEndDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                    <div *ngIf="editForm.get('visitEndDate')!.invalid && (editForm.get('visitEndDate')!.dirty || editForm.get('visitEndDate')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('visitEndDate')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('visitEndDate')?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.intendedVisit.cancelled" for="field_cancelled">Cancelled</label>
+                    <input type="checkbox" class="form-control" name="cancelled" id="field_cancelled"
+                           formControlName="cancelled"/>
+                    <div *ngIf="editForm.get('cancelled')!.invalid && (editForm.get('cancelled')!.dirty || editForm.get('cancelled')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('cancelled')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.intendedVisit.visitingUser" for="field_visitingUser">Visiting User</label>
+                    <select class="form-control" id="field_visitingUser" name="visitingUser" formControlName="visitingUserId">
+                        <option *ngIf="!editForm.get('visitingUserId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('visitingUserId')!.invalid && (editForm.get('visitingUserId')!.dirty || editForm.get('visitingUserId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('visitingUserId')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.intendedVisit.restaurant" for="field_restaurant">Restaurant</label>
+                    <select class="form-control" id="field_restaurant" name="restaurant" formControlName="restaurantId">
+                        <option *ngIf="!editForm.get('restaurantId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="restaurantOption.id" *ngFor="let restaurantOption of restaurants; trackBy: trackById">{{ restaurantOption.name }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('restaurantId')!.invalid && (editForm.get('restaurantId')!.dirty || editForm.get('restaurantId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('restaurantId')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+{
+  "paradineApp": {
+    "intendedVisit": {
+      "home": {
+        "title": "Intended Visits",
+        "createLabel": "Створити новий Intended Visit",
+        "createOrEditLabel": "Створити чи редагувати Intended Visit",
+        "search": "Знайти Intended Visit",
+        "notFound": "No Intended Visits found"
+      },
+      "created": "Новий Intended Visit створений з ідентифікатором {{ param }}",
+      "updated": "Intended Visit оновлений з ідентифікатором {{ param }}",
+      "deleted": "Intended Visit видалений з ідентифікатором {{ param }}",
+      "delete": {
+        "question": "Ви впевнені, що хочете видалити Intended Visit {{ id }}?"
+      },
+      "detail": {
+        "title": "Intended Visit"
+      },
+      "visitStartDate": "Visit Start Date",
+      "visitEndDate": "Visit End Date",
+      "cancelled": "Cancelled",
+      "visitingUser": "Visiting User",
+      "restaurant": "Restaurant"
+    }
+  }
+}

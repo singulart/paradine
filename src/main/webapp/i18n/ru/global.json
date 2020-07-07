@@ -11,6 +11,7 @@
         "popularTime": "Popular Time",
         "workingHours": "Working Hours",
         "achievement": "Achievement",
+        "intendedVisit": "Intended Visit",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

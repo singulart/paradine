@@ -20,6 +20,10 @@ import { RouterModule } from '@angular/router';
         path: 'achievement',
         loadChildren: () => import('./achievement/achievement.module').then(m => m.ParadineAchievementModule),
       },
+      {
+        path: 'intended-visit',
+        loadChildren: () => import('./intended-visit/intended-visit.module').then(m => m.ParadineIntendedVisitModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

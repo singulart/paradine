@@ -1,0 +1,27 @@
+{
+  "paradineApp": {
+    "intendedVisit": {
+      "home": {
+        "title": "Intended Visits",
+        "createLabel": "Create a new Intended Visit",
+        "createOrEditLabel": "Create or edit a Intended Visit",
+        "search": "Search for Intended Visit",
+        "notFound": "No Intended Visits found"
+      },
+      "created": "A new Intended Visit is created with identifier {{ param }}",
+      "updated": "A Intended Visit is updated with identifier {{ param }}",
+      "deleted": "A Intended Visit is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Intended Visit {{ id }}?"
+      },
+      "detail": {
+        "title": "Intended Visit"
+      },
+      "visitStartDate": "Visit Start Date",
+      "visitEndDate": "Visit End Date",
+      "cancelled": "Cancelled",
+      "visitingUser": "Visiting User",
+      "restaurant": "Restaurant"
+    }
+  }
+}
