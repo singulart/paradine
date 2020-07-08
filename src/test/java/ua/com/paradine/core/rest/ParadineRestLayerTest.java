@@ -3,6 +3,7 @@ package ua.com.paradine.core.rest;
 import static java.util.Arrays.asList;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -191,6 +192,12 @@ public class ParadineRestLayerTest {
     @Test
     void anonymousSubmissionOfVisitIntentShouldRespond401() throws Exception {
         mockMvc.perform(get("/api/paradine/v2/restaurants/intended_visits"))
+            .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void anonymousCancellationOfVisitIntentShouldRespond401() throws Exception {
+        mockMvc.perform(delete("/api/paradine/v2/restaurants/intended_visits/12345"))
             .andExpect(status().isUnauthorized());
     }
 
