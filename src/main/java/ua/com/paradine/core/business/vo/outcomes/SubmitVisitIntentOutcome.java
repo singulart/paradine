@@ -1,6 +1,5 @@
 package ua.com.paradine.core.business.vo.outcomes;
 
-import org.zalando.problem.Problem;
 import org.zalando.problem.ThrowableProblem;
 
 public class SubmitVisitIntentOutcome {

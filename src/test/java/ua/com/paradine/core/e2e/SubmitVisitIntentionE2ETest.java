@@ -22,7 +22,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -121,7 +120,7 @@ public class SubmitVisitIntentionE2ETest {
             .andExpect(jsonPath("$.id").isNotEmpty())
         ;
 
-        intendedVisit.setWhen(OffsetDateTime.now().plusDays(1).plusHours(4)); // 2h after the previous visit supposed to end
+        intendedVisit.setWhen(intendedVisit.getWhen().plusHours(4)); // 2h after the previous visit supposed to end
 
         mockMvc.perform(post("/api/paradine/v2/restaurants/intended_visits")
             .contentType(MediaType.APPLICATION_JSON)

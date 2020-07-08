@@ -109,15 +109,20 @@ public class SubmitVisitIntentFlow {
                 Problem.valueOf(Status.BAD_REQUEST, TOO_CLOSE_TO_EXISTING_VISIT));
         }
 
+        IntendedVisit visit = persistVisitIntent(user.get(), plannedVisitDate, restaurant.get());
+        return new SubmitVisitIntentOutcome(visit.getUuid());
+    }
+
+    private IntendedVisit persistVisitIntent(Long who, OffsetDateTime when, Long where) {
         IntendedVisit visit = new IntendedVisit();
         visit.setUuid(UUID.randomUUID().toString());
-        visit.setVisitingUser(userReference(user.get()));
-        visit.setRestaurant(restaurantReference(restaurant.get()));
+        visit.setVisitingUser(userReference(who));
+        visit.setRestaurant(restaurantReference(where));
         visit.setCancelled(Boolean.FALSE);
-        visit.setVisitStartDate(plannedVisitDate.toZonedDateTime());
-        visit.setVisitEndDate(plannedVisitDate.plusHours(VISIT_DURATION_HOURS).toZonedDateTime());
+        visit.setVisitStartDate(when.toZonedDateTime());
+        visit.setVisitEndDate(when.plusHours(VISIT_DURATION_HOURS).toZonedDateTime());
         visitIntentionRepository.saveAndFlush(visit);
-        return new SubmitVisitIntentOutcome(visit.getUuid());
+        return visit;
     }
 
     private User userReference(Long id) {

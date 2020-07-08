@@ -2,6 +2,7 @@ package ua.com.paradine.core.dao;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ua.com.paradine.domain.IntendedVisit;
@@ -20,4 +21,10 @@ public interface ExtendedVisitIntentionRepository extends IntendedVisitRepositor
                         @Param("startDate") ZonedDateTime startDate,
                         @Param("endDate") ZonedDateTime endDate
     );
+
+    @Query(value = "UPDATE IntendedVisit SET cancelled = TRUE "
+        + "WHERE visitingUser.id = (SELECT u.id from User u WHERE u.login = :userLogin) "
+        + "AND uuid = :uuid ")
+    @Modifying
+    Integer cancelVisit(@Param("uuid") String uuid, @Param("userLogin") String userLogin);
 }
