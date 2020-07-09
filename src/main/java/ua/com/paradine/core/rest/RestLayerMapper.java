@@ -1,6 +1,7 @@
 package ua.com.paradine.core.rest;
 
 import java.util.List;
+import java.util.UUID;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -36,4 +37,8 @@ public interface RestLayerMapper {
     @Mapping(target = "when", source = "request.visit.when")
     @Mapping(target = "restaurantId", source = "request.visit.restaurantId")
     SubmitVisitIntentCommand map(CreateIntendedVisitRequest request, String user);
+
+    default String map(UUID uuid) {
+        return uuid.toString();
+    }
 }

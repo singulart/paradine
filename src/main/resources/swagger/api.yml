@@ -190,8 +190,6 @@ components:
             id:
               type: string
               format: uuid
-              minLength: 36
-              maxLength: 36
               description: UUID of the created resource assigned by server.
       example:
         version: 2.0
@@ -415,8 +413,6 @@ components:
         id:
           type: string
           format: uuid
-          minLength: 36
-          maxLength: 36
           description: UUID of an intended visit.
         visitDate:
           description: Date and time of an intended visit in a format YYYY-mm-dd HH:00:00.
@@ -458,8 +454,6 @@ components:
           description: UUID of a particular existing restaurant.
           type: string
           format: uuid
-          minLength: 36
-          maxLength: 36
 
   responses:
     Problem:
