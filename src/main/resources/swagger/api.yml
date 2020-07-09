@@ -63,6 +63,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RestaurantsGetResponse'
+              examples:
+                first:
+                  value:
+                    version: '2.0'
+                    restaurants:
+                      - $ref: '#/components/examples/RestaurantInfoWithSafety/value'
           headers:
             X-Total-Count:
               schema:
@@ -74,6 +80,7 @@ paths:
               description: Total number of pages. Non-negative number.
           description: >-
             A page of restaurants.
+
         '400':
           content:
             application/json:
@@ -81,6 +88,7 @@ paths:
                 $ref: '#/components/responses/Problem'
           description: >-
             Error response indicating incorrect / inconsistent query parameters.
+
   /restaurants/intended_visits:
     get:
       security:
@@ -93,6 +101,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IntendedVisitsGetResponse'
+              examples:
+                resp1:
+                  value:
+                    version: '2.0'
+                    todayVisits:
+                      - $ref: '#/components/examples/StoredIntendedVisit/value'
+                      - $ref: '#/components/examples/StoredIntendedVisit/value'
+                    tomorrowVisits:
+                      - $ref: '#/components/examples/StoredIntendedVisit/value'
+                      - $ref: '#/components/examples/StoredIntendedVisit/value'
           description: >-
             A list of intended visits.
         '401':
@@ -204,125 +222,14 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Restaurant'
-      example:
-        version: '2.0'
-        restaurants:
-          - id: aaaa-bbbb-cccc-dddd
-            name: Shoti
-            address:
-              ru_RU: ул. Шевченко 20
-              uk_UA: вул. Шевченка 20
-              en_US: 20 Schevchenka str
-            image: http://paradine.com/static/assets/5783853745/34587345934583.jpg
-            geolat: 50.304567
-            geolng: 30.344532
-            safetyToday:
-              - h: 0
-                value: -1
-              - h: 1
-                value: -1
-              - h: 2
-                value: -1
-              - h: 3
-                value: -1
-              - h: 4
-                value: -1
-              - h: 5
-                value: -1
-              - h: 6
-                value: -1
-              - h: 7
-                value: -1
-              - h: 8
-                value: -1
-              - h: 9
-                value: 0
-              - h: 10
-                value: 0
-              - h: 11
-                value: 0
-              - h: 12
-                value: 10
-              - h: 13
-                value: 10
-              - h: 14
-                value: 10
-              - h: 15
-                value: 10
-              - h: 16
-                value: 10
-              - h: 17
-                value: 10
-              - h: 18
-                value: 20
-              - h: 19
-                value: 20
-              - h: 20
-                value: 20
-              - h: 21
-                value: 20
-              - h: 22
-                value: 10
-              - h: 23
-                value: -1
-            safetyTomorrow:
-              - h: 0
-                value: -1
-              - h: 1
-                value: -1
-              - h: 2
-                value: -1
-              - h: 3
-                value: -1
-              - h: 4
-                value: -1
-              - h: 5
-                value: -1
-              - h: 6
-                value: -1
-              - h: 7
-                value: -1
-              - h: 8
-                value: -1
-              - h: 9
-                value: 0
-              - h: 10
-                value: 0
-              - h: 11
-                value: 0
-              - h: 12
-                value: 10
-              - h: 13
-                value: 10
-              - h: 14
-                value: 10
-              - h: 15
-                value: 10
-              - h: 16
-                value: 10
-              - h: 17
-                value: 10
-              - h: 18
-                value: 20
-              - h: 19
-                value: 20
-              - h: 20
-                value: 20
-              - h: 21
-                value: 20
-              - h: 22
-                value: 10
-              - h: 23
-                value: -1
-    Restaurant:
+
+    RestaurantBasic:
       type: object
       required:
         - id
         - name
         - image
         - address
-        - safetyToday
-        - safetyTomorrow
       properties:
         id:
           type: string
@@ -343,14 +250,27 @@ components:
         geolng:
           type: number
           format: float
-        safetyToday:
-          type: array
-          items:
-            $ref: '#/components/schemas/HourlySafety'
-        safetyTomorrow:
-          type: array
-          items:
-            $ref: '#/components/schemas/HourlySafety'
+
+    Restaurant:
+      allOf:
+        - $ref: '#/components/schemas/RestaurantBasic'
+        - type: object
+          properties:
+            safetyToday:
+              type: array
+              items:
+                $ref: '#/components/schemas/HourlySafety'
+            safetyTomorrow:
+              type: array
+              items:
+                $ref: '#/components/schemas/HourlySafety'
+      required:
+        - id
+        - name
+        - image
+        - address
+        - safetyToday
+        - safetyTomorrow
 
     HourlySafety:
       type: object
@@ -390,22 +310,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/StoredIntendedVisit'
-      example:
-        version: '2.0'
-        todayVisits:
-          - id: 551f9da9-e0d9-468c-bb5d-a4a761c63dba
-            when: 2020-07-28T17:00:00Z
-            restaurantId: 5190ccd1-9b7b-4c5c-9025-495c7d9fa687
-          - id: 2ac715d1-467b-472f-9bcb-e1c88c879cd4
-            when: 2020-07-28T17:00:00Z
-            restaurantId: 50e26c12-ff82-4131-adfc-9f377857bdf0
-        tomorrowVisits:
-          - id: 551f9da9-e0d9-468c-bb5d-a4a761c63dba
-            when: 2020-07-29T17:00:00Z
-            restaurantId: 5190ccd1-9b7b-4c5c-9025-495c7d9fa687
-          - id: 2ac715d1-467b-472f-9bcb-e1c88c879cd4
-            when: 2020-07-29T17:00:00Z
-            restaurantId: 50e26c12-ff82-4131-adfc-9f377857bdf0
 
     StoredIntendedVisit:
       type: object
@@ -419,25 +323,12 @@ components:
           type: string
           format: date-time
         restaurant:
-          $ref: '#/components/schemas/Restaurant'
+          $ref: '#/components/schemas/RestaurantBasic'
       required:
         - id
         - visitDate
         - restaurant
       description: Representation of a user's intention to go to a particular restaurant stored under a unique id.
-      example:
-        id: aaa1-bbb1-ccc1-ddd2
-        visitDate: 2020-07-28 17:00:00
-        restaurant:
-          id: aaaa-bbbb-cccc-dddd
-          name: Shoti
-          address:
-            ru_RU: ул. Шевченко 20
-            uk_UA: вул. Шевченка 20
-            en_US: 20 Schevchenka str
-          image: http://paradine.com/static/assets/5783853745/34587345934583.jpg
-          geolat: 50.304567
-          geolng: 30.344532
 
     IntendedVisit:
       type: object
@@ -454,6 +345,136 @@ components:
           description: UUID of a particular existing restaurant.
           type: string
           format: uuid
+
+  examples:
+    StoredIntendedVisit:
+      value:
+        id: 815550e8-ce6e-4c5c-8581-9909857cec2c
+        visitDate: '2020-07-28T17:00:00Z'
+        restaurant:
+          $ref: '#/components/examples/RestaurantBasic/value'
+
+    RestaurantInfoWithSafety:
+      value:
+        id: 815550e8-ce6e-4c5c-8581-9909857cec2c
+        name: Shoti
+        address:
+          ru_RU: ул. Шевченко 20
+          uk_UA: вул. Шевченка 20
+          en_US: 20 Schevchenka str
+        image: http://paradine.com/static/assets/5783853745/34587345934583.jpg
+        geolat: 50.304567
+        geolng: 30.344532
+        safetyToday:
+          - h: 0
+            value: -1
+          - h: 1
+            value: -1
+          - h: 2
+            value: -1
+          - h: 3
+            value: -1
+          - h: 4
+            value: -1
+          - h: 5
+            value: -1
+          - h: 6
+            value: -1
+          - h: 7
+            value: -1
+          - h: 8
+            value: -1
+          - h: 9
+            value: 0
+          - h: 10
+            value: 0
+          - h: 11
+            value: 0
+          - h: 12
+            value: 10
+          - h: 13
+            value: 10
+          - h: 14
+            value: 10
+          - h: 15
+            value: 10
+          - h: 16
+            value: 10
+          - h: 17
+            value: 10
+          - h: 18
+            value: 20
+          - h: 19
+            value: 20
+          - h: 20
+            value: 20
+          - h: 21
+            value: 20
+          - h: 22
+            value: 10
+          - h: 23
+            value: -1
+        safetyTomorrow:
+          - h: 0
+            value: -1
+          - h: 1
+            value: -1
+          - h: 2
+            value: -1
+          - h: 3
+            value: -1
+          - h: 4
+            value: -1
+          - h: 5
+            value: -1
+          - h: 6
+            value: -1
+          - h: 7
+            value: -1
+          - h: 8
+            value: -1
+          - h: 9
+            value: 0
+          - h: 10
+            value: 0
+          - h: 11
+            value: 0
+          - h: 12
+            value: 10
+          - h: 13
+            value: 10
+          - h: 14
+            value: 10
+          - h: 15
+            value: 10
+          - h: 16
+            value: 10
+          - h: 17
+            value: 10
+          - h: 18
+            value: 20
+          - h: 19
+            value: 20
+          - h: 20
+            value: 20
+          - h: 21
+            value: 20
+          - h: 22
+            value: 10
+          - h: 23
+            value: -1
+
+    RestaurantBasic:
+      value:
+        id: 815550e8-ce6e-4c5c-8581-9909857cec2c
+        name: Shoti
+        address:
+          ru_RU: ул. Шевченко 20
+          uk_UA: вул. Шевченка 20
+          en_US: 20 Schevchenka str
+        image: http://paradine.com/static/assets/5783853745/34587345934583.jpg
+        geolat: 50.304567
+        geolng: 30.344532
 
   responses:
     Problem:
