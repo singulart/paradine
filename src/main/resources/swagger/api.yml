@@ -189,6 +189,7 @@ components:
           properties:
             id:
               type: string
+              format: uuid
               minLength: 36
               maxLength: 36
               description: UUID of the created resource assigned by server.
@@ -352,6 +353,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/HourlySafety'
+
     HourlySafety:
       type: object
       description: Representation of a restaurants' safety at a certain hour
@@ -382,39 +384,64 @@ components:
         - $ref: '#/components/schemas/Envelope'
         - type: object
           properties:
-            visits:
+            todayVisits:
+              type: array
+              items:
+                $ref: '#/components/schemas/StoredIntendedVisit'
+            tomorrowVisits:
               type: array
               items:
                 $ref: '#/components/schemas/StoredIntendedVisit'
       example:
         version: '2.0'
-        visits:
+        todayVisits:
           - id: 551f9da9-e0d9-468c-bb5d-a4a761c63dba
             when: 2020-07-28T17:00:00Z
+            restaurantId: 5190ccd1-9b7b-4c5c-9025-495c7d9fa687
+          - id: 2ac715d1-467b-472f-9bcb-e1c88c879cd4
+            when: 2020-07-28T17:00:00Z
+            restaurantId: 50e26c12-ff82-4131-adfc-9f377857bdf0
+        tomorrowVisits:
+          - id: 551f9da9-e0d9-468c-bb5d-a4a761c63dba
+            when: 2020-07-29T17:00:00Z
             restaurantId: 5190ccd1-9b7b-4c5c-9025-495c7d9fa687
           - id: 2ac715d1-467b-472f-9bcb-e1c88c879cd4
             when: 2020-07-29T17:00:00Z
             restaurantId: 50e26c12-ff82-4131-adfc-9f377857bdf0
 
     StoredIntendedVisit:
-      allOf:
-        - type: object
-          properties:
-            id:
-              type: string
-              minLength: 36
-              maxLength: 36
-              description: UUID of an intended visit.
-        - $ref: '#/components/schemas/IntendedVisit'
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+          description: UUID of an intended visit.
+        visitDate:
+          description: Date and time of an intended visit in a format YYYY-mm-dd HH:00:00.
+          type: string
+          format: date-time
+        restaurant:
+          $ref: '#/components/schemas/Restaurant'
       required:
         - id
-        - when
-        - restaurantId
+        - visitDate
+        - restaurant
       description: Representation of a user's intention to go to a particular restaurant stored under a unique id.
       example:
         id: aaa1-bbb1-ccc1-ddd2
-        when: 2020-07-28T17:00:00Z
-        restaurantId: aaaa-bbbb-cccc-dddd
+        visitDate: 2020-07-28 17:00:00
+        restaurant:
+          id: aaaa-bbbb-cccc-dddd
+          name: Shoti
+          address:
+            ru_RU: ул. Шевченко 20
+            uk_UA: вул. Шевченка 20
+            en_US: 20 Schevchenka str
+          image: http://paradine.com/static/assets/5783853745/34587345934583.jpg
+          geolat: 50.304567
+          geolng: 30.344532
 
     IntendedVisit:
       type: object
@@ -430,6 +457,7 @@ components:
         restaurantId:
           description: UUID of a particular existing restaurant.
           type: string
+          format: uuid
           minLength: 36
           maxLength: 36
 
