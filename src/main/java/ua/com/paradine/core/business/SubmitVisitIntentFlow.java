@@ -2,6 +2,7 @@ package ua.com.paradine.core.business;
 
 import static java.lang.Math.abs;
 import static java.time.OffsetDateTime.now;
+import static java.util.UUID.fromString;
 import static ua.com.paradine.core.Errors.TOO_CLOSE_TO_EXISTING_VISIT;
 import static ua.com.paradine.core.Errors.TOO_MANY_INTENDED_VISITS;
 import static ua.com.paradine.core.Errors.VISIT_IN_NON_BUSINESS_HOURS_NOT_ALLOWED;
@@ -110,7 +111,7 @@ public class SubmitVisitIntentFlow {
         }
 
         IntendedVisit visit = persistVisitIntent(user.get(), plannedVisitDate, restaurant.get());
-        return new SubmitVisitIntentOutcome(visit.getUuid());
+        return new SubmitVisitIntentOutcome(fromString(visit.getUuid()));
     }
 
     private IntendedVisit persistVisitIntent(Long who, OffsetDateTime when, Long where) {

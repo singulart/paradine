@@ -1,5 +1,6 @@
 package ua.com.paradine.core.e2e;
 
+import static java.util.UUID.fromString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -54,7 +55,7 @@ public class CancelIntendedVisitE2ETest {
     @Test
     public void testCancelVisitIntent_200OK() throws Exception {
         IntendedVisit intendedVisit = new IntendedVisit()
-            .restaurantId("117c0823-4d31-437d-8d14-e2686fa8c594")
+            .restaurantId(fromString("117c0823-4d31-437d-8d14-e2686fa8c594"))
             .when(OffsetDateTime.now().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(14));
         CreateIntendedVisitRequest createIntendedVisitRequest = new CreateIntendedVisitRequest()
             .version("x.y")

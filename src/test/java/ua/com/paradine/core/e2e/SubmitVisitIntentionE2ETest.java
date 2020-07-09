@@ -1,5 +1,6 @@
 package ua.com.paradine.core.e2e;
 
+import static java.util.UUID.fromString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -53,7 +54,7 @@ public class SubmitVisitIntentionE2ETest {
     @Test
     public void testSubmitVisitIntent_200OK() throws Exception {
         IntendedVisit intendedVisit = new IntendedVisit()
-            .restaurantId("117c0823-4d31-437d-8d14-e2686fa8c594")
+            .restaurantId(fromString("117c0823-4d31-437d-8d14-e2686fa8c594"))
             .when(OffsetDateTime.now().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(14));
         CreateIntendedVisitRequest createIntendedVisitRequest = new CreateIntendedVisitRequest()
             .version("x.y")
@@ -74,7 +75,7 @@ public class SubmitVisitIntentionE2ETest {
     @Test
     public void testSubmitTooManyVisits_400() throws Exception {
         IntendedVisit intendedVisit = new IntendedVisit()
-            .restaurantId("117c0823-4d31-437d-8d14-e2686fa8c594")
+            .restaurantId(fromString("117c0823-4d31-437d-8d14-e2686fa8c594"))
             .when(OffsetDateTime.now().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(14));
         CreateIntendedVisitRequest createIntendedVisitRequest = new CreateIntendedVisitRequest()
             .version("x.y")
@@ -104,7 +105,7 @@ public class SubmitVisitIntentionE2ETest {
     @Test
     public void testSubmitTwoVisitsWhichAreTooClose_400() throws Exception {
         IntendedVisit intendedVisit = new IntendedVisit()
-            .restaurantId("117c0823-4d31-437d-8d14-e2686fa8c594")
+            .restaurantId(fromString("117c0823-4d31-437d-8d14-e2686fa8c594"))
             .when(OffsetDateTime.now().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(14));
 
         CreateIntendedVisitRequest createIntendedVisitRequest = new CreateIntendedVisitRequest()
@@ -134,7 +135,7 @@ public class SubmitVisitIntentionE2ETest {
     @Test
     public void testMinimalLegitimateIntervalBetweenTwoVisits_is_3h_200() throws Exception {
         IntendedVisit intendedVisit = new IntendedVisit()
-            .restaurantId("117c0823-4d31-437d-8d14-e2686fa8c594")
+            .restaurantId(fromString("117c0823-4d31-437d-8d14-e2686fa8c594"))
             .when(OffsetDateTime.now().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(14));
         CreateIntendedVisitRequest createIntendedVisitRequest = new CreateIntendedVisitRequest()
             .version("x.y")
