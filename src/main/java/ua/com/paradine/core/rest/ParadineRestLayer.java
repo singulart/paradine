@@ -1,8 +1,10 @@
 package ua.com.paradine.core.rest;
 
+import static java.util.stream.Collectors.toList;
 import static ua.com.paradine.core.Errors.BAD_GEOLOCATION_PARAMS;
 import static ua.com.paradine.core.Errors.NOT_FOUND;
 
+import java.util.List;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,14 +16,17 @@ import org.zalando.problem.Status;
 import ua.com.paradine.core.business.CancelIntendedVisitFlow;
 import ua.com.paradine.core.business.SubmitVisitIntentFlow;
 import ua.com.paradine.core.business.ViewClassifiedRestaurantsFlow;
+import ua.com.paradine.core.business.ViewIntendedVisitsFlow;
 import ua.com.paradine.core.business.ViewRestaurantsListCriteria;
 import ua.com.paradine.core.business.vo.ClassifiedRestaurantVO;
+import ua.com.paradine.core.business.vo.IntendedVisitVO;
 import ua.com.paradine.core.business.vo.commands.CancelIntendedVisitCommand;
 import ua.com.paradine.core.business.vo.outcomes.CancelIntendedVisitOutcome;
 import ua.com.paradine.core.business.vo.outcomes.SubmitVisitIntentOutcome;
 import ua.com.paradine.security.SecurityUtils;
 import ua.com.paradine.web.api.RestaurantsApiDelegate;
 import ua.com.paradine.web.api.model.CreateIntendedVisitRequest;
+import ua.com.paradine.web.api.model.IntendedVisitsGetResponse;
 import ua.com.paradine.web.api.model.RestaurantsGetResponse;
 import ua.com.paradine.web.api.model.UuidResponse;
 
@@ -34,15 +39,19 @@ public class ParadineRestLayer implements RestaurantsApiDelegate {
     private final ViewClassifiedRestaurantsFlow viewClassifiedRestaurantsFlow;
     private final SubmitVisitIntentFlow submitVisitIntentFlow;
     private final CancelIntendedVisitFlow cancelIntendedVisitFlow;
+    private final ViewIntendedVisitsFlow viewIntendedVisitsFlow;
+
     private final RestLayerMapper restMapper = Mappers.getMapper(RestLayerMapper.class);
 
     @Autowired
     public ParadineRestLayer(ViewClassifiedRestaurantsFlow viewClassifiedRestaurantsFlow,
         SubmitVisitIntentFlow submitVisitIntentFlow,
-        CancelIntendedVisitFlow cancelIntendedVisitFlow) {
+        CancelIntendedVisitFlow cancelIntendedVisitFlow,
+        ViewIntendedVisitsFlow viewIntendedVisitsFlow) {
         this.viewClassifiedRestaurantsFlow = viewClassifiedRestaurantsFlow;
         this.submitVisitIntentFlow = submitVisitIntentFlow;
         this.cancelIntendedVisitFlow = cancelIntendedVisitFlow;
+        this.viewIntendedVisitsFlow = viewIntendedVisitsFlow;
     }
 
     @Override
@@ -107,5 +116,29 @@ public class ParadineRestLayer implements RestaurantsApiDelegate {
         } else {
             throw outcome.getError();
         }
+    }
+
+    @Override
+    public ResponseEntity<IntendedVisitsGetResponse> getMyIntendedVisits() {
+        List<IntendedVisitVO> visits =
+            viewIntendedVisitsFlow.viewMyIntendedVisits(SecurityUtils.getCurrentUserLogin().orElseThrow(
+                () -> Problem.valueOf(Status.NOT_FOUND, NOT_FOUND)
+            ));
+        return ResponseEntity.ok()
+            .body(new IntendedVisitsGetResponse()
+                .version(API_VERSION)
+                .todayVisits(
+                    visits.stream()
+                        .filter(iv -> iv.getKindOfDay().equals("TODAY"))
+                        .map(restMapper::mapVisit)
+                        .collect(toList())
+                )
+                .tomorrowVisits(
+                    visits.stream()
+                        .filter(iv -> iv.getKindOfDay().equals("TOMORROW"))
+                        .map(restMapper::mapVisit)
+                        .collect(toList())
+                )
+            );
     }
 }

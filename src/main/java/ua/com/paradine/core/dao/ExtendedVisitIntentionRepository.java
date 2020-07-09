@@ -10,8 +10,11 @@ import ua.com.paradine.repository.IntendedVisitRepository;
 
 public interface ExtendedVisitIntentionRepository extends IntendedVisitRepository {
 
-    @Query(value = "FROM IntendedVisit iv WHERE iv.visitingUser.id = :userId AND iv.cancelled = FALSE ")
-    List<IntendedVisit> findActiveVisitsByUser(Long userId);
+    @Query(value = "FROM IntendedVisit iv "
+        + "INNER JOIN FETCH iv.restaurant "
+        + "WHERE iv.visitingUser.id = (SELECT u.id from User u WHERE u.login = :userLogin)"
+        + " AND iv.cancelled = FALSE ")
+    List<IntendedVisit> findActiveVisitsByUser(@Param("userLogin")String userLogin);
 
     @Query(value = "FROM IntendedVisit iv WHERE iv.visitingUser.id = :userId "
         + "AND iv.cancelled = FALSE "

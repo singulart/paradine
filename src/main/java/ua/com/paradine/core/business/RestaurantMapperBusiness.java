@@ -1,16 +1,17 @@
 package ua.com.paradine.core.business;
 
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import ua.com.paradine.core.business.vo.ClassifiedRestaurantVO;
 import ua.com.paradine.core.business.vo.HourlyClassifier;
+import ua.com.paradine.core.business.vo.IntendedVisitVO;
 import ua.com.paradine.core.business.vo.PopularTimeVO;
 import ua.com.paradine.core.business.vo.RestaurantVO;
 import ua.com.paradine.core.business.vo.WorkingHoursVO;
-import ua.com.paradine.core.business.vo.commands.SubmitVisitIntentCommand;
 import ua.com.paradine.domain.IntendedVisit;
 import ua.com.paradine.domain.PopularTime;
 import ua.com.paradine.domain.Restaurant;
@@ -35,11 +36,12 @@ public interface RestaurantMapperBusiness {
 
     WorkingHoursVO dbEntityToValueObject(WorkingHours workingHours);
 
-//    @Mapping(target = "visitStartDate", source = "when")
-//    @Mapping(target = "visitEndDate", ignore = true)
-//    @Mapping(target = "restaurant", ignore = true)
-//    @Mapping(target = "id", ignore = true)
-//    @Mapping(target = "visitingUser", source = "user")
-//    @Mapping(target = "cancelled", expression = "java(Boolean.FALSE)")
-//    IntendedVisit commandToDbEntity(SubmitVisitIntentCommand command);
+    @Mapping(target = "id", source = "uuid")
+    @Mapping(target = "visitTime", source = "visitStartDate")
+    @Mapping(target = "kindOfDay", ignore = true)
+    IntendedVisitVO dbEntityToValueObject(IntendedVisit jpaEntity);
+
+    default OffsetDateTime map(ZonedDateTime time) {
+        return time.toOffsetDateTime();
+    }
 }
