@@ -38,6 +38,15 @@
     "nativeLanguage": "en",
     "languages": ["en", "ru", "ua"],
     "blueprints": [],
-    "lastLiquibaseTimestamp": 1594106762000
+    "lastLiquibaseTimestamp": 1594106762000,
+    "aws": {
+      "applicationName": "paradine",
+      "environmentName": "paradine-env",
+      "bucketName": "ua-com-paradine",
+      "instanceType": "t2.small",
+      "awsRegion": "eu-central-1",
+      "dbName": "paradine",
+      "dbInstanceClass": "db.t2.micro"
+    }
   }
 }
