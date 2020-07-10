@@ -1,5 +1,7 @@
 package ua.com.paradine.web.rest;
 
+import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import ua.com.paradine.RedisTestContainerExtension;
 import ua.com.paradine.ParadineApp;
 import ua.com.paradine.domain.Authority;
@@ -68,6 +70,9 @@ public class UserResourceIT {
 
     @Autowired
     private UserRepository userRepository;
+
+    @MockBean
+    private JestElasticsearchTemplate jestElasticsearchTemplate;
 
     /**
      * This repository is mocked in the ua.com.paradine.repository.search test package.

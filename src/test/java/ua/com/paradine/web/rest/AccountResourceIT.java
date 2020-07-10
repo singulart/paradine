@@ -1,5 +1,7 @@
 package ua.com.paradine.web.rest;
 
+import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import ua.com.paradine.ParadineApp;
 import ua.com.paradine.config.Constants;
 import ua.com.paradine.domain.User;
@@ -53,6 +55,9 @@ public class AccountResourceIT {
 
     @Autowired
     private MockMvc restAccountMockMvc;
+
+    @MockBean
+    private JestElasticsearchTemplate jestElasticsearchTemplate;
 
     @Test
     @WithUnauthenticatedMockUser

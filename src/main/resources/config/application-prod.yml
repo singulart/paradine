@@ -48,7 +48,8 @@ spring:
       auto-commit: false
   jpa:
     database-platform: io.github.jhipster.domain.util.FixedPostgreSQL10Dialect
-    show-sql: false
+    show-sql: true
+    properties: hibernate.format_sql=true
   data:
     jest:
       uri: http://localhost:9200

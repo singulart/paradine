@@ -1,5 +1,7 @@
 package ua.com.paradine.web.rest;
 
+import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import ua.com.paradine.ParadineApp;
 import ua.com.paradine.domain.IntendedVisit;
 import ua.com.paradine.domain.User;
@@ -73,6 +75,9 @@ public class IntendedVisitResourceIT {
 
     @Autowired
     private IntendedVisitService intendedVisitService;
+
+    @MockBean
+    private JestElasticsearchTemplate jestElasticsearchTemplate;
 
     /**
      * This repository is mocked in the ua.com.paradine.repository.search test package.
