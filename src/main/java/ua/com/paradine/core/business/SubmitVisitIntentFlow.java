@@ -61,7 +61,8 @@ public class SubmitVisitIntentFlow {
 
     public SubmitVisitIntentOutcome submitVisitIntent(SubmitVisitIntentCommand command) {
 
-        OffsetDateTime plannedVisitDate = command.getWhen().truncatedTo(ChronoUnit.HOURS);
+        ZonedDateTime plannedVisitDate = command.getWhen().truncatedTo(ChronoUnit.HOURS)
+            .atZoneSameInstant(DEFAULT_ZONE);
         Duration dur = Duration.between(now().truncatedTo(ChronoUnit.HOURS), plannedVisitDate);
         if(dur.isNegative() || dur.toDays() > 1) {
             return new SubmitVisitIntentOutcome(Problem.valueOf(Status.BAD_REQUEST));
@@ -100,10 +101,11 @@ public class SubmitVisitIntentFlow {
 
         Optional<IntendedVisit> tooCloseTo = visitsForTargetDay.stream().filter(iv ->
             abs(Duration.between(iv.getVisitEndDate(),
-                plannedVisitDate).toHours()) > MINIMAL_INTERVAL_BETWEEN_VISITS_HOURS
+                plannedVisitDate).toHours()) < MINIMAL_INTERVAL_BETWEEN_VISITS_HOURS
             ||
             abs(Duration.between(iv.getVisitStartDate(),
-                plannedVisitDate).toHours()) > MINIMAL_INTERVAL_BETWEEN_VISITS_HOURS
+                plannedVisitDate).toHours()) < MINIMAL_INTERVAL_BETWEEN_VISITS_HOURS
+//                plannedVisitDate).toHours()) > MINIMAL_INTERVAL_BETWEEN_VISITS_HOURS
         ).findFirst();
         if(tooCloseTo.isPresent()) {
             return new SubmitVisitIntentOutcome(
@@ -114,14 +116,14 @@ public class SubmitVisitIntentFlow {
         return new SubmitVisitIntentOutcome(fromString(visit.getUuid()));
     }
 
-    private IntendedVisit persistVisitIntent(Long who, OffsetDateTime when, Long where) {
+    private IntendedVisit persistVisitIntent(Long who, ZonedDateTime when, Long where) {
         IntendedVisit visit = new IntendedVisit();
         visit.setUuid(UUID.randomUUID().toString());
         visit.setVisitingUser(userReference(who));
         visit.setRestaurant(restaurantReference(where));
         visit.setCancelled(Boolean.FALSE);
-        visit.setVisitStartDate(when.toZonedDateTime());
-        visit.setVisitEndDate(when.plusHours(VISIT_DURATION_HOURS).toZonedDateTime());
+        visit.setVisitStartDate(when);
+        visit.setVisitEndDate(when.plusHours(VISIT_DURATION_HOURS));
         visitIntentionRepository.saveAndFlush(visit);
         return visit;
     }

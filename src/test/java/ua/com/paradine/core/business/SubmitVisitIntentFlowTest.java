@@ -10,6 +10,7 @@ import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static ua.com.paradine.core.Nowness.getNow;
 
 import io.undertow.util.StatusCodes;
 import java.time.Duration;
@@ -60,7 +61,7 @@ class SubmitVisitIntentFlowTest {
     void visitDateCannotBeInPast() {
 
         SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
-        cmd.setWhen(OffsetDateTime.now().minusDays(1));
+        cmd.setWhen(getNow().minusDays(1));
 
         SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
 
@@ -74,7 +75,7 @@ class SubmitVisitIntentFlowTest {
     void visitDateCannotBeAfterTomorrow() {
 
         SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
-        cmd.setWhen(OffsetDateTime.now().plusDays(2));
+        cmd.setWhen(getNow().plusDays(2));
 
         SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
 
@@ -91,7 +92,7 @@ class SubmitVisitIntentFlowTest {
             .thenReturn(Optional.empty());
 
         SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
-        cmd.setWhen(OffsetDateTime.now().plusHours(2));
+        cmd.setWhen(getNow().plusHours(2));
         cmd.setRestaurantId("123");
 
         SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
@@ -112,7 +113,7 @@ class SubmitVisitIntentFlowTest {
             .thenReturn(Optional.empty());
 
         SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
-        cmd.setWhen(OffsetDateTime.now().plusHours(2));
+        cmd.setWhen(getNow().plusHours(2));
         cmd.setRestaurantId("123");
         cmd.setUser("hito");
 
@@ -137,7 +138,7 @@ class SubmitVisitIntentFlowTest {
             .thenReturn(Optional.of(new WorkingHours().closed(Boolean.TRUE)));
 
         SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
-        cmd.setWhen(OffsetDateTime.now().plusHours(2));
+        cmd.setWhen(getNow().plusHours(2));
         cmd.setRestaurantId("123");
         cmd.setUser("hito");
 
@@ -163,7 +164,7 @@ class SubmitVisitIntentFlowTest {
             .thenReturn(Optional.of(new WorkingHours().closed(Boolean.FALSE).closingHour(21).openingHour(9)));
 
         SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
-        cmd.setWhen(OffsetDateTime.now().truncatedTo(ChronoUnit.DAYS).plusHours(22)); //22:00
+        cmd.setWhen(getNow().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(22)); //22:00
         cmd.setRestaurantId("123");
         cmd.setUser("hito");
 
@@ -186,7 +187,7 @@ class SubmitVisitIntentFlowTest {
             .thenReturn(Optional.of(42L));
 
         SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
-        cmd.setWhen(OffsetDateTime.now().truncatedTo(ChronoUnit.DAYS).plusHours(22)); //22:00
+        cmd.setWhen(getNow().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(22)); //22:00
         cmd.setRestaurantId("123");
         cmd.setUser("hito");
 
@@ -210,15 +211,15 @@ class SubmitVisitIntentFlowTest {
             .thenReturn(Optional.of(42L));
 
         SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
-        cmd.setWhen(OffsetDateTime.now().truncatedTo(ChronoUnit.DAYS).plusHours(22)); //22:00
+        cmd.setWhen(getNow().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(22)); //22:00
         cmd.setRestaurantId("123");
         cmd.setUser("hito");
 
         IntendedVisit intendedVisit = new IntendedVisit();
         intendedVisit.setCancelled(Boolean.FALSE);
         //scheduled visit from 18:00 to 20:00
-        intendedVisit.setVisitStartDate(ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).plusHours(18));
-        intendedVisit.setVisitEndDate(ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).plusHours(20));
+        intendedVisit.setVisitStartDate(ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(18));
+        intendedVisit.setVisitEndDate(ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(20));
 
         lenient().when(visitIntentionRepository.findActiveVisitsByUserAndDay(eq(42L), any(), any()))
             .thenReturn(asList(intendedVisit));
@@ -240,7 +241,7 @@ class SubmitVisitIntentFlowTest {
             .thenReturn(Optional.of(42L));
 
         SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
-        cmd.setWhen(OffsetDateTime.now().plusHours(2));
+        cmd.setWhen(getNow().plusHours(2));
         cmd.setRestaurantId("123");
         cmd.setUser("hito");
 
