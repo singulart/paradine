@@ -1,6 +1,9 @@
 package ua.com.paradine.core.business;
 
+import static ua.com.paradine.core.ParadineConstants.DEFAULT_ZONE;
+
 import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +36,7 @@ public class ViewIntendedVisitsFlow {
     }
 
     private IntendedVisitVO setDayKind(IntendedVisitVO intendedVisitVO) {
-        OffsetDateTime now = OffsetDateTime.now();
+        OffsetDateTime now = ZonedDateTime.now(DEFAULT_ZONE).toOffsetDateTime();
         OffsetDateTime startOfToday = now.truncatedTo(ChronoUnit.DAYS);
         OffsetDateTime endOfToday = startOfToday.plusDays(1);
         OffsetDateTime startOfTomorrow = endOfToday; //weird
