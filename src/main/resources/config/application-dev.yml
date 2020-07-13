@@ -21,6 +21,9 @@ logging:
       com:
         paradine: DEBUG
 
+eureka:
+  client:
+    enabled: false
 #eureka:
 #  instance:
 #    prefer-ip-address: true

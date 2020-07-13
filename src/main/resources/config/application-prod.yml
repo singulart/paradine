@@ -20,7 +20,9 @@ logging:
     ua.com.paradine: INFO
 #    com.netflix.discovery: OFF
 
-#eureka:
+eureka:
+  client:
+    enabled: false
 #  instance:
 #    prefer-ip-address: true
 #  client:
