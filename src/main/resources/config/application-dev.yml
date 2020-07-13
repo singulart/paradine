@@ -21,13 +21,13 @@ logging:
       com:
         paradine: DEBUG
 
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    enabled: false # By default, the JHipster Registry is not used in the "dev" profile
-    service-url:
-      defaultZone: http://admin:${jhipster.registry.password}@UAIEV8759NBM.LEVI9.COM:8761/eureka/
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    enabled: false # By default, the JHipster Registry is not used in the "dev" profile
+#    service-url:
+#      defaultZone: http://admin:${jhipster.registry.password}@UAIEV8759NBM.LEVI9.COM:8761/eureka/
 
 management:
   health:
@@ -35,9 +35,9 @@ management:
       enabled: false
 
 spring:
-  cloud:
-    config:
-      uri: http://admin:${jhipster.registry.password}@UAIEV8759NBM.LEVI9.COM:8761/config
+  #  cloud:
+  #    config:
+  #      uri: http://admin:${jhipster.registry.password}@UAIEV8759NBM.LEVI9.COM:8761/config
   profiles:
     active: dev
     include:
