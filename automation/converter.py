@@ -1,6 +1,6 @@
 """
 Converts Google Places API Json response from drobnikj/crawler-google-places
-into a number of SQL inserts into popular_time and working_hours table.
+into a number of SQL inserts into main tables: restaurant, popular_time and working_hours.
 
 Usage: python3 converter.py /Users/o.buistov/projects/experi-mental/crawler-google-places/apify_storage/datasets/default/\*.json
 """
@@ -62,26 +62,33 @@ def execute(path):
     files = glob.glob(path)
 
     # restaurants ingestion
+    insert_header = 'INSERT INTO RESTAURANT (ID, UUID, CAPACITY, GEOLAT, GEOLNG, NAME, PHOTO_URL, GOOGLE_PLACES_ID, CREATED_AT, UPDATED_AT, ADDRESS_EN, ADDRESS_UA) VALUES \n'
+    print(insert_header)
+    restaurant_rows = []
     for f in files:
         with open(f, 'r') as popul:
             rest_dict = json.loads(popul.read())
-            insert_header = 'INSERT INTO RESTAURANT (ID, UUID, CAPACITY, GEOLAT, GEOLNG, NAME, PHOTO_URL, GOOGLE_PLACES_ID, CREATED_AT, UPDATED_AT, ADDRESS_EN, ADDRESS_UA) VALUES '
-            row_sql_values = "((SELECT NEXTVAL('SEQUENCE_GENERATOR')), %s, %d, %s, %s, %s, %s, %s, %s, %s, %s, %s);" % \
+            row_sql_values = "((SELECT NEXTVAL('SEQUENCE_GENERATOR')), %s, %d, %s, %s, %s, %s, %s, %s, %s, %s, %s) " % \
                              (quote(str(uuid.uuid4())), 99,
                               rest_dict['location']['lat'],
                               rest_dict['location']['lng'],
                               quote(rest_dict['title']),
                               quote('http://www.todo.com'),
                               quote(rest_dict['placeId']),
-                              'LOCALTIMESTAMP()',
-                              'LOCALTIMESTAMP()',
+                              'CURRENT_TIMESTAMP',
+                              'CURRENT_TIMESTAMP',
                               quote(rest_dict['address'].split('   ')[0].strip()) if rest_dict['address'] else quote(''),
                               quote(rest_dict['address'].split('   ')[-1].strip()) if rest_dict['address'] else quote(''))
-            print(insert_header + row_sql_values)
+            restaurant_rows.append(row_sql_values)
+    print(','.join(restaurant_rows) + ';')
 
     print('create index RESTAURANT_GOOGLE_PLACES_ID_INDEX on RESTAURANT (GOOGLE_PLACES_ID);')
 
     # popular times ingestion
+    column_names = ", ".join("OCC_%02d" % h for h in range(1, 25))
+    insert_header = "INSERT INTO POPULAR_TIME (ID, RESTAURANT_ID, DAY_OF_WEEK, %s) VALUES \n" % column_names
+    print(insert_header)
+    pop_times_rows = []
     for f in files:
         with open(f, 'r') as popul:
             rest_dict = json.loads(popul.read())
@@ -97,18 +104,27 @@ def execute(path):
                         if i.get('hour') not in [y.get('hour') for y in pop_hist[dow][n + 1:]]
                     ]
                     sorted_list = sorted(deduped_list, key=lambda i: i['hour'])
-                    column_names = ", ".join("OCC_%02d" % h['hour'] for h in sorted_list)
-                    insert_header = "INSERT INTO POPULAR_TIME (ID, RESTAURANT_ID, DAY_OF_WEEK, %s) VALUES " % column_names
-                    occ_values = ", ".join("%d" % d['occupancyPercent'] for d in sorted_list)
-                    row_sql_values = "(SELECT NEXTVAL('SEQUENCE_GENERATOR')), %s, '%s', %s" % (
+                    map_from_sorted_list = {int(x['hour']): x for x in sorted_list}
+                    pop_times = []
+                    for t in range(1, 25):
+                        if t in map_from_sorted_list.keys():
+                            pop_times.append(str(map_from_sorted_list[t]['occupancyPercent']))
+                        else:
+                            pop_times.append('0')
+                    occ_values = ", ".join(pop_times)
+                    row_sql_values = "((SELECT NEXTVAL('SEQUENCE_GENERATOR')), %s, '%s', %s)" % (
                     resto_id_clause, dow, occ_values)
-                    print("".join([insert_header, '(', row_sql_values, ');']))
+                    pop_times_rows.append(row_sql_values)
                 else:
-                    insert_header = "INSERT INTO POPULAR_TIME (ID, RESTAURANT_ID, DAY_OF_WEEK) VALUES "
-                    row_sql_values = "(SELECT NEXTVAL('SEQUENCE_GENERATOR')), %s, '%s'" % (resto_id_clause, dow)
-                    print("".join([insert_header, '(', row_sql_values, ');']))
+                    row_sql_values = "((SELECT NEXTVAL('SEQUENCE_GENERATOR')), %s, '%s', %s)" % (resto_id_clause, dow,
+                                                   ", ".join('0' for _ in range(1, 25)))
+                    pop_times_rows.append(row_sql_values)
+    print(',\n'.join(pop_times_rows) + ';')
 
     # working hours ingestion
+    insert_header = "INSERT INTO WORKING_HOURS (ID, RESTAURANT_ID, DAY_OF_WEEK, OPENING_HOUR, CLOSING_HOUR, CLOSED) VALUES "
+    print(insert_header)
+    wh_rows = []
     for f in files:
         with open(f, 'r') as popul:
             rest_dict = json.loads(popul.read())
@@ -120,25 +136,20 @@ def execute(path):
                 day = WEEK[opening['day'].replace(',', '')]  # cleanup weird comma character
                 hours = opening['hours']
                 if 'Closed' in hours:
-                    insert_header = "INSERT INTO WORKING_HOURS (ID, RESTAURANT_ID, DAY_OF_WEEK, CLOSED) VALUES "
-                    print("".join([insert_header,
-                                   '(', ', '.join(["(SELECT NEXTVAL('SEQUENCE_GENERATOR'))",
-                                                   resto_id_clause, quote(day), 'True']), ');']))
+                    wh_rows.append("((SELECT NEXTVAL('SEQUENCE_GENERATOR')), %s, %s, %s, %s, %s)" % (
+                                                   resto_id_clause, quote(day), 'NULL', 'NULL', 'True'))
                 elif '24 hours' in hours:
-                    insert_header = "INSERT INTO WORKING_HOURS (ID, RESTAURANT_ID, DAY_OF_WEEK, OPENING_HOUR, CLOSING_HOUR) VALUES "
-                    print("".join([insert_header,
-                                   '(', ', '.join(["(SELECT NEXTVAL('SEQUENCE_GENERATOR'))",
-                                                   resto_id_clause, quote(day), '0', '24']), ');']))
+                    wh_rows.append("((SELECT NEXTVAL('SEQUENCE_GENERATOR')), %s, %s, %s, %s, %s)" % (
+                        resto_id_clause, quote(day), '0', '24', 'False'))
                 else:
                     if ',' in hours:
                         print('-- handling comma in working hours, next statement needs inspection')
                         hours = hours.split(',')[-1]
                     open_hour = parse_hour(hours.split('to')[0].strip())
                     close_hour = parse_hour(hours.split('to')[1].strip())
-                    insert_header = "INSERT INTO WORKING_HOURS (ID, RESTAURANT_ID, DAY_OF_WEEK, OPENING_HOUR, CLOSING_HOUR) VALUES "
-                    print("".join([insert_header,
-                                   '(', ', '.join(["(SELECT NEXTVAL('SEQUENCE_GENERATOR'))",
-                                                   resto_id_clause, quote(day), str(open_hour), str(close_hour)]), ');']))
+                    wh_rows.append("((SELECT NEXTVAL('SEQUENCE_GENERATOR')), %s, %s, %s, %s, %s)" % (
+                        resto_id_clause, quote(day), str(open_hour), str(close_hour), 'False'))
+    print(',\n'.join(wh_rows) + ';')
     print('drop index RESTAURANT_GOOGLE_PLACES_ID_INDEX;')
     print(alter_sequence_after)
 
