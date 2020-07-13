@@ -4,15 +4,14 @@ import static java.util.UUID.fromString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ua.com.paradine.core.Nowness.getNow;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
-import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,12 +28,9 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import ua.com.paradine.ParadineApp;
-import ua.com.paradine.core.business.SafetyMarker;
 import ua.com.paradine.web.api.model.CreateIntendedVisitRequest;
 import ua.com.paradine.web.api.model.IntendedVisit;
-import ua.com.paradine.web.api.model.UuidResponse;
 
 @SpringBootTest(classes = ParadineApp.class)
 @ExtendWith({MockitoExtension.class, SpringExtension.class})
@@ -59,7 +55,7 @@ public class ViewIntendedVisitsE2ETest {
     public void testViewIntendedVisits_200OK() throws Exception {
         IntendedVisit intendedVisit = new IntendedVisit()
             .restaurantId(fromString("117c0823-4d31-437d-8d14-e2686fa8c594"))
-            .when(OffsetDateTime.now().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(14)); // visit is for tomorrow
+            .when(getNow().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(14)); // visit is for tomorrow
         CreateIntendedVisitRequest createIntendedVisitRequest = new CreateIntendedVisitRequest()
             .version("x.y")
             .visit(intendedVisit);
@@ -76,7 +72,7 @@ public class ViewIntendedVisitsE2ETest {
             .andExpect(jsonPath("$.tomorrowVisits.length()").value(1))
         ;
 
-        intendedVisit.setWhen(OffsetDateTime.now().plusSeconds(10)); // visit is for today);
+        intendedVisit.setWhen(getNow().plusHours(1)); // visit is for today. TODO Fails when run between 11pm and midnight);
         mockMvc.perform(post("/api/paradine/v2/restaurants/intended_visits")
             .contentType(MediaType.APPLICATION_JSON)
             .content(mapper.writeValueAsString(createIntendedVisitRequest)))
