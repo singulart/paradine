@@ -9,12 +9,11 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static ua.com.paradine.core.Nowness.getNow;
 
-import io.undertow.util.StatusCodes;
 import java.time.Duration;
-import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
@@ -66,7 +65,7 @@ class SubmitVisitIntentFlowTest {
         SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
 
         assertNotNull(outcome.getError());
-        assertEquals(StatusCodes.BAD_REQUEST, outcome.getError().getStatus().getStatusCode());
+        assertEquals(BAD_REQUEST.value(), outcome.getError().getStatus().getStatusCode());
 
         verifyNoInteractions(visitIntentionRepository, userRepository, restaurantRepository, workingHoursRepository);
     }
@@ -80,7 +79,7 @@ class SubmitVisitIntentFlowTest {
         SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
 
         assertNotNull(outcome.getError());
-        assertEquals(StatusCodes.BAD_REQUEST, outcome.getError().getStatus().getStatusCode());
+        assertEquals(BAD_REQUEST.value(), outcome.getError().getStatus().getStatusCode());
 
         verifyNoInteractions(visitIntentionRepository, userRepository, restaurantRepository, workingHoursRepository);
     }
@@ -98,7 +97,7 @@ class SubmitVisitIntentFlowTest {
         SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
 
         assertNotNull(outcome.getError());
-        assertEquals(StatusCodes.NOT_FOUND, outcome.getError().getStatus().getStatusCode());
+        assertEquals(NOT_FOUND.value(), outcome.getError().getStatus().getStatusCode());
 
         verifyNoInteractions(visitIntentionRepository, userRepository, workingHoursRepository);
     }
@@ -120,7 +119,7 @@ class SubmitVisitIntentFlowTest {
         SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
 
         assertNotNull(outcome.getError());
-        assertEquals(StatusCodes.NOT_FOUND, outcome.getError().getStatus().getStatusCode());
+        assertEquals(NOT_FOUND.value(), outcome.getError().getStatus().getStatusCode());
 
         verifyNoInteractions(visitIntentionRepository, workingHoursRepository);
     }
@@ -145,7 +144,7 @@ class SubmitVisitIntentFlowTest {
         SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
 
         assertNotNull(outcome.getError());
-        assertEquals(StatusCodes.BAD_REQUEST, outcome.getError().getStatus().getStatusCode());
+        assertEquals(BAD_REQUEST.value(), outcome.getError().getStatus().getStatusCode());
         assertEquals(Errors.VISIT_IN_NON_BUSINESS_HOURS_NOT_ALLOWED, outcome.getError().getDetail());
 
         verifyNoInteractions(visitIntentionRepository);
@@ -171,7 +170,7 @@ class SubmitVisitIntentFlowTest {
         SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
 
         assertNotNull(outcome.getError());
-        assertEquals(StatusCodes.BAD_REQUEST, outcome.getError().getStatus().getStatusCode());
+        assertEquals(BAD_REQUEST.value(), outcome.getError().getStatus().getStatusCode());
         assertEquals(Errors.VISIT_IN_NON_BUSINESS_HOURS_NOT_ALLOWED, outcome.getError().getDetail());
 
         verifyNoInteractions(visitIntentionRepository);
@@ -197,7 +196,7 @@ class SubmitVisitIntentFlowTest {
         SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
 
         assertNotNull(outcome.getError());
-        assertEquals(StatusCodes.BAD_REQUEST, outcome.getError().getStatus().getStatusCode());
+        assertEquals(BAD_REQUEST.value(), outcome.getError().getStatus().getStatusCode());
         assertEquals(Errors.TOO_MANY_INTENDED_VISITS, outcome.getError().getDetail());
     }
 
@@ -227,7 +226,7 @@ class SubmitVisitIntentFlowTest {
         SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
 
         assertNotNull(outcome.getError());
-        assertEquals(StatusCodes.BAD_REQUEST, outcome.getError().getStatus().getStatusCode());
+        assertEquals(BAD_REQUEST.value(), outcome.getError().getStatus().getStatusCode());
         assertEquals(Errors.TOO_CLOSE_TO_EXISTING_VISIT, outcome.getError().getDetail());
     }
 
