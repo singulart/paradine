@@ -1,10 +1,17 @@
 
-  ${AnsiColor.GREEN}      ██╗${AnsiColor.RED} ██╗   ██╗ ████████╗ ███████╗   ██████╗ ████████╗ ████████╗ ███████╗
-  ${AnsiColor.GREEN}      ██║${AnsiColor.RED} ██║   ██║ ╚══██╔══╝ ██╔═══██╗ ██╔════╝ ╚══██╔══╝ ██╔═════╝ ██╔═══██╗
-  ${AnsiColor.GREEN}      ██║${AnsiColor.RED} ████████║    ██║    ███████╔╝ ╚█████╗     ██║    ██████╗   ███████╔╝
-  ${AnsiColor.GREEN}██╗   ██║${AnsiColor.RED} ██╔═══██║    ██║    ██╔════╝   ╚═══██╗    ██║    ██╔═══╝   ██╔══██║
-  ${AnsiColor.GREEN}╚██████╔╝${AnsiColor.RED} ██║   ██║ ████████╗ ██║       ██████╔╝    ██║    ████████╗ ██║  ╚██╗
-  ${AnsiColor.GREEN} ╚═════╝ ${AnsiColor.RED} ╚═╝   ╚═╝ ╚═══════╝ ╚═╝       ╚═════╝     ╚═╝    ╚═══════╝ ╚═╝   ╚═╝
+                           ${AnsiColor.GREEN}                  ___
+${AnsiColor.RED}         ${AnsiColor.GREEN}                                   (   )  .-.
+${AnsiColor.RED}   .-..  ${AnsiColor.BRIGHT_YELLOW}   .---.  ${AnsiColor.GREEN} ___ .-.      .---.    .-.| |  ( __)  ___ .-.     .--.
+${AnsiColor.RED}  /    \ ${AnsiColor.BRIGHT_YELLOW}  / .-, \ ${AnsiColor.GREEN}(   )   \    / .-, \  /   \ |  (''") (   )   \   /    \
+${AnsiColor.RED} ' .-,  ;${AnsiColor.BRIGHT_YELLOW} (__) ; | ${AnsiColor.GREEN} | ' .-. ;  (__) ; | |  .-. |   | |   |  .-. .  |  .-. ;
+${AnsiColor.RED} | |  . |${AnsiColor.BRIGHT_YELLOW}   .'`  | ${AnsiColor.GREEN} |  / (___)   .'`  | | |  | |   | |   | |  | |  |  | | |
+${AnsiColor.RED} | |  | |${AnsiColor.BRIGHT_YELLOW}  / .'| | ${AnsiColor.GREEN} | |         / .'| | | |  | |   | |   | |  | |  |  |/  |
+${AnsiColor.RED} | |  | |${AnsiColor.BRIGHT_YELLOW} | /  | | ${AnsiColor.GREEN} | |        | /  | | | |  | |   | |   | |  | |  |  ' _.'
+${AnsiColor.RED} | |  ' |${AnsiColor.BRIGHT_YELLOW} ; |  ; | ${AnsiColor.GREEN} | |        ; |  ; | | '  | |   | |   | |  | |  |  .'.-.
+${AnsiColor.RED} | `-'  '${AnsiColor.BRIGHT_YELLOW} ' `-'  | ${AnsiColor.GREEN} | |        ' `-'  | ' `-'  /   | |   | |  | |  '  `-' /
+${AnsiColor.RED} | \__.' ${AnsiColor.BRIGHT_YELLOW} `.__.'_. ${AnsiColor.GREEN}(___)       `.__.'_.  `.__,'   (___) (___)(___)  `.__.'
+${AnsiColor.RED} | |
+${AnsiColor.RED}(___)
 
-${AnsiColor.BRIGHT_BLUE}:: JHipster 🤓  :: Running Spring Boot ${spring-boot.version} ::
-:: https://www.jhipster.tech ::${AnsiColor.DEFAULT}
+${AnsiColor.BRIGHT_BLUE}:: PARADINE 🤓  :: Running Spring Boot ${spring-boot.version} ::
+:: https://www.paradine.app ::${AnsiColor.DEFAULT}
