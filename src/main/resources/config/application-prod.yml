@@ -48,6 +48,7 @@ spring:
     hikari:
       poolName: Hikari
       auto-commit: false
+      connection-timeout: 3000
   jpa:
     database-platform: io.github.jhipster.domain.util.FixedPostgreSQL10Dialect
     show-sql: false

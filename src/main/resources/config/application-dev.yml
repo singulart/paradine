@@ -64,6 +64,7 @@ spring:
     hikari:
       poolName: Hikari
       auto-commit: false
+      connection-timeout: 500
   h2:
     console:
       enabled: false
