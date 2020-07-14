@@ -60,9 +60,9 @@ setUp(
     nothingFor(4 seconds),
     atOnceUsers(2),
     rampUsers(10) during (5 seconds),
-    constantUsersPerSec(1) during (15 seconds) randomized,
-    rampUsersPerSec(10) to 30 during (10 minutes) randomized,
-    heavisideUsers(100) during (20 seconds)
+    constantUsersPerSec(50) during (15 seconds) randomized,
+    rampUsersPerSec(10) to 20 during (10 minutes) randomized,
+    heavisideUsers(1) during (20 seconds)
   ).protocols(httpProtocol)
 )
 
