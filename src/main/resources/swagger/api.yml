@@ -56,6 +56,8 @@ paths:
             minimum: -180.0
             maximum: 180.0
       operationId: getRestaurants
+      tags:
+        - restaurants
       description: Returns a page of restaurants enriched with hourly safety indicators.
       responses:
         '200':
@@ -94,6 +96,8 @@ paths:
       security:
         - jwt: []
       operationId: getMyIntendedVisits
+      tags:
+        - restaurants
       description: Returns the full list of intended visits for a logged-in user.
       responses:
         '200':
@@ -124,6 +128,8 @@ paths:
       security:
         - jwt: []
       operationId: createIntendedVisit
+      tags:
+        - restaurants
       description: Creates a new intended visit
       requestBody:
         content:
@@ -158,6 +164,8 @@ paths:
       security:
         - jwt: []
       operationId: cancelIntendedVisit
+      tags:
+        - restaurants
       description: Cancels previously created intended visit
       parameters:
         - in: path
