@@ -25,8 +25,8 @@ class GooglePopularTimesSafetyClassifierTest {
         ClassifiedRestaurantVO classified = classifier.classifySafety(restaurant1);
 
         for (int i = 0; i < 24; i++) {
-            assessSafetyToday(classified, i, SafetyMarker.CLOSED);
-            assessSafetyTomorrow(classified, i, SafetyMarker.CLOSED);
+            assessSafetyToday(classified, i, SafetyMarker.GREEN);
+            assessSafetyTomorrow(classified, i, SafetyMarker.GREEN);
         }
     }
 
@@ -104,6 +104,34 @@ class GooglePopularTimesSafetyClassifierTest {
         assessSafetyToday(classified, 11, SafetyMarker.YELLOW);
         assessSafetyTomorrow(classified, 9, SafetyMarker.YELLOW);
         assessSafetyTomorrow(classified, 23, SafetyMarker.CLOSED);
+    }
+
+    @Test
+    void venueShouldClassifyAsGreen_for_all_working_hours_if_NoPopularTimesIsSet() {
+        when(classifier.getToday()).thenReturn("We");
+        when(classifier.getTomorrow()).thenReturn("Th");
+
+        WorkingHoursVO todaysWH = new WorkingHoursVO();
+        todaysWH.setDayOfWeek("We");
+        todaysWH.setOpeningHour(10);
+        todaysWH.setClosingHour(23);
+
+        WorkingHoursVO tomorrowsWH = new WorkingHoursVO();
+        tomorrowsWH.setDayOfWeek("Th");
+        tomorrowsWH.setOpeningHour(10);
+        tomorrowsWH.setClosingHour(23);
+
+        RestaurantVO restaurant1 = new RestaurantVO();
+
+        restaurant1.getWorkingHours().add(todaysWH);
+        restaurant1.getWorkingHours().add(tomorrowsWH);
+
+        ClassifiedRestaurantVO classified = classifier.classifySafety(restaurant1);
+
+        for (int i = 10; i < 24; i++) {
+            assessSafetyToday(classified, i, SafetyMarker.GREEN);
+            assessSafetyTomorrow(classified, i, SafetyMarker.GREEN);
+        }
     }
 
     @Test

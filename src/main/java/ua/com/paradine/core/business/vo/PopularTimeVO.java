@@ -4,53 +4,53 @@ public class PopularTimeVO {
 
     private String dayOfWeek;
 
-    private Integer occ01;
+    private Integer occ01 = 0;
 
-    private Integer occ02;
+    private Integer occ02 = 0;
 
-    private Integer occ03;
+    private Integer occ03 = 0;
 
-    private Integer occ04;
+    private Integer occ04 = 0;
 
-    private Integer occ05;
+    private Integer occ05 = 0;
 
-    private Integer occ06;
+    private Integer occ06 = 0;
 
-    private Integer occ07;
+    private Integer occ07 = 0;
 
-    private Integer occ08;
+    private Integer occ08 = 0;
 
-    private Integer occ09;
+    private Integer occ09 = 0;
 
-    private Integer occ10;
+    private Integer occ10 = 0;
 
-    private Integer occ11;
+    private Integer occ11 = 0;
 
-    private Integer occ12;
+    private Integer occ12 = 0;
 
-    private Integer occ13;
+    private Integer occ13 = 0;
 
-    private Integer occ14;
+    private Integer occ14 = 0;
 
-    private Integer occ15;
+    private Integer occ15 = 0;
 
-    private Integer occ16;
+    private Integer occ16 = 0;
 
-    private Integer occ17;
+    private Integer occ17 = 0;
 
-    private Integer occ18;
+    private Integer occ18 = 0;
 
-    private Integer occ19;
+    private Integer occ19 = 0;
 
-    private Integer occ20;
+    private Integer occ20 = 0;
 
-    private Integer occ21;
+    private Integer occ21 = 0;
 
-    private Integer occ22;
+    private Integer occ22 = 0;
 
-    private Integer occ23;
+    private Integer occ23 = 0;
 
-    private Integer occ24;
+    private Integer occ24 = 0;
 
     public String getDayOfWeek() {
         return dayOfWeek;
