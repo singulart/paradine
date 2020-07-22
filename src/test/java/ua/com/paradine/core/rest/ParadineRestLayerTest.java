@@ -161,7 +161,7 @@ public class ParadineRestLayerTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(header().string("X-Total-Count", "100"))
-            .andExpect(header().string("X-Total-Pages", "50"))
+            .andExpect(header().exists("Link"))
             .andExpect(jsonPath("$.version").value("2.0"))
             .andExpect(jsonPath("$.restaurants[0].id").value(rest1.getUuid()))
             .andExpect(jsonPath("$.restaurants[0].name").value(rest1.getName()))

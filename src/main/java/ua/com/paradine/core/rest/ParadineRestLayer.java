@@ -4,13 +4,16 @@ import static java.util.stream.Collectors.toList;
 import static ua.com.paradine.core.Errors.BAD_GEOLOCATION_PARAMS;
 import static ua.com.paradine.core.Errors.NOT_FOUND;
 
+import io.github.jhipster.web.util.PaginationUtil;
 import java.util.List;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 import ua.com.paradine.core.business.CancelIntendedVisitFlow;
@@ -70,10 +73,11 @@ public class ParadineRestLayer implements RestaurantsApiDelegate {
             .withQuery(q)
             .withPage(page).build();
         Page<ClassifiedRestaurantVO> classifiedRestaurants = viewClassifiedRestaurantsFlow.fetchClassifiedRestaurants(searchCriteria);
+        HttpHeaders headers = PaginationUtil
+            .generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), classifiedRestaurants);
 
         return ResponseEntity.ok()
-            .header("X-Total-Count", classifiedRestaurants.getTotalElements() + "")
-            .header("X-Total-Pages", classifiedRestaurants.getTotalPages() + "")
+            .headers(headers)
             .body(new RestaurantsGetResponse()
             .version(API_VERSION)
             .restaurants(restMapper.map(classifiedRestaurants.getContent())));
