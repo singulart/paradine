@@ -5,6 +5,7 @@ import static java.time.OffsetDateTime.now;
 import static java.util.UUID.fromString;
 import static ua.com.paradine.core.Errors.TOO_CLOSE_TO_EXISTING_VISIT;
 import static ua.com.paradine.core.Errors.TOO_MANY_INTENDED_VISITS;
+import static ua.com.paradine.core.Errors.VISIT_DATE_OUT_OF_RANGE;
 import static ua.com.paradine.core.Errors.VISIT_IN_NON_BUSINESS_HOURS_NOT_ALLOWED;
 import static ua.com.paradine.core.ParadineConstants.DEFAULT_ZONE;
 import static ua.com.paradine.core.util.DaysOfWeek.DOW;
@@ -65,7 +66,8 @@ public class SubmitVisitIntentFlow {
             .atZoneSameInstant(DEFAULT_ZONE);
         Duration dur = Duration.between(now().truncatedTo(ChronoUnit.HOURS), plannedVisitDate);
         if(dur.isNegative() || dur.toDays() > 1) {
-            return new SubmitVisitIntentOutcome(Problem.valueOf(Status.BAD_REQUEST));
+            return new SubmitVisitIntentOutcome(
+                Problem.valueOf(Status.BAD_REQUEST, VISIT_DATE_OUT_OF_RANGE));
         }
 
         Optional<Long> restaurant = restaurantRepository.findIdByUuid(command.getRestaurantId());

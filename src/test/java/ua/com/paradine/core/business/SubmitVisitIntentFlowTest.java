@@ -151,6 +151,58 @@ class SubmitVisitIntentFlowTest {
     }
 
     @Test
+    void visitTimeInPastShouldBeRejected() {
+
+        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
+            .thenReturn(Optional.of(1000L));
+
+        lenient().when(userRepository.findIdByLogin(eq("hito")))
+            .thenReturn(Optional.of(42L));
+
+        lenient().when(workingHoursRepository.fetchByRestaurantIdAndDayOfWeek(eq(1000L), anyString()))
+            .thenReturn(Optional.of(new WorkingHours().closed(Boolean.FALSE).closingHour(21).openingHour(9)));
+
+        SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
+        cmd.setWhen(getNow().minusDays(2));
+        cmd.setRestaurantId("123");
+        cmd.setUser("hito");
+
+        SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
+
+        assertNotNull(outcome.getError());
+        assertEquals(BAD_REQUEST.value(), outcome.getError().getStatus().getStatusCode());
+        assertEquals(Errors.VISIT_DATE_OUT_OF_RANGE, outcome.getError().getDetail());
+
+        verifyNoInteractions(visitIntentionRepository);
+    }
+
+    @Test
+    void visitTimeInDistantFutureShouldBeRejected() {
+
+        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
+            .thenReturn(Optional.of(1000L));
+
+        lenient().when(userRepository.findIdByLogin(eq("hito")))
+            .thenReturn(Optional.of(42L));
+
+        lenient().when(workingHoursRepository.fetchByRestaurantIdAndDayOfWeek(eq(1000L), anyString()))
+            .thenReturn(Optional.of(new WorkingHours().closed(Boolean.FALSE).closingHour(21).openingHour(9)));
+
+        SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
+        cmd.setWhen(getNow().plusDays(2));
+        cmd.setRestaurantId("123");
+        cmd.setUser("hito");
+
+        SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
+
+        assertNotNull(outcome.getError());
+        assertEquals(BAD_REQUEST.value(), outcome.getError().getStatus().getStatusCode());
+        assertEquals(Errors.VISIT_DATE_OUT_OF_RANGE, outcome.getError().getDetail());
+
+        verifyNoInteractions(visitIntentionRepository);
+    }
+
+    @Test
     void visitInNonBusinessHoursShouldBeRejected_venueEOD() {
 
         lenient().when(restaurantRepository.findIdByUuid(eq("123")))

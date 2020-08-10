@@ -10,6 +10,10 @@ public class Errors {
     public static final String VISIT_IN_NON_BUSINESS_HOURS_NOT_ALLOWED
         = "paradine.api.errors.visit.in.non.business.hours";
 
+    // only possible with Postman, not possible from normal app usage
+    public static final String VISIT_DATE_OUT_OF_RANGE
+        = "paradine.api.errors.visit.out.of.range";
+
     // possible from normal app usage
     public static final String TOO_MANY_INTENDED_VISITS = "paradine.api.errors.too.many.visits";
 
