@@ -52,7 +52,6 @@ public class ViewRestaurantsListE2ETest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(header().string("X-Total-Count", "10"))
-            .andExpect(header().string("X-Total-Pages", "1"))
             .andExpect(jsonPath("$.version").value("2.0"))
             .andExpect(jsonPath("$.restaurants[?(@.name=='Musafir')].safetyToday[?(@.h=='09')].value")
                 .value(SafetyMarker.GREEN.getIndicator()))
