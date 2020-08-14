@@ -12,9 +12,9 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static ua.com.paradine.core.Nowness.getNow;
+import static ua.com.paradine.core.Nowness.getNowZoned;
 
 import java.time.Duration;
-import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -269,8 +269,8 @@ class SubmitVisitIntentFlowTest {
         IntendedVisit intendedVisit = new IntendedVisit();
         intendedVisit.setCancelled(Boolean.FALSE);
         //scheduled visit from 18:00 to 20:00
-        intendedVisit.setVisitStartDate(ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(18));
-        intendedVisit.setVisitEndDate(ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(20));
+        intendedVisit.setVisitStartDate(getNowZoned().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(18));
+        intendedVisit.setVisitEndDate(getNowZoned().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(20));
 
         lenient().when(visitIntentionRepository.findActiveVisitsByUserAndDay(eq(42L), any(), any()))
             .thenReturn(asList(intendedVisit));

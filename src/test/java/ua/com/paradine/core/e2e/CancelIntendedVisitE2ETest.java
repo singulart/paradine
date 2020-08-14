@@ -3,6 +3,7 @@ package ua.com.paradine.core.e2e;
 import static java.util.UUID.fromString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,6 +31,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import ua.com.paradine.ParadineApp;
 import ua.com.paradine.web.api.model.CreateIntendedVisitRequest;
 import ua.com.paradine.web.api.model.IntendedVisit;
+import ua.com.paradine.web.api.model.IntendedVisitsGetResponse;
 import ua.com.paradine.web.api.model.UuidResponse;
 
 @SpringBootTest(classes = ParadineApp.class)
@@ -68,6 +70,11 @@ public class CancelIntendedVisitE2ETest {
 
         String content = result.getResponse().getContentAsString();
         UuidResponse response = mapper.readValue(content, UuidResponse.class);
+
+        MvcResult getResult = mockMvc.perform(get("/api/paradine/v2/restaurants/intended_visits")
+        ).andReturn();
+        content = getResult.getResponse().getContentAsString();
+        IntendedVisitsGetResponse resp = mapper.readValue(content, IntendedVisitsGetResponse.class);
 
         mockMvc.perform(delete("/api/paradine/v2/restaurants/intended_visits/{visit}", response.getId()))
             .andExpect(status().isOk());

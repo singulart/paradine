@@ -81,7 +81,7 @@ public class SubmitVisitIntentFlow {
         }
 
         String dayOfWeek = DOW.get(plannedVisitDate.getDayOfWeek());
-        int hour = plannedVisitDate.getHour();
+        int hour = command.getWhen().getHour();
         Optional<WorkingHours> workingHours = workingHoursRepository
             .fetchByRestaurantIdAndDayOfWeek(restaurant.get(), dayOfWeek);
         if(workingHours.isPresent()) {

@@ -2,9 +2,9 @@ package ua.com.paradine.core.business;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.lenient;
+import static ua.com.paradine.core.Nowness.getNowZoned;
 import static ua.com.paradine.core.business.ViewIntendedVisitsFlow.TODAY;
 import static ua.com.paradine.core.business.ViewIntendedVisitsFlow.TOMORROW;
 
@@ -32,7 +32,7 @@ class ViewIntendedVisitsFlowTest {
 
     @Test
     void viewMyIntendedVisits_shouldReturnCorrectKindOfDayValues() {
-        ZonedDateTime test1 = ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).plusHours(12);
+        ZonedDateTime test1 = getNowZoned().truncatedTo(ChronoUnit.DAYS).plusHours(12);
         ZonedDateTime test2 = test1.plusDays(1);
 
         lenient().when(visitIntentionRepository.findActiveVisitsByUser(eq("foodie")))
@@ -47,7 +47,7 @@ class ViewIntendedVisitsFlowTest {
 
     @Test
     void visitAtMidnight_shouldBeMarked_Today_not_Tomorrow() {
-        ZonedDateTime test1 = ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).plusHours(24);
+        ZonedDateTime test1 = getNowZoned().truncatedTo(ChronoUnit.DAYS).plusHours(24);
         ZonedDateTime test2 = test1.plusMinutes(10);
 
         lenient().when(visitIntentionRepository.findActiveVisitsByUser(eq("foodie")))
@@ -62,7 +62,7 @@ class ViewIntendedVisitsFlowTest {
 
     @Test
     void visitsWithWeirdVisitDatesShouldBeRemovedFromList() {
-        ZonedDateTime test1 = ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS).plusHours(24);
+        ZonedDateTime test1 = getNowZoned().truncatedTo(ChronoUnit.DAYS).plusHours(24);
         ZonedDateTime test2 = test1.plusMinutes(10);
 
         lenient().when(visitIntentionRepository.findActiveVisitsByUser(eq("foodie")))
