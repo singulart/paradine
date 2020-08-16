@@ -1,6 +1,7 @@
 package ua.com.paradine.core.business;
 
 import static java.util.Arrays.asList;
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -15,6 +16,8 @@ import static ua.com.paradine.core.Nowness.getNow;
 import static ua.com.paradine.core.Nowness.getNowZoned;
 
 import java.time.Duration;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -66,6 +69,7 @@ class SubmitVisitIntentFlowTest {
 
         assertNotNull(outcome.getError());
         assertEquals(BAD_REQUEST.value(), outcome.getError().getStatus().getStatusCode());
+        assertEquals(Errors.VISIT_DATE_OUT_OF_RANGE, outcome.getError().getDetail());
 
         verifyNoInteractions(visitIntentionRepository, userRepository, restaurantRepository, workingHoursRepository);
     }
@@ -80,6 +84,7 @@ class SubmitVisitIntentFlowTest {
 
         assertNotNull(outcome.getError());
         assertEquals(BAD_REQUEST.value(), outcome.getError().getStatus().getStatusCode());
+        assertEquals(Errors.VISIT_DATE_OUT_OF_RANGE, outcome.getError().getDetail());
 
         verifyNoInteractions(visitIntentionRepository, userRepository, restaurantRepository, workingHoursRepository);
     }
@@ -151,58 +156,6 @@ class SubmitVisitIntentFlowTest {
     }
 
     @Test
-    void visitTimeInPastShouldBeRejected() {
-
-        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
-            .thenReturn(Optional.of(1000L));
-
-        lenient().when(userRepository.findIdByLogin(eq("hito")))
-            .thenReturn(Optional.of(42L));
-
-        lenient().when(workingHoursRepository.fetchByRestaurantIdAndDayOfWeek(eq(1000L), anyString()))
-            .thenReturn(Optional.of(new WorkingHours().closed(Boolean.FALSE).closingHour(21).openingHour(9)));
-
-        SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
-        cmd.setWhen(getNow().minusDays(2));
-        cmd.setRestaurantId("123");
-        cmd.setUser("hito");
-
-        SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
-
-        assertNotNull(outcome.getError());
-        assertEquals(BAD_REQUEST.value(), outcome.getError().getStatus().getStatusCode());
-        assertEquals(Errors.VISIT_DATE_OUT_OF_RANGE, outcome.getError().getDetail());
-
-        verifyNoInteractions(visitIntentionRepository);
-    }
-
-    @Test
-    void visitTimeInDistantFutureShouldBeRejected() {
-
-        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
-            .thenReturn(Optional.of(1000L));
-
-        lenient().when(userRepository.findIdByLogin(eq("hito")))
-            .thenReturn(Optional.of(42L));
-
-        lenient().when(workingHoursRepository.fetchByRestaurantIdAndDayOfWeek(eq(1000L), anyString()))
-            .thenReturn(Optional.of(new WorkingHours().closed(Boolean.FALSE).closingHour(21).openingHour(9)));
-
-        SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
-        cmd.setWhen(getNow().plusDays(2));
-        cmd.setRestaurantId("123");
-        cmd.setUser("hito");
-
-        SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
-
-        assertNotNull(outcome.getError());
-        assertEquals(BAD_REQUEST.value(), outcome.getError().getStatus().getStatusCode());
-        assertEquals(Errors.VISIT_DATE_OUT_OF_RANGE, outcome.getError().getDetail());
-
-        verifyNoInteractions(visitIntentionRepository);
-    }
-
-    @Test
     void visitInNonBusinessHoursShouldBeRejected_venueEOD() {
 
         lenient().when(restaurantRepository.findIdByUuid(eq("123")))
@@ -215,7 +168,12 @@ class SubmitVisitIntentFlowTest {
             .thenReturn(Optional.of(new WorkingHours().closed(Boolean.FALSE).closingHour(21).openingHour(9)));
 
         SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
-        cmd.setWhen(getNow().truncatedTo(ChronoUnit.DAYS).plusDays(1).plusHours(22)); //22:00
+        cmd.setWhen(getNow()
+            .truncatedTo(ChronoUnit.DAYS)
+            .plusDays(1)
+            .plusHours(22)
+            .withOffsetSameInstant(ZoneOffset.UTC)); //22:00
+
         cmd.setRestaurantId("123");
         cmd.setUser("hito");
 
@@ -226,6 +184,33 @@ class SubmitVisitIntentFlowTest {
         assertEquals(Errors.VISIT_IN_NON_BUSINESS_HOURS_NOT_ALLOWED, outcome.getError().getDetail());
 
         verifyNoInteractions(visitIntentionRepository);
+    }
+
+    @Test
+    void visitAtExactOpeningHour_should_be_accepted() {
+
+        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
+            .thenReturn(Optional.of(1000L));
+
+        lenient().when(userRepository.findIdByLogin(eq("hito")))
+            .thenReturn(Optional.of(42L));
+
+        lenient().when(workingHoursRepository.fetchByRestaurantIdAndDayOfWeek(eq(1000L), anyString()))
+            .thenReturn(Optional.of(new WorkingHours().closed(Boolean.FALSE).closingHour(21).openingHour(9)));
+
+        SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
+        cmd.setWhen(getNow()
+            .truncatedTo(ChronoUnit.DAYS)
+            .plusDays(1)
+            .plusHours(9)
+            .withOffsetSameInstant(ZoneOffset.UTC)); //08:00
+
+        cmd.setRestaurantId("123");
+        cmd.setUser("hito");
+
+        SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
+
+        assertNull(outcome.getError());
     }
 
     @Test

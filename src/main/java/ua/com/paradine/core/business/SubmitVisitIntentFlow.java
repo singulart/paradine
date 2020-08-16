@@ -64,8 +64,8 @@ public class SubmitVisitIntentFlow {
 
         ZonedDateTime plannedVisitDate = command.getWhen().truncatedTo(ChronoUnit.HOURS)
             .atZoneSameInstant(DEFAULT_ZONE);
-        Duration dur = Duration.between(now().truncatedTo(ChronoUnit.HOURS), plannedVisitDate);
-        if(dur.isNegative() || dur.toDays() > 1) {
+        Duration dur = Duration.between(now(DEFAULT_ZONE).truncatedTo(ChronoUnit.HOURS), plannedVisitDate);
+        if(dur.isZero() || dur.isNegative() || dur.toDays() > 1) {
             return new SubmitVisitIntentOutcome(
                 Problem.valueOf(Status.BAD_REQUEST, VISIT_DATE_OUT_OF_RANGE));
         }
@@ -81,7 +81,7 @@ public class SubmitVisitIntentFlow {
         }
 
         String dayOfWeek = DOW.get(plannedVisitDate.getDayOfWeek());
-        int hour = command.getWhen().getHour();
+        int hour = plannedVisitDate.getHour();
         Optional<WorkingHours> workingHours = workingHoursRepository
             .fetchByRestaurantIdAndDayOfWeek(restaurant.get(), dayOfWeek);
         if(workingHours.isPresent()) {
