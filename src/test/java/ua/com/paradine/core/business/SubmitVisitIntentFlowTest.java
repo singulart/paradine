@@ -75,6 +75,21 @@ class SubmitVisitIntentFlowTest {
     }
 
     @Test
+    void visitDateCannotBeInPast_one_minute_before_now() {
+
+        SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
+        cmd.setWhen(getNow().minusMinutes(1));
+
+        SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
+
+        assertNotNull(outcome.getError());
+        assertEquals(BAD_REQUEST.value(), outcome.getError().getStatus().getStatusCode());
+        assertEquals(Errors.VISIT_DATE_OUT_OF_RANGE, outcome.getError().getDetail());
+
+        verifyNoInteractions(visitIntentionRepository, userRepository, restaurantRepository, workingHoursRepository);
+    }
+
+    @Test
     void visitDateCannotBeAfterTomorrow() {
 
         SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
