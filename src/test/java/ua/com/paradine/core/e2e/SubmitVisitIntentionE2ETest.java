@@ -105,6 +105,39 @@ public class SubmitVisitIntentionE2ETest {
     }
 
     @Test
+    public void testSubmitTooManyVisits_400_end_of_tomorrow_edge_case() throws Exception {
+        IntendedVisit intendedVisit = new IntendedVisit()
+            .restaurantId(fromString("117c0823-4d31-437d-8d14-e2686fa8c594"))
+            .when(getNow().truncatedTo(ChronoUnit.DAYS).plusDays(1));
+        CreateIntendedVisitRequest createIntendedVisitRequest = new CreateIntendedVisitRequest()
+            .version("x.y")
+            .visit(intendedVisit);
+
+        for(int i = 0; i < SubmitVisitIntentFlow.MAX_VISITS_PER_DAY; i++) {
+            intendedVisit.setWhen(intendedVisit.getWhen().plusHours(5));
+            mockMvc.perform(post("/api/paradine/v2/restaurants/intended_visits")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(createIntendedVisitRequest))
+            )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.version").value("2.0"))
+                .andExpect(jsonPath("$.id").isNotEmpty())
+            ;
+        }
+
+        intendedVisit.setWhen(getNow().truncatedTo(ChronoUnit.DAYS).plusDays(2)); // <-- edge case
+
+        mockMvc.perform(post("/api/paradine/v2/restaurants/intended_visits")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(mapper.writeValueAsString(createIntendedVisitRequest))
+        )
+            .andExpect(status().isBadRequest())
+        ;
+
+    }
+
+    @Test
     public void testSubmitTwoVisitsWhichAreTooClose_400() throws Exception {
         IntendedVisit intendedVisit = new IntendedVisit()
             .restaurantId(fromString("117c0823-4d31-437d-8d14-e2686fa8c594"))
