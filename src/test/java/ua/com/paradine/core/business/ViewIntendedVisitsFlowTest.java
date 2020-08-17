@@ -46,6 +46,31 @@ class ViewIntendedVisitsFlowTest {
     }
 
     @Test
+    void viewAtExactStartOfToday_should_be_marked_Today() {
+        ZonedDateTime test1 = getNowZoned().truncatedTo(ChronoUnit.DAYS);
+        lenient().when(visitIntentionRepository.findActiveVisitsByUser(eq("foodie")))
+            .thenReturn(asList(new IntendedVisit().visitStartDate(test1)));
+
+        List<String> outcome = viewIntendedVisitsFlow.viewMyIntendedVisits("foodie")
+            .stream().map(IntendedVisitVO::getKindOfDay).collect(Collectors.toList());
+
+        assertEquals(asList(TODAY), outcome);
+    }
+
+    @Test
+    void viewAtExactEndOfToday_should_be_marked_Tomorrow() {
+        ZonedDateTime test1 = getNowZoned().truncatedTo(ChronoUnit.DAYS).plusDays(2);
+
+        lenient().when(visitIntentionRepository.findActiveVisitsByUser(eq("foodie")))
+            .thenReturn(asList(new IntendedVisit().visitStartDate(test1)));
+
+        List<String> outcome = viewIntendedVisitsFlow.viewMyIntendedVisits("foodie")
+            .stream().map(IntendedVisitVO::getKindOfDay).collect(Collectors.toList());
+
+        assertEquals(asList(TOMORROW), outcome);
+    }
+
+    @Test
     void visitAtMidnight_shouldBeMarked_Today_not_Tomorrow() {
         ZonedDateTime test1 = getNowZoned().truncatedTo(ChronoUnit.DAYS).plusHours(24);
         ZonedDateTime test2 = test1.plusMinutes(10);
@@ -67,16 +92,16 @@ class ViewIntendedVisitsFlowTest {
 
         lenient().when(visitIntentionRepository.findActiveVisitsByUser(eq("foodie")))
             .thenReturn(asList(
-                new IntendedVisit().visitStartDate(test1),
-                new IntendedVisit().visitStartDate(test2),
-                new IntendedVisit().visitStartDate(test2.minusDays(2)),
-                new IntendedVisit().visitStartDate(test2.plusDays(10))
+                new IntendedVisit().uuid("uuid1").visitStartDate(test1),
+                new IntendedVisit().uuid("uuid2").visitStartDate(test2),
+                new IntendedVisit().uuid("uuid-should-be-removed2").visitStartDate(test2.minusDays(2)),
+                new IntendedVisit().uuid("uuid-should-be-removed2").visitStartDate(test2.plusDays(10))
                 )
             );
 
         List<String> outcome = viewIntendedVisitsFlow.viewMyIntendedVisits("foodie")
-            .stream().map(IntendedVisitVO::getKindOfDay).collect(Collectors.toList());
+            .stream().map(IntendedVisitVO::getId).collect(Collectors.toList());
 
-        assertEquals(asList(TODAY, TOMORROW), outcome);
+        assertEquals(asList("uuid1", "uuid2"), outcome);
     }
 }

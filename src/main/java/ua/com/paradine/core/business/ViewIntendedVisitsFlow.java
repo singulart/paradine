@@ -42,10 +42,12 @@ public class ViewIntendedVisitsFlow {
         OffsetDateTime startOfTomorrow = endOfToday; //weird
         OffsetDateTime endOfTomorrow = startOfTomorrow.plusDays(1);
         if(intendedVisitVO.getVisitTime().isAfter(startOfToday) && intendedVisitVO.getVisitTime().isBefore(endOfToday)
+                || intendedVisitVO.getVisitTime().equals(startOfToday)
                 || intendedVisitVO.getVisitTime().equals(endOfToday)) {
             intendedVisitVO.setKindOfDay(TODAY);
         } else if(intendedVisitVO.getVisitTime().isAfter(startOfTomorrow) &&
-            intendedVisitVO.getVisitTime().isBefore(endOfTomorrow)) {
+                        intendedVisitVO.getVisitTime().isBefore(endOfTomorrow)
+                    || intendedVisitVO.getVisitTime().equals(endOfTomorrow)) {
             intendedVisitVO.setKindOfDay(TOMORROW);
         }
         return intendedVisitVO;
