@@ -105,6 +105,21 @@ class SubmitVisitIntentFlowTest {
     }
 
     @Test
+    void visitDateCannotBeAfterTomorrow2() {
+
+        SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
+        cmd.setWhen(getNow().plusDays(2).minusHours(1)); // 1 day, 23h
+
+        SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
+
+        assertNotNull(outcome.getError());
+        assertEquals(BAD_REQUEST.value(), outcome.getError().getStatus().getStatusCode());
+        assertEquals(Errors.VISIT_DATE_OUT_OF_RANGE, outcome.getError().getDetail());
+
+        verifyNoInteractions(visitIntentionRepository, userRepository, restaurantRepository, workingHoursRepository);
+    }
+
+    @Test
     void nonExistentRestaurantShouldYield404() {
 
         lenient().when(restaurantRepository.findIdByUuid(eq("123")))

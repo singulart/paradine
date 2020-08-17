@@ -11,6 +11,7 @@ import static ua.com.paradine.core.ParadineConstants.DEFAULT_ZONE;
 import static ua.com.paradine.core.util.DaysOfWeek.DOW;
 
 import java.time.Duration;
+import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -64,7 +65,11 @@ public class SubmitVisitIntentFlow {
         ZonedDateTime plannedVisitDate = command.getWhen().truncatedTo(ChronoUnit.HOURS)
             .atZoneSameInstant(DEFAULT_ZONE);
         Duration dur = Duration.between(now(DEFAULT_ZONE).truncatedTo(ChronoUnit.HOURS), plannedVisitDate);
-        if(dur.isZero() || dur.isNegative() || dur.toDays() > 1) {
+        OffsetDateTime startOfToday = now(DEFAULT_ZONE).truncatedTo(ChronoUnit.DAYS);
+        OffsetDateTime endOfTomorrow = startOfToday.plusDays(2);
+        Duration tillEndOfTomorrow = Duration.between(now(DEFAULT_ZONE).truncatedTo(ChronoUnit.HOURS), endOfTomorrow);
+
+        if(dur.isZero() || dur.isNegative() || dur.toHours() > tillEndOfTomorrow.toHours()) {
             return new SubmitVisitIntentOutcome(
                 Problem.valueOf(Status.BAD_REQUEST, VISIT_DATE_OUT_OF_RANGE));
         }
