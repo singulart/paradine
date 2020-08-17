@@ -13,7 +13,7 @@ public interface ExtendedVisitIntentionRepository extends IntendedVisitRepositor
     @Query(value = "FROM IntendedVisit iv "
         + "INNER JOIN FETCH iv.restaurant "
         + "WHERE iv.visitingUser.id = (SELECT u.id from User u WHERE u.login = :userLogin)"
-        + " AND iv.cancelled = FALSE ")
+        + " AND iv.cancelled = FALSE ORDER BY iv.visitStartDate")
     List<IntendedVisit> findActiveVisitsByUser(@Param("userLogin")String userLogin);
 
     @Query(value = "FROM IntendedVisit iv WHERE iv.visitingUser.id = :userId "

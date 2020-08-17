@@ -27,6 +27,7 @@ public class ViewIntendedVisitsFlow {
     }
 
     public List<IntendedVisitVO> viewMyIntendedVisits(String user) {
+        //TODO add where condition on visit date to avoid fetching too many historical visits
         return visitIntentionRepository.findActiveVisitsByUser(user)
             .stream()
             .map(mapper::dbEntityToValueObject)
