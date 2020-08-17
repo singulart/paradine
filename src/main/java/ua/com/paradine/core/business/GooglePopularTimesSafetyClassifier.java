@@ -4,10 +4,8 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import static ua.com.paradine.core.util.DaysOfWeek.DOW;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 import ua.com.paradine.core.business.vo.ClassifiedRestaurantVO;

@@ -1,7 +1,6 @@
 package ua.com.paradine.core.business.vo;
 
 import java.util.List;
-import java.util.Set;
 
 public class ClassifiedRestaurantVO extends RestaurantVO {
 
