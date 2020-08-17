@@ -97,7 +97,8 @@ public class SubmitVisitIntentFlow {
             }
         }
 
-        ZonedDateTime startOfDay = plannedVisitDate.toLocalDate().atStartOfDay(DEFAULT_ZONE);
+        // minus 1 second is a little trick allowing to stay within 'tomorrow', see testSubmitTooManyVisits_400_end_of_tomorrow_edge_case
+        ZonedDateTime startOfDay = plannedVisitDate.minusSeconds(1).truncatedTo(ChronoUnit.DAYS);
         List<IntendedVisit> visitsForTargetDay = visitIntentionRepository
             .findActiveVisitsByUserAndDay(user.get(), startOfDay, startOfDay.plusDays(1));
         if(visitsForTargetDay.size() >= MAX_VISITS_PER_DAY) {
