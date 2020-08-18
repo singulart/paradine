@@ -1,9 +1,10 @@
 # API-first development with OpenAPI
 # This file will be used at compile time to generate Spring-MVC endpoint stubs using openapi-generator
+# This file will also be used to generate frontend http client code that accesses the backend APIs
 openapi: '3.0.1'
 info:
   title: Paradine
-  version: 2.0.0
+  version: 2.0.1
   termsOfService: https://localhost:8080/en/tos
   contact:
     name: API Support
@@ -15,7 +16,7 @@ info:
 servers:
   - url: http://localhost:8080/api/paradine/v2
     description: Development server
-  - url: https://localhost:8080/api/paradine/v2
+  - url: https://localhost:443/api/paradine/v2
     description: Development server with TLS Profile
 paths:
   /restaurants:
@@ -30,6 +31,14 @@ paths:
             type: integer
             minimum: 0
         - in: query
+          name: city
+          description: City slug. Empty restaurants list returned if unknown value sent.
+          required: true
+          schema:
+            type: string
+            minLength: 2
+            maxLength: 32
+        - in: query
           name: q
           description: Search term
           required: false
@@ -39,7 +48,10 @@ paths:
             maxLength: 42
         - in: query
           name: lat
-          description: Latitude for geolocation search. Must be used in conbination with 'lng'
+          description: |
+            Latitude for geolocation search.
+            Must be used in conbination with 'lng'.
+            If present, parameter 'city' is ignored.
           required: false
           schema:
             type: number
@@ -48,7 +60,10 @@ paths:
             maximum: 90.0
         - in: query
           name: lng
-          description: Longitude for geolocation search. Must be used in conbination with 'lat'
+          description: |
+            Longitude for geolocation search.
+            Must be used in conbination with 'lat'.
+            If present, parameter 'city' is ignored.
           required: false
           schema:
             type: number
@@ -195,6 +210,27 @@ paths:
           description: >
             Error response when the visit intent wasn't found.
 
+  /cities:
+    get:
+      security: [] # No security
+      operationId: getCities
+      tags:
+        - geo
+      description: Returns a list of cities for choosing restaurants
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CitiesGetResponse'
+              examples:
+                first:
+                  value:
+                    version: '2.0'
+                    cities:
+                      - $ref: '#/components/examples/City/value'
+          description: >-
+            A list of cities
 components:
   schemas:
     Envelope:
@@ -220,6 +256,16 @@ components:
       example:
         version: 2.0
         id: 50e26c12-ff82-4131-adfc-9f377857bdf0
+
+    CitiesGetResponse:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            cities:
+              type: array
+              items:
+                $ref: '#/components/schemas/City'
 
     RestaurantsGetResponse:
       allOf:
@@ -279,6 +325,26 @@ components:
         - address
         - safetyToday
         - safetyTomorrow
+
+    City:
+      type: object
+      description: Representation of a city
+      required:
+        - slug
+        - name
+        - image
+      properties:
+        slug:
+          description: unique human readable city id
+          type: string
+        name:
+          description: city name (in English)
+          type: string
+        image:
+          description: image URL
+          type: string
+      example:
+        $ref: '#/components/examples/City/value'
 
     HourlySafety:
       type: object
@@ -355,6 +421,12 @@ components:
           format: uuid
 
   examples:
+    City:
+      value:
+        slug: lviv
+        name: Lviv
+        image: http://www.lviv.com/images/main.png
+
     StoredIntendedVisit:
       value:
         id: 815550e8-ce6e-4c5c-8581-9909857cec2c
