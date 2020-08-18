@@ -890,6 +890,7 @@
                     <version>${openapi-generator-maven-plugin.version}</version>
                     <executions>
                         <execution>
+                            <id>Spring MVC Generator</id>
                             <goals>
                                 <goal>generate</goal>
                             </goals>
