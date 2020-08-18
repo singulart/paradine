@@ -96,7 +96,6 @@ public class Restaurant implements Serializable {
     private String uuid;
 
     @OneToOne
-    @JoinColumn(unique = true)
     private City city;
 
     @Transient

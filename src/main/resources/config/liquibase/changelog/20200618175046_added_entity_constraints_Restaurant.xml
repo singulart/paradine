@@ -10,7 +10,7 @@
 
         <addColumn tableName="restaurant">
             <column name="city_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_restaurant_city_id" />
+                <constraints nullable="true"/>
             </column>
         </addColumn>
 
@@ -19,6 +19,9 @@
                                  constraintName="fk_restaurant_city_id"
                                  referencedColumnNames="id"
                                  referencedTableName="city"/>
+        <sql>
+            update restaurant set city_id = 1;
+        </sql>
 
     </changeSet>
 </databaseChangeLog>
