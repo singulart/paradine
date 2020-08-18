@@ -26,6 +26,7 @@
     <include file="config/liquibase/changelog/20200702093259_changelog.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200703102529_added_entity_constraints_WorkingHours.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200707072602_added_entity_constraints_IntendedVisit.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200618175046_added_entity_constraints_Restaurant.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

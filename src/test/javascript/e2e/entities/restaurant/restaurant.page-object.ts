@@ -45,6 +45,8 @@ export class RestaurantUpdatePage {
   updatedAtInput = element(by.id('field_updatedAt'));
   uuidInput = element(by.id('field_uuid'));
 
+  citySelect = element(by.id('field_city'));
+
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
   }
@@ -167,6 +169,22 @@ export class RestaurantUpdatePage {
 
   async getUuidInput(): Promise<string> {
     return await this.uuidInput.getAttribute('value');
+  }
+
+  async citySelectLastOption(): Promise<void> {
+    await this.citySelect.all(by.tagName('option')).last().click();
+  }
+
+  async citySelectOption(option: string): Promise<void> {
+    await this.citySelect.sendKeys(option);
+  }
+
+  getCitySelect(): ElementFinder {
+    return this.citySelect;
+  }
+
+  async getCitySelectedOption(): Promise<string> {
+    return await this.citySelect.element(by.css('option:checked')).getText();
   }
 
   async save(): Promise<void> {

@@ -4,11 +4,14 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IRestaurant, Restaurant } from 'app/shared/model/restaurant.model';
 import { RestaurantService } from './restaurant.service';
+import { ICity } from 'app/shared/model/city.model';
+import { CityService } from 'app/entities/city/city.service';
 
 @Component({
   selector: 'jhi-restaurant-update',
@@ -16,6 +19,7 @@ import { RestaurantService } from './restaurant.service';
 })
 export class RestaurantUpdateComponent implements OnInit {
   isSaving = false;
+  cities: ICity[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -50,9 +54,15 @@ export class RestaurantUpdateComponent implements OnInit {
         Validators.pattern('[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}'),
       ],
     ],
+    cityId: [],
   });
 
-  constructor(protected restaurantService: RestaurantService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected restaurantService: RestaurantService,
+    protected cityService: CityService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ restaurant }) => {
@@ -63,6 +73,28 @@ export class RestaurantUpdateComponent implements OnInit {
       }
 
       this.updateForm(restaurant);
+
+      this.cityService
+        .query({ filter: 'restaurant-is-null' })
+        .pipe(
+          map((res: HttpResponse<ICity[]>) => {
+            return res.body || [];
+          })
+        )
+        .subscribe((resBody: ICity[]) => {
+          if (!restaurant.cityId) {
+            this.cities = resBody;
+          } else {
+            this.cityService
+              .find(restaurant.cityId)
+              .pipe(
+                map((subRes: HttpResponse<ICity>) => {
+                  return subRes.body ? [subRes.body].concat(resBody) : resBody;
+                })
+              )
+              .subscribe((concatRes: ICity[]) => (this.cities = concatRes));
+          }
+        });
     });
   }
 
@@ -84,6 +116,7 @@ export class RestaurantUpdateComponent implements OnInit {
       createdAt: restaurant.createdAt ? restaurant.createdAt.format(DATE_TIME_FORMAT) : null,
       updatedAt: restaurant.updatedAt ? restaurant.updatedAt.format(DATE_TIME_FORMAT) : null,
       uuid: restaurant.uuid,
+      cityId: restaurant.cityId,
     });
   }
 
@@ -120,6 +153,7 @@ export class RestaurantUpdateComponent implements OnInit {
       createdAt: this.editForm.get(['createdAt'])!.value ? moment(this.editForm.get(['createdAt'])!.value, DATE_TIME_FORMAT) : undefined,
       updatedAt: this.editForm.get(['updatedAt'])!.value ? moment(this.editForm.get(['updatedAt'])!.value, DATE_TIME_FORMAT) : undefined,
       uuid: this.editForm.get(['uuid'])!.value,
+      cityId: this.editForm.get(['cityId'])!.value,
     };
   }
 
@@ -137,5 +171,9 @@ export class RestaurantUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackById(index: number, item: ICity): any {
+    return item.id;
   }
 }

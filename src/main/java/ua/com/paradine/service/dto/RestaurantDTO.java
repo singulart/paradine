@@ -63,6 +63,10 @@ public class RestaurantDTO implements Serializable {
     @Pattern(regexp = "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
     private String uuid;
 
+
+    private Long cityId;
+
+    private String cityName;
     
     public Long getId() {
         return id;
@@ -192,6 +196,22 @@ public class RestaurantDTO implements Serializable {
         this.uuid = uuid;
     }
 
+    public Long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -229,6 +249,8 @@ public class RestaurantDTO implements Serializable {
             ", createdAt='" + getCreatedAt() + "'" +
             ", updatedAt='" + getUpdatedAt() + "'" +
             ", uuid='" + getUuid() + "'" +
+            ", cityId=" + getCityId() +
+            ", cityName='" + getCityName() + "'" +
             "}";
     }
 }

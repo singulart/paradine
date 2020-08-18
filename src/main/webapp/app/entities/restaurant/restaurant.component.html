@@ -56,6 +56,7 @@
                     <th scope="col"  jhiSortBy="createdAt"><span jhiTranslate="paradineApp.restaurant.createdAt">Created At</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="updatedAt"><span jhiTranslate="paradineApp.restaurant.updatedAt">Updated At</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="uuid"><span jhiTranslate="paradineApp.restaurant.uuid">Uuid</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="cityName"><span jhiTranslate="paradineApp.restaurant.city">City</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -77,6 +78,11 @@
                     <td>{{ restaurant.createdAt | date:'medium' }}</td>
                     <td>{{ restaurant.updatedAt | date:'medium' }}</td>
                     <td>{{ restaurant.uuid }}</td>
+                    <td>
+                        <div *ngIf="restaurant.cityId">
+                            <a [routerLink]="['/city', restaurant.cityId , 'view']" >{{ restaurant.cityName }}</a>
+                        </div>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

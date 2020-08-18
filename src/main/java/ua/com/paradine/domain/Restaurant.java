@@ -1,23 +1,16 @@
 package ua.com.paradine.domain;
 
-import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
+import org.springframework.data.elasticsearch.annotations.FieldType;
+import java.io.Serializable;
+import java.time.ZonedDateTime;
 
 /**
  * A Restaurant.
@@ -101,6 +94,10 @@ public class Restaurant implements Serializable {
     @Pattern(regexp = "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
     @Column(name = "uuid", length = 36, nullable = false, unique = true)
     private String uuid;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private City city;
 
     @Transient
     private List<PopularTime> popularTimes = new ArrayList<>();
@@ -312,14 +309,19 @@ public class Restaurant implements Serializable {
         this.uuid = uuid;
     }
 
-    public List<PopularTime> getPopularTimes() {
-        return popularTimes;
+    public City getCity() {
+        return city;
     }
 
-    public Restaurant popularTimes(List<PopularTime> popularTimes) {
-        this.popularTimes = popularTimes;
+    public Restaurant city(City city) {
+        this.city = city;
         return this;
     }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     public Restaurant addPopularTimes(PopularTime popularTime) {
         this.popularTimes.add(popularTime);
@@ -333,6 +335,10 @@ public class Restaurant implements Serializable {
         return this;
     }
 
+    public List<PopularTime> getPopularTimes() {
+        return popularTimes;
+    }
+
     public List<WorkingHours> getWorkingHours() {
         return workingHours;
     }
@@ -344,7 +350,11 @@ public class Restaurant implements Serializable {
     public void setPopularTimes(List<PopularTime> popularTimes) {
         this.popularTimes = popularTimes;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+
+    public Restaurant popularTimes(List<PopularTime> popularTimes) {
+        this.popularTimes = popularTimes;
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {

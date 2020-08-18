@@ -1,10 +1,8 @@
 package ua.com.paradine.web.rest;
 
-import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
-import org.junit.Ignore;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import ua.com.paradine.ParadineApp;
 import ua.com.paradine.domain.Restaurant;
+import ua.com.paradine.domain.City;
 import ua.com.paradine.repository.RestaurantRepository;
 import ua.com.paradine.repository.search.RestaurantSearchRepository;
 import ua.com.paradine.service.RestaurantService;
@@ -110,9 +108,6 @@ public class RestaurantResourceIT {
 
     @Autowired
     private RestaurantService restaurantService;
-
-    @MockBean
-    private JestElasticsearchTemplate jestElasticsearchTemplate;
 
     /**
      * This repository is mocked in the ua.com.paradine.repository.search test package.
@@ -1182,47 +1177,44 @@ public class RestaurantResourceIT {
     }
 
 
-//    @Ignore
-//    @Test
-//    @Transactional
-//    public void getAllRestaurantsByPhotoUrlIsEqualToSomething() throws Exception {
-//        // Initialize the database
-//        restaurantRepository.saveAndFlush(restaurant);
-//
-//        // Get all the restaurantList where photoUrl equals to DEFAULT_PHOTO_URL
-//        defaultRestaurantShouldBeFound("photoUrl.equals=" + DEFAULT_PHOTO_URL);
-//
-//        // Get all the restaurantList where photoUrl equals to UPDATED_PHOTO_URL
-//        defaultRestaurantShouldNotBeFound("photoUrl.equals=" + UPDATED_PHOTO_URL);
-//    }
-//
-//    @Ignore
-//    @Test
-//    @Transactional
-//    public void getAllRestaurantsByPhotoUrlIsNotEqualToSomething() throws Exception {
-//        // Initialize the database
-//        restaurantRepository.saveAndFlush(restaurant);
-//
-//        // Get all the restaurantList where photoUrl not equals to DEFAULT_PHOTO_URL
-//        defaultRestaurantShouldNotBeFound("photoUrl.notEquals=" + DEFAULT_PHOTO_URL);
-//
-//        // Get all the restaurantList where photoUrl not equals to UPDATED_PHOTO_URL
-//        defaultRestaurantShouldBeFound("photoUrl.notEquals=" + UPDATED_PHOTO_URL);
-//    }
-//
-//    @Ignore
-//    @Test
-//    @Transactional
-//    public void getAllRestaurantsByPhotoUrlIsInShouldWork() throws Exception {
-//        // Initialize the database
-//        restaurantRepository.saveAndFlush(restaurant);
-//
-//        // Get all the restaurantList where photoUrl in DEFAULT_PHOTO_URL or UPDATED_PHOTO_URL
-//        defaultRestaurantShouldBeFound("photoUrl.in=" + DEFAULT_PHOTO_URL + "," + UPDATED_PHOTO_URL);
-//
-//        // Get all the restaurantList where photoUrl equals to UPDATED_PHOTO_URL
-//        defaultRestaurantShouldNotBeFound("photoUrl.in=" + UPDATED_PHOTO_URL);
-//    }
+    @Test
+    @Transactional
+    public void getAllRestaurantsByPhotoUrlIsEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where photoUrl equals to DEFAULT_PHOTO_URL
+        defaultRestaurantShouldBeFound("photoUrl.equals=" + DEFAULT_PHOTO_URL);
+
+        // Get all the restaurantList where photoUrl equals to UPDATED_PHOTO_URL
+        defaultRestaurantShouldNotBeFound("photoUrl.equals=" + UPDATED_PHOTO_URL);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByPhotoUrlIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where photoUrl not equals to DEFAULT_PHOTO_URL
+        defaultRestaurantShouldNotBeFound("photoUrl.notEquals=" + DEFAULT_PHOTO_URL);
+
+        // Get all the restaurantList where photoUrl not equals to UPDATED_PHOTO_URL
+        defaultRestaurantShouldBeFound("photoUrl.notEquals=" + UPDATED_PHOTO_URL);
+    }
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByPhotoUrlIsInShouldWork() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+
+        // Get all the restaurantList where photoUrl in DEFAULT_PHOTO_URL or UPDATED_PHOTO_URL
+        defaultRestaurantShouldBeFound("photoUrl.in=" + DEFAULT_PHOTO_URL + "," + UPDATED_PHOTO_URL);
+
+        // Get all the restaurantList where photoUrl equals to UPDATED_PHOTO_URL
+        defaultRestaurantShouldNotBeFound("photoUrl.in=" + UPDATED_PHOTO_URL);
+    }
 
     @Test
     @Transactional
@@ -1809,6 +1801,26 @@ public class RestaurantResourceIT {
 
         // Get all the restaurantList where uuid does not contain UPDATED_UUID
         defaultRestaurantShouldBeFound("uuid.doesNotContain=" + UPDATED_UUID);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllRestaurantsByCityIsEqualToSomething() throws Exception {
+        // Initialize the database
+        restaurantRepository.saveAndFlush(restaurant);
+        City city = CityResourceIT.createEntity(em);
+        em.persist(city);
+        em.flush();
+        restaurant.setCity(city);
+        restaurantRepository.saveAndFlush(restaurant);
+        Long cityId = city.getId();
+
+        // Get all the restaurantList where city equals to cityId
+        defaultRestaurantShouldBeFound("cityId.equals=" + cityId);
+
+        // Get all the restaurantList where city equals to cityId + 1
+        defaultRestaurantShouldNotBeFound("cityId.equals=" + (cityId + 1));
     }
 
     /**

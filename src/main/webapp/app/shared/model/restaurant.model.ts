@@ -17,6 +17,8 @@ export interface IRestaurant {
   createdAt?: Moment;
   updatedAt?: Moment;
   uuid?: string;
+  cityName?: string;
+  cityId?: number;
 }
 
 export class Restaurant implements IRestaurant {
@@ -36,6 +38,8 @@ export class Restaurant implements IRestaurant {
     public capacity?: number,
     public createdAt?: Moment,
     public updatedAt?: Moment,
-    public uuid?: string
+    public uuid?: string,
+    public cityName?: string,
+    public cityId?: number
   ) {}
 }

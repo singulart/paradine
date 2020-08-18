@@ -31,7 +31,8 @@
       "capacity": "Capacity",
       "createdAt": "Created At",
       "updatedAt": "Updated At",
-      "uuid": "Uuid"
+      "uuid": "Uuid",
+      "city": "City"
     }
   }
 }

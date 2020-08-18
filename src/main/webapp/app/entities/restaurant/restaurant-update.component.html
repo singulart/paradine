@@ -252,6 +252,14 @@
                         </small>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.restaurant.city" for="field_city">City</label>
+                    <select class="form-control" id="field_city" name="city" formControlName="cityId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="cityOption.id" *ngFor="let cityOption of cities; trackBy: trackById">{{ cityOption.name }}</option>
+                    </select>
+                </div>
             </div>
 
             <div>

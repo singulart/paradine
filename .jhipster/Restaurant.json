@@ -103,5 +103,15 @@
   "readOnly": false,
   "jpaMetamodelFiltering": true,
   "pagination": "infinite-scroll",
-  "relationships": []
+  "relationships": [
+    {
+      "relationshipName": "city",
+      "otherEntityName": "city",
+      "relationshipType": "one-to-one",
+      "otherEntityField": "name",
+      "ownerSide": true,
+      "useJPADerivedIdentifier": false,
+      "otherEntityRelationshipName": "restaurant"
+    }
+  ]
 }

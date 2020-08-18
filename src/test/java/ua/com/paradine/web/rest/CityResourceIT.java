@@ -4,6 +4,9 @@ import ua.com.paradine.ParadineApp;
 import ua.com.paradine.domain.City;
 import ua.com.paradine.repository.CityRepository;
 import ua.com.paradine.repository.search.CitySearchRepository;
+import ua.com.paradine.service.CityService;
+import ua.com.paradine.service.dto.CityDTO;
+import ua.com.paradine.service.mapper.CityMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,6 +51,12 @@ public class CityResourceIT {
 
     @Autowired
     private CityRepository cityRepository;
+
+    @Autowired
+    private CityMapper cityMapper;
+
+    @Autowired
+    private CityService cityService;
 
     /**
      * This repository is mocked in the ua.com.paradine.repository.search test package.
@@ -102,9 +111,10 @@ public class CityResourceIT {
     public void createCity() throws Exception {
         int databaseSizeBeforeCreate = cityRepository.findAll().size();
         // Create the City
+        CityDTO cityDTO = cityMapper.toDto(city);
         restCityMockMvc.perform(post("/api/cities")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(city)))
+            .content(TestUtil.convertObjectToJsonBytes(cityDTO)))
             .andExpect(status().isCreated());
 
         // Validate the City in the database
@@ -126,11 +136,12 @@ public class CityResourceIT {
 
         // Create the City with an existing ID
         city.setId(1L);
+        CityDTO cityDTO = cityMapper.toDto(city);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restCityMockMvc.perform(post("/api/cities")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(city)))
+            .content(TestUtil.convertObjectToJsonBytes(cityDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the City in the database
@@ -150,11 +161,12 @@ public class CityResourceIT {
         city.setSlug(null);
 
         // Create the City, which fails.
+        CityDTO cityDTO = cityMapper.toDto(city);
 
 
         restCityMockMvc.perform(post("/api/cities")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(city)))
+            .content(TestUtil.convertObjectToJsonBytes(cityDTO)))
             .andExpect(status().isBadRequest());
 
         List<City> cityList = cityRepository.findAll();
@@ -169,11 +181,12 @@ public class CityResourceIT {
         city.setName(null);
 
         // Create the City, which fails.
+        CityDTO cityDTO = cityMapper.toDto(city);
 
 
         restCityMockMvc.perform(post("/api/cities")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(city)))
+            .content(TestUtil.convertObjectToJsonBytes(cityDTO)))
             .andExpect(status().isBadRequest());
 
         List<City> cityList = cityRepository.findAll();
@@ -188,11 +201,12 @@ public class CityResourceIT {
         city.setImage(null);
 
         // Create the City, which fails.
+        CityDTO cityDTO = cityMapper.toDto(city);
 
 
         restCityMockMvc.perform(post("/api/cities")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(city)))
+            .content(TestUtil.convertObjectToJsonBytes(cityDTO)))
             .andExpect(status().isBadRequest());
 
         List<City> cityList = cityRepository.findAll();
@@ -254,10 +268,11 @@ public class CityResourceIT {
             .slug(UPDATED_SLUG)
             .name(UPDATED_NAME)
             .image(UPDATED_IMAGE);
+        CityDTO cityDTO = cityMapper.toDto(updatedCity);
 
         restCityMockMvc.perform(put("/api/cities")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedCity)))
+            .content(TestUtil.convertObjectToJsonBytes(cityDTO)))
             .andExpect(status().isOk());
 
         // Validate the City in the database
@@ -277,10 +292,13 @@ public class CityResourceIT {
     public void updateNonExistingCity() throws Exception {
         int databaseSizeBeforeUpdate = cityRepository.findAll().size();
 
+        // Create the City
+        CityDTO cityDTO = cityMapper.toDto(city);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCityMockMvc.perform(put("/api/cities")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(city)))
+            .content(TestUtil.convertObjectToJsonBytes(cityDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the City in the database

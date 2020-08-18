@@ -57,6 +57,8 @@ public class RestaurantCriteria implements Serializable, Criteria {
 
     private StringFilter uuid;
 
+    private LongFilter cityId;
+
     public RestaurantCriteria() {
     }
 
@@ -77,6 +79,7 @@ public class RestaurantCriteria implements Serializable, Criteria {
         this.createdAt = other.createdAt == null ? null : other.createdAt.copy();
         this.updatedAt = other.updatedAt == null ? null : other.updatedAt.copy();
         this.uuid = other.uuid == null ? null : other.uuid.copy();
+        this.cityId = other.cityId == null ? null : other.cityId.copy();
     }
 
     @Override
@@ -212,6 +215,14 @@ public class RestaurantCriteria implements Serializable, Criteria {
         this.uuid = uuid;
     }
 
+    public LongFilter getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(LongFilter cityId) {
+        this.cityId = cityId;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -238,7 +249,8 @@ public class RestaurantCriteria implements Serializable, Criteria {
             Objects.equals(capacity, that.capacity) &&
             Objects.equals(createdAt, that.createdAt) &&
             Objects.equals(updatedAt, that.updatedAt) &&
-            Objects.equals(uuid, that.uuid);
+            Objects.equals(uuid, that.uuid) &&
+            Objects.equals(cityId, that.cityId);
     }
 
     @Override
@@ -259,7 +271,8 @@ public class RestaurantCriteria implements Serializable, Criteria {
         capacity,
         createdAt,
         updatedAt,
-        uuid
+        uuid,
+        cityId
         );
     }
 
@@ -283,6 +296,7 @@ public class RestaurantCriteria implements Serializable, Criteria {
                 (createdAt != null ? "createdAt=" + createdAt + ", " : "") +
                 (updatedAt != null ? "updatedAt=" + updatedAt + ", " : "") +
                 (uuid != null ? "uuid=" + uuid + ", " : "") +
+                (cityId != null ? "cityId=" + cityId + ", " : "") +
             "}";
     }
 

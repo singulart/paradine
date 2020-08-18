@@ -68,6 +68,12 @@
                 <dd>
                     <span>{{ restaurant.uuid }}</span>
                 </dd>
+                <dt><span jhiTranslate="paradineApp.restaurant.city">City</span></dt>
+                <dd>
+                    <div *ngIf="restaurant.cityId">
+                        <a [routerLink]="['/city', restaurant.cityId, 'view']">{{ restaurant.cityName }}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

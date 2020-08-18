@@ -56,6 +56,7 @@ describe('Restaurant e2e test', () => {
       restaurantUpdatePage.setCreatedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       restaurantUpdatePage.setUpdatedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       restaurantUpdatePage.setUuidInput('9dE1b5Ab-FA8F-0Fb6-Fc3A-C6Eb86DeD48b'),
+      restaurantUpdatePage.citySelectLastOption(),
     ]);
 
     expect(await restaurantUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
