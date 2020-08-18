@@ -1,0 +1,25 @@
+{
+  "paradineApp": {
+    "city": {
+      "home": {
+        "title": "Cities",
+        "createLabel": "Створити новий City",
+        "createOrEditLabel": "Створити чи редагувати City",
+        "search": "Знайти City",
+        "notFound": "No Cities found"
+      },
+      "created": "Новий City створений з ідентифікатором {{ param }}",
+      "updated": "City оновлений з ідентифікатором {{ param }}",
+      "deleted": "City видалений з ідентифікатором {{ param }}",
+      "delete": {
+        "question": "Ви впевнені, що хочете видалити City {{ id }}?"
+      },
+      "detail": {
+        "title": "City"
+      },
+      "slug": "Slug",
+      "name": "Name",
+      "image": "Image"
+    }
+  }
+}

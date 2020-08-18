@@ -38,7 +38,7 @@
     "nativeLanguage": "en",
     "languages": ["en", "ru", "ua"],
     "blueprints": [],
-    "lastLiquibaseTimestamp": 1594106762000,
+    "lastLiquibaseTimestamp": 1597752746000,
     "aws": {
       "applicationName": "paradine",
       "environmentName": "paradine-env",
