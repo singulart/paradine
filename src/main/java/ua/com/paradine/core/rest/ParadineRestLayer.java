@@ -58,7 +58,7 @@ public class ParadineRestLayer implements RestaurantsApiDelegate {
     }
 
     @Override
-    public ResponseEntity<RestaurantsGetResponse> getRestaurants(Integer page, String q, Float geolat, Float geolng) {
+    public ResponseEntity<RestaurantsGetResponse> getRestaurants(String city, Integer page, String q, Float geolat, Float geolng) {
         if (geolat != null && geolng == null) {
             throw Problem.valueOf(Status.BAD_REQUEST, BAD_GEOLOCATION_PARAMS);
         }
@@ -67,7 +67,7 @@ public class ParadineRestLayer implements RestaurantsApiDelegate {
         }
 
         ViewRestaurantsListCriteria searchCriteria = ViewRestaurantsListCriteria.Builder.init()
-            .withCitySlug(null) //TODO add this filter
+            .withCitySlug(city)
             .withLat(geolat)
             .withLng(geolng)
             .withQuery(q)

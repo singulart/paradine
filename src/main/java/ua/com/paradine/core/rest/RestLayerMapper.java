@@ -10,6 +10,8 @@ import ua.com.paradine.core.business.vo.HourlyClassifier;
 import ua.com.paradine.core.business.vo.IntendedVisitVO;
 import ua.com.paradine.core.business.vo.RestaurantVO;
 import ua.com.paradine.core.business.vo.commands.SubmitVisitIntentCommand;
+import ua.com.paradine.service.dto.CityDTO;
+import ua.com.paradine.web.api.model.City;
 import ua.com.paradine.web.api.model.CreateIntendedVisitRequest;
 import ua.com.paradine.web.api.model.HourlySafety;
 import ua.com.paradine.web.api.model.Restaurant;
@@ -62,4 +64,6 @@ public interface RestLayerMapper {
     default UUID map(String uuid) {
         return UUID.fromString(uuid);
     }
+
+    List<City> mapCities(List<CityDTO> cities);
 }
