@@ -32,8 +32,8 @@ paths:
             minimum: 0
         - in: query
           name: city
-          description: City slug. Empty restaurants list returned if unknown value sent.
-          required: true
+          description: City slug. Empty restaurants list returned if unknown value sent. See GET /cities for supported values
+          required: false
           schema:
             type: string
             minLength: 2
