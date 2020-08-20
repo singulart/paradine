@@ -39,38 +39,38 @@
     <div class="table-responsive" id="entities" *ngIf="popularTimes && popularTimes.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
-                <tr>
-                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.dayOfWeek">Day Of Week</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ01">Occ 01</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ02">Occ 02</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ03">Occ 03</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ04">Occ 04</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ05">Occ 05</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ06">Occ 06</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ07">Occ 07</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ08">Occ 08</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ09">Occ 09</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ10">Occ 10</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ11">Occ 11</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ12">Occ 12</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ13">Occ 13</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ14">Occ 14</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ15">Occ 15</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ16">Occ 16</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ17">Occ 17</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ18">Occ 18</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ19">Occ 19</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ20">Occ 20</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ21">Occ 21</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ22">Occ 22</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ23">Occ 23</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.occ24">Occ 24</span></th>
-                    <th scope="col" ><span jhiTranslate="paradineApp.popularTime.restaurant">Restaurant</span></th>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dayOfWeek"><span jhiTranslate="paradineApp.popularTime.dayOfWeek">Day Of Week</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ01"><span jhiTranslate="paradineApp.popularTime.occ01">Occ 01</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ02"><span jhiTranslate="paradineApp.popularTime.occ02">Occ 02</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ03"><span jhiTranslate="paradineApp.popularTime.occ03">Occ 03</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ04"><span jhiTranslate="paradineApp.popularTime.occ04">Occ 04</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ05"><span jhiTranslate="paradineApp.popularTime.occ05">Occ 05</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ06"><span jhiTranslate="paradineApp.popularTime.occ06">Occ 06</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ07"><span jhiTranslate="paradineApp.popularTime.occ07">Occ 07</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ08"><span jhiTranslate="paradineApp.popularTime.occ08">Occ 08</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ09"><span jhiTranslate="paradineApp.popularTime.occ09">Occ 09</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ10"><span jhiTranslate="paradineApp.popularTime.occ10">Occ 10</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ11"><span jhiTranslate="paradineApp.popularTime.occ11">Occ 11</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ12"><span jhiTranslate="paradineApp.popularTime.occ12">Occ 12</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ13"><span jhiTranslate="paradineApp.popularTime.occ13">Occ 13</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ14"><span jhiTranslate="paradineApp.popularTime.occ14">Occ 14</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ15"><span jhiTranslate="paradineApp.popularTime.occ15">Occ 15</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ16"><span jhiTranslate="paradineApp.popularTime.occ16">Occ 16</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ17"><span jhiTranslate="paradineApp.popularTime.occ17">Occ 17</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ18"><span jhiTranslate="paradineApp.popularTime.occ18">Occ 18</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ19"><span jhiTranslate="paradineApp.popularTime.occ19">Occ 19</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ20"><span jhiTranslate="paradineApp.popularTime.occ20">Occ 20</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ21"><span jhiTranslate="paradineApp.popularTime.occ21">Occ 21</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ22"><span jhiTranslate="paradineApp.popularTime.occ22">Occ 22</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ23"><span jhiTranslate="paradineApp.popularTime.occ23">Occ 23</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="occ24"><span jhiTranslate="paradineApp.popularTime.occ24">Occ 24</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="restaurantName"><span jhiTranslate="paradineApp.popularTime.restaurant">Restaurant</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                 <tr *ngFor="let popularTime of popularTimes ;trackBy: trackId">
                     <td><a [routerLink]="['/popular-time', popularTime.id, 'view']">{{ popularTime.id }}</a></td>
                     <td>{{ popularTime.dayOfWeek }}</td>

@@ -195,5 +195,5 @@
   "databaseType": "sql",
   "readOnly": false,
   "jpaMetamodelFiltering": true,
-  "pagination": "no"
+  "pagination": "infinite-scroll"
 }

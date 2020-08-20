@@ -9,14 +9,12 @@ import ua.com.paradine.service.mapper.PopularTimeMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
@@ -60,15 +58,15 @@ public class PopularTimeServiceImpl implements PopularTimeService {
     /**
      * Get all the popularTimes.
      *
+     * @param pageable the pagination information.
      * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)
-    public List<PopularTimeDTO> findAll() {
+    public Page<PopularTimeDTO> findAll(Pageable pageable) {
         log.debug("Request to get all PopularTimes");
-        return popularTimeRepository.findAll().stream()
-            .map(popularTimeMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+        return popularTimeRepository.findAll(pageable)
+            .map(popularTimeMapper::toDto);
     }
 
 
@@ -102,15 +100,14 @@ public class PopularTimeServiceImpl implements PopularTimeService {
      * Search for the popularTime corresponding to the query.
      *
      * @param query the query of the search.
+     * @param pageable the pagination information.
      * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)
-    public List<PopularTimeDTO> search(String query) {
-        log.debug("Request to search PopularTimes for query {}", query);
-        return StreamSupport
-            .stream(popularTimeSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(popularTimeMapper::toDto)
-        .collect(Collectors.toList());
+    public Page<PopularTimeDTO> search(String query, Pageable pageable) {
+        log.debug("Request to search for a page of PopularTimes for query {}", query);
+        return popularTimeSearchRepository.search(queryStringQuery(query), pageable)
+            .map(popularTimeMapper::toDto);
     }
 }

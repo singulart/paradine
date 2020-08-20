@@ -2,7 +2,9 @@ package ua.com.paradine.service;
 
 import ua.com.paradine.service.dto.PopularTimeDTO;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.Optional;
 
 /**
@@ -21,9 +23,10 @@ public interface PopularTimeService {
     /**
      * Get all the popularTimes.
      *
+     * @param pageable the pagination information.
      * @return the list of entities.
      */
-    List<PopularTimeDTO> findAll();
+    Page<PopularTimeDTO> findAll(Pageable pageable);
 
 
     /**
@@ -46,7 +49,8 @@ public interface PopularTimeService {
      *
      * @param query the query of the search.
      * 
+     * @param pageable the pagination information.
      * @return the list of entities.
      */
-    List<PopularTimeDTO> search(String query);
+    Page<PopularTimeDTO> search(String query, Pageable pageable);
 }

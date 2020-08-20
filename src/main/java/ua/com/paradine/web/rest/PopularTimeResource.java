@@ -7,10 +7,16 @@ import ua.com.paradine.service.dto.PopularTimeCriteria;
 import ua.com.paradine.service.PopularTimeQueryService;
 
 import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -89,14 +95,16 @@ public class PopularTimeResource {
     /**
      * {@code GET  /popular-times} : get all the popularTimes.
      *
+     * @param pageable the pagination information.
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of popularTimes in body.
      */
     @GetMapping("/popular-times")
-    public ResponseEntity<List<PopularTimeDTO>> getAllPopularTimes(PopularTimeCriteria criteria) {
+    public ResponseEntity<List<PopularTimeDTO>> getAllPopularTimes(PopularTimeCriteria criteria, Pageable pageable) {
         log.debug("REST request to get PopularTimes by criteria: {}", criteria);
-        List<PopularTimeDTO> entityList = popularTimeQueryService.findByCriteria(criteria);
-        return ResponseEntity.ok().body(entityList);
+        Page<PopularTimeDTO> page = popularTimeQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
@@ -142,11 +150,14 @@ public class PopularTimeResource {
      * to the query.
      *
      * @param query the query of the popularTime search.
+     * @param pageable the pagination information.
      * @return the result of the search.
      */
     @GetMapping("/_search/popular-times")
-    public List<PopularTimeDTO> searchPopularTimes(@RequestParam String query) {
-        log.debug("REST request to search PopularTimes for query {}", query);
-        return popularTimeService.search(query);
-    }
+    public ResponseEntity<List<PopularTimeDTO>> searchPopularTimes(@RequestParam String query, Pageable pageable) {
+        log.debug("REST request to search for a page of PopularTimes for query {}", query);
+        Page<PopularTimeDTO> page = popularTimeService.search(query, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        }
 }

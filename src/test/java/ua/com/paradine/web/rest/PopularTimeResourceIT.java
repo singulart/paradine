@@ -1,7 +1,5 @@
 package ua.com.paradine.web.rest;
 
-import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import ua.com.paradine.ParadineApp;
 import ua.com.paradine.domain.PopularTime;
 import ua.com.paradine.domain.Restaurant;
@@ -21,6 +19,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -152,9 +152,6 @@ public class PopularTimeResourceIT {
 
     @Autowired
     private PopularTimeService popularTimeService;
-
-    @MockBean
-    private JestElasticsearchTemplate jestElasticsearchTemplate;
 
     /**
      * This repository is mocked in the ua.com.paradine.repository.search test package.
@@ -3727,8 +3724,8 @@ public class PopularTimeResourceIT {
         // Configure the mock search repository
         // Initialize the database
         popularTimeRepository.saveAndFlush(popularTime);
-        when(mockPopularTimeSearchRepository.search(queryStringQuery("id:" + popularTime.getId())))
-            .thenReturn(Collections.singletonList(popularTime));
+        when(mockPopularTimeSearchRepository.search(queryStringQuery("id:" + popularTime.getId()), PageRequest.of(0, 20)))
+            .thenReturn(new PageImpl<>(Collections.singletonList(popularTime), PageRequest.of(0, 1), 1));
 
         // Search the popularTime
         restPopularTimeMockMvc.perform(get("/api/_search/popular-times?query=id:" + popularTime.getId()))
