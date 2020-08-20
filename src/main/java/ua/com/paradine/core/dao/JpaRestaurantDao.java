@@ -36,6 +36,7 @@ public class JpaRestaurantDao implements RestaurantDao {
     @Override
     public Page<Restaurant> loadRestaurants(ViewRestaurantsListCriteria searchCriteria) {
         Page<Restaurant> jpaRestaurants = restaurantRepository.searchByCriteria(
+            searchCriteria.getCitySlug(),
             PageRequest.of(ofNullable(searchCriteria.getPage()).orElse(0), pageSize));
         List<Long> ids = jpaRestaurants.stream().map(Restaurant::getId).collect(toList());
         if (!ids.isEmpty()) {

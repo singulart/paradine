@@ -48,7 +48,7 @@ public class ViewRestaurantsListE2ETest {
         doReturn("We").when(classifier).getToday();
         doReturn("Th").when(classifier).getTomorrow();
 
-        mockMvc.perform(get("/api/paradine/v2/restaurants"))
+        mockMvc.perform(get("/api/paradine/v2/restaurants").queryParam("city", "kyiv"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(header().string("X-Total-Count", "10"))

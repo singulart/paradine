@@ -1,6 +1,7 @@
 package ua.com.paradine.core.rest;
 
 import static java.util.stream.Collectors.toList;
+import static org.springframework.util.StringUtils.isEmpty;
 import static ua.com.paradine.core.Errors.BAD_GEOLOCATION_PARAMS;
 import static ua.com.paradine.core.Errors.NOT_FOUND;
 
@@ -59,6 +60,13 @@ public class ParadineRestLayer implements RestaurantsApiDelegate {
 
     @Override
     public ResponseEntity<RestaurantsGetResponse> getRestaurants(Integer page, String city, String q, Float geolat, Float geolng) {
+
+        if (city == null || isEmpty(city)) {
+            if (geolat == null && geolng == null) {
+                throw Problem.valueOf(Status.BAD_REQUEST, BAD_GEOLOCATION_PARAMS);
+            }
+        }
+
         if (geolat != null && geolng == null) {
             throw Problem.valueOf(Status.BAD_REQUEST, BAD_GEOLOCATION_PARAMS);
         }

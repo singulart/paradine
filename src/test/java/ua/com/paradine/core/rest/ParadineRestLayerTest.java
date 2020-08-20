@@ -45,11 +45,32 @@ public class ParadineRestLayerTest {
     private JestElasticsearchTemplate elasticsearchTemplate;
 
     @Test
-    void getRestaurants() throws Exception {
+    void getRestaurants_noQueryParams_400() throws Exception {
         when(viewListFlow.fetchClassifiedRestaurants(any())).thenReturn(
             new PageImpl<>(asList(new ClassifiedRestaurantVO()), PageRequest.of(0, 1), 10)
         );
         mockMvc.perform(get("/api/paradine/v2/restaurants"))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void getRestaurants_city() throws Exception {
+        when(viewListFlow.fetchClassifiedRestaurants(any())).thenReturn(
+            new PageImpl<>(asList(new ClassifiedRestaurantVO()), PageRequest.of(0, 1), 10)
+        );
+        mockMvc.perform(get("/api/paradine/v2/restaurants").queryParam("city", "nyc"))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    void getRestaurants_geo() throws Exception {
+        when(viewListFlow.fetchClassifiedRestaurants(any())).thenReturn(
+            new PageImpl<>(asList(new ClassifiedRestaurantVO()), PageRequest.of(0, 1), 10)
+        );
+        mockMvc.perform(get("/api/paradine/v2/restaurants")
+            .queryParam("lat", "50.123456")
+            .queryParam("lng", "50.123456")
+        )
             .andExpect(status().isOk());
     }
 
@@ -157,7 +178,7 @@ public class ParadineRestLayerTest {
             new PageImpl<>(asList(rest1), PageRequest.of(0, 2), 100)
         );
 
-        mockMvc.perform(get("/api/paradine/v2/restaurants"))
+        mockMvc.perform(get("/api/paradine/v2/restaurants").queryParam("city", "nyc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(header().string("X-Total-Count", "100"))

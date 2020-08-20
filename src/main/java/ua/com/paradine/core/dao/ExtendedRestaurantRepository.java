@@ -13,9 +13,9 @@ import ua.com.paradine.repository.RestaurantRepository;
 public interface ExtendedRestaurantRepository extends RestaurantRepository {
 
     @Query(value =
-        "FROM Restaurant r"
+        "FROM Restaurant r where r.city.id = (SELECT c.id from City c where c.slug = :slug)"
     )
-    Page<Restaurant> searchByCriteria(Pageable p);
+    Page<Restaurant> searchByCriteria(@Param("slug") String city, Pageable p);
 
     @Query(value =
         "SELECT r.id FROM Restaurant r where r.uuid = :uuid"
