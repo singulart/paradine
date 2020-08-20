@@ -31,8 +31,14 @@ def parse_hour(hour):
             return 24
         else:
             hour = str(inc) + hour.split(':30')[1]
+    if ':01' in hour:
+        inc = int(hour.split(':')[0])
+        if inc == 12 and 'PM' in hour:
+            return 24
+        else:
+            hour = str(inc) + hour.split(':01')[1]
     if ':20' in hour:
-        inc = int(hour.split(':')[0]) + 1
+        inc = int(hour.split(':')[0])
         if inc == 12 and 'PM' in hour:
             return 24
         else:
@@ -43,6 +49,12 @@ def parse_hour(hour):
             return 24
         else:
             hour = str(inc) + hour.split(':45')[1]
+    if ':55' in hour:
+        inc = int(hour.split(':')[0]) + 1
+        if inc == 12 and 'PM' in hour:
+            return 24
+        else:
+            hour = str(inc) + hour.split(':55')[1]
     if ':59' in hour:
         inc = int(hour.split(':')[0]) + 1
         if inc == 12 and 'PM' in hour:
