@@ -2,7 +2,8 @@
 Converts Google Places API Json response from drobnikj/crawler-google-places
 into a number of SQL inserts into main tables: restaurant, popular_time and working_hours.
 
-Usage: python3 converter.py /Users/o.buistov/projects/experi-mental/crawler-google-places/apify_storage/datasets/default/\*.json
+Usage: python3 converter.py /Users/o.buistov/projects/experi-mental/crawler-google-places/apify_storage/datasets/default/\*.json 2
+2 is the id of city Kharkiv
 """
 
 import json
@@ -30,6 +31,12 @@ def parse_hour(hour):
             return 24
         else:
             hour = str(inc) + hour.split(':30')[1]
+    if ':20' in hour:
+        inc = int(hour.split(':')[0]) + 1
+        if inc == 12 and 'PM' in hour:
+            return 24
+        else:
+            hour = str(inc) + hour.split(':20')[1]
     if ':45' in hour:
         inc = int(hour.split(':')[0]) + 1
         if inc == 12 and 'PM' in hour:
@@ -55,21 +62,21 @@ def quote(s):
     return "'" + s.replace("'", "''") + "'"
 
 
-def execute(path):
+def execute(path, city):
     alter_sequence_before = 'ALTER SEQUENCE SEQUENCE_GENERATOR INCREMENT BY 1;'
     alter_sequence_after = 'ALTER SEQUENCE SEQUENCE_GENERATOR INCREMENT BY 50;'
     print(alter_sequence_before)
     files = glob.glob(path)
 
     # restaurants ingestion
-    insert_header = 'INSERT INTO RESTAURANT (ID, UUID, CAPACITY, GEOLAT, GEOLNG, NAME, PHOTO_URL, GOOGLE_PLACES_ID, CREATED_AT, UPDATED_AT, ADDRESS_EN, ADDRESS_UA) VALUES \n'
+    insert_header = 'INSERT INTO RESTAURANT (ID, UUID, CITY_ID, CAPACITY, GEOLAT, GEOLNG, NAME, PHOTO_URL, GOOGLE_PLACES_ID, CREATED_AT, UPDATED_AT, ADDRESS_EN, ADDRESS_UA) VALUES \n'
     print(insert_header)
     restaurant_rows = []
     for f in files:
         with open(f, 'r') as popul:
             rest_dict = json.loads(popul.read())
-            row_sql_values = "((SELECT NEXTVAL('SEQUENCE_GENERATOR')), %s, %d, %s, %s, %s, %s, %s, %s, %s, %s, %s) " % \
-                             (quote(str(uuid.uuid4())), 99,
+            row_sql_values = "((SELECT NEXTVAL('SEQUENCE_GENERATOR')), %s, %d, %d, %s, %s, %s, %s, %s, %s, %s, %s, %s) " % \
+                             (quote(str(uuid.uuid4())), int(city), 99,
                               rest_dict['location']['lat'],
                               rest_dict['location']['lng'],
                               quote(rest_dict['title']),
@@ -80,7 +87,7 @@ def execute(path):
                               quote(rest_dict['address'].split('   ')[0].strip()) if rest_dict['address'] else quote(''),
                               quote(rest_dict['address'].split('   ')[-1].strip()) if rest_dict['address'] else quote(''))
             restaurant_rows.append(row_sql_values)
-    print(','.join(restaurant_rows) + ';')
+    print(',\n'.join(restaurant_rows) + ';')
 
     print('create index RESTAURANT_GOOGLE_PLACES_ID_INDEX on RESTAURANT (GOOGLE_PLACES_ID);')
 
@@ -133,8 +140,13 @@ def execute(path):
                 continue
             opening_hours = rest_dict['openingHours']
             for opening in opening_hours:
-                day = WEEK[opening['day'].replace(',', '')]  # cleanup weird comma character
-                hours = opening['hours']
+                day_no_comma = opening['day'].replace(',', '')  # cleanup weird comma character
+                if not day_no_comma in WEEK:
+                    print("-- '%s' is not a week day. working hours are possibly hidden" % day_no_comma)
+                    continue
+                day = WEEK[day_no_comma]
+                hours = opening['hours']\
+                    .replace(', Hours might differ', '').replace('(Independence Day of Ukraine), ', '')
                 if 'Closed' in hours:
                     wh_rows.append("((SELECT NEXTVAL('SEQUENCE_GENERATOR')), %s, %s, %s, %s, %s)" % (
                                                    resto_id_clause, quote(day), 'NULL', 'NULL', 'True'))
@@ -145,6 +157,7 @@ def execute(path):
                     if ',' in hours:
                         print('-- handling comma in working hours, next statement needs inspection')
                         hours = hours.split(',')[-1]
+                    # print(hours)
                     open_hour = parse_hour(hours.split('to')[0].strip())
                     close_hour = parse_hour(hours.split('to')[1].strip())
                     wh_rows.append("((SELECT NEXTVAL('SEQUENCE_GENERATOR')), %s, %s, %s, %s, %s)" % (
@@ -155,4 +168,4 @@ def execute(path):
 
 
 if __name__ == '__main__':
-    execute(sys.argv[1])
+    execute(sys.argv[1], sys.argv[2])
