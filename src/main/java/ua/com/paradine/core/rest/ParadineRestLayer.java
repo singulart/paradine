@@ -58,7 +58,7 @@ public class ParadineRestLayer implements RestaurantsApiDelegate {
     }
 
     @Override
-    public ResponseEntity<RestaurantsGetResponse> getRestaurants(String city, Integer page, String q, Float geolat, Float geolng) {
+    public ResponseEntity<RestaurantsGetResponse> getRestaurants(Integer page, String city, String q, Float geolat, Float geolng) {
         if (geolat != null && geolng == null) {
             throw Problem.valueOf(Status.BAD_REQUEST, BAD_GEOLOCATION_PARAMS);
         }
