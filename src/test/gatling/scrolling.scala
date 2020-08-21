@@ -25,34 +25,34 @@ class Scrolling extends Simulation {
 
   val scn = scenario("Scrolling Restaurants List")
    .exec(http("get page 1")
-    .get("/api/paradine/v2/restaurants"))
+    .get("/api/paradine/v2/restaurants?city=kyiv"))
 
    .exec(http("get page 2")
-    .get("/api/paradine/v2/restaurants?page=2"))
+    .get("/api/paradine/v2/restaurants?page=2&city=kyiv"))
 
    .exec(http("get page 3")
-    .get("/api/paradine/v2/restaurants?page=3"))
+    .get("/api/paradine/v2/restaurants?page=3&city=kyiv"))
 
    .exec(http("get page 4")
-    .get("/api/paradine/v2/restaurants?page=4"))
+    .get("/api/paradine/v2/restaurants?page=4&city=kyiv"))
 
    .exec(http("get page 5")
-    .get("/api/paradine/v2/restaurants?page=5"))
+    .get("/api/paradine/v2/restaurants?page=5&city=kyiv"))
 
    .exec(http("get page 6")
-    .get("/api/paradine/v2/restaurants?page=6"))
+    .get("/api/paradine/v2/restaurants?page=6&city=kyiv"))
 
    .exec(http("get page 7")
-    .get("/api/paradine/v2/restaurants?page=7"))
+    .get("/api/paradine/v2/restaurants?page=7&city=kyiv"))
 
    .exec(http("get page 8")
-    .get("/api/paradine/v2/restaurants?page=8"))
+    .get("/api/paradine/v2/restaurants?page=8&city=kyiv"))
 
    .exec(http("get page 9")
-    .get("/api/paradine/v2/restaurants?page=9"))
+    .get("/api/paradine/v2/restaurants?page=9&city=kyiv"))
 
    .exec(http("get page 10")
-    .get("/api/paradine/v2/restaurants?page=10"))
+    .get("/api/paradine/v2/restaurants?page=10&city=kyiv"))
 
 
 setUp(
