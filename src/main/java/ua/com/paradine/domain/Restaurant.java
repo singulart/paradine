@@ -95,7 +95,7 @@ public class Restaurant implements Serializable {
     @Column(name = "uuid", length = 36, nullable = false, unique = true)
     private String uuid;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private City city;
 
     @Transient
