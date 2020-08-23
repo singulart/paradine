@@ -10,8 +10,6 @@ import static ua.com.paradine.core.Nowness.getNow;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
-import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +19,6 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
@@ -44,9 +41,6 @@ public class SubmitVisitIntentionE2ETest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @MockBean
-    private  JestElasticsearchTemplate elasticsearchTemplate;
 
     private ObjectMapper mapper = new ObjectMapper()
         .registerModule(new JavaTimeModule())

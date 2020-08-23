@@ -3,7 +3,6 @@ package ua.com.paradine.service.impl;
 import ua.com.paradine.service.IntendedVisitService;
 import ua.com.paradine.domain.IntendedVisit;
 import ua.com.paradine.repository.IntendedVisitRepository;
-import ua.com.paradine.repository.search.IntendedVisitSearchRepository;
 import ua.com.paradine.service.dto.IntendedVisitDTO;
 import ua.com.paradine.service.mapper.IntendedVisitMapper;
 import org.slf4j.Logger;
@@ -15,8 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing {@link IntendedVisit}.
@@ -31,12 +28,9 @@ public class IntendedVisitServiceImpl implements IntendedVisitService {
 
     private final IntendedVisitMapper intendedVisitMapper;
 
-    private final IntendedVisitSearchRepository intendedVisitSearchRepository;
-
-    public IntendedVisitServiceImpl(IntendedVisitRepository intendedVisitRepository, IntendedVisitMapper intendedVisitMapper, IntendedVisitSearchRepository intendedVisitSearchRepository) {
+    public IntendedVisitServiceImpl(IntendedVisitRepository intendedVisitRepository, IntendedVisitMapper intendedVisitMapper) {
         this.intendedVisitRepository = intendedVisitRepository;
         this.intendedVisitMapper = intendedVisitMapper;
-        this.intendedVisitSearchRepository = intendedVisitSearchRepository;
     }
 
     /**
@@ -51,7 +45,7 @@ public class IntendedVisitServiceImpl implements IntendedVisitService {
         IntendedVisit intendedVisit = intendedVisitMapper.toEntity(intendedVisitDTO);
         intendedVisit = intendedVisitRepository.save(intendedVisit);
         IntendedVisitDTO result = intendedVisitMapper.toDto(intendedVisit);
-        intendedVisitSearchRepository.save(intendedVisit);
+//        intendedVisitSearchRepository.save(intendedVisit);
         return result;
     }
 
@@ -93,7 +87,7 @@ public class IntendedVisitServiceImpl implements IntendedVisitService {
     public void delete(Long id) {
         log.debug("Request to delete IntendedVisit : {}", id);
         intendedVisitRepository.deleteById(id);
-        intendedVisitSearchRepository.deleteById(id);
+//        intendedVisitSearchRepository.deleteById(id);
     }
 
     /**
@@ -107,7 +101,8 @@ public class IntendedVisitServiceImpl implements IntendedVisitService {
     @Transactional(readOnly = true)
     public Page<IntendedVisitDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of IntendedVisits for query {}", query);
-        return intendedVisitSearchRepository.search(queryStringQuery(query), pageable)
-            .map(intendedVisitMapper::toDto);
+//        return intendedVisitSearchRepository.search(queryStringQuery(query), pageable)
+//            .map(intendedVisitMapper::toDto);
+        return Page.empty();
     }
 }

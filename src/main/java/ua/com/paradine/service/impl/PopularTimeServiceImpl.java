@@ -3,7 +3,6 @@ package ua.com.paradine.service.impl;
 import ua.com.paradine.service.PopularTimeService;
 import ua.com.paradine.domain.PopularTime;
 import ua.com.paradine.repository.PopularTimeRepository;
-import ua.com.paradine.repository.search.PopularTimeSearchRepository;
 import ua.com.paradine.service.dto.PopularTimeDTO;
 import ua.com.paradine.service.mapper.PopularTimeMapper;
 import org.slf4j.Logger;
@@ -15,8 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing {@link PopularTime}.
@@ -31,12 +28,9 @@ public class PopularTimeServiceImpl implements PopularTimeService {
 
     private final PopularTimeMapper popularTimeMapper;
 
-    private final PopularTimeSearchRepository popularTimeSearchRepository;
-
-    public PopularTimeServiceImpl(PopularTimeRepository popularTimeRepository, PopularTimeMapper popularTimeMapper, PopularTimeSearchRepository popularTimeSearchRepository) {
+    public PopularTimeServiceImpl(PopularTimeRepository popularTimeRepository, PopularTimeMapper popularTimeMapper) {
         this.popularTimeRepository = popularTimeRepository;
         this.popularTimeMapper = popularTimeMapper;
-        this.popularTimeSearchRepository = popularTimeSearchRepository;
     }
 
     /**
@@ -51,7 +45,7 @@ public class PopularTimeServiceImpl implements PopularTimeService {
         PopularTime popularTime = popularTimeMapper.toEntity(popularTimeDTO);
         popularTime = popularTimeRepository.save(popularTime);
         PopularTimeDTO result = popularTimeMapper.toDto(popularTime);
-        popularTimeSearchRepository.save(popularTime);
+//        popularTimeSearchRepository.save(popularTime);
         return result;
     }
 
@@ -93,7 +87,7 @@ public class PopularTimeServiceImpl implements PopularTimeService {
     public void delete(Long id) {
         log.debug("Request to delete PopularTime : {}", id);
         popularTimeRepository.deleteById(id);
-        popularTimeSearchRepository.deleteById(id);
+//        popularTimeSearchRepository.deleteById(id);
     }
 
     /**
@@ -107,7 +101,8 @@ public class PopularTimeServiceImpl implements PopularTimeService {
     @Transactional(readOnly = true)
     public Page<PopularTimeDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of PopularTimes for query {}", query);
-        return popularTimeSearchRepository.search(queryStringQuery(query), pageable)
-            .map(popularTimeMapper::toDto);
+//        return popularTimeSearchRepository.search(queryStringQuery(query), pageable)
+//            .map(popularTimeMapper::toDto);
+        return Page.empty();
     }
 }

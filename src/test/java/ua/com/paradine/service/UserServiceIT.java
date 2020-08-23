@@ -4,7 +4,6 @@ import ua.com.paradine.RedisTestContainerExtension;
 import ua.com.paradine.ParadineApp;
 import ua.com.paradine.config.Constants;
 import ua.com.paradine.domain.User;
-import ua.com.paradine.repository.search.UserSearchRepository;
 import ua.com.paradine.repository.UserRepository;
 import ua.com.paradine.service.dto.UserDTO;
 
@@ -60,14 +59,6 @@ public class UserServiceIT {
 
     @Autowired
     private UserService userService;
-
-    /**
-     * This repository is mocked in the ua.com.paradine.repository.search test package.
-     *
-     * @see ua.com.paradine.repository.search.UserSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private UserSearchRepository mockUserSearchRepository;
 
     @Autowired
     private AuditingHandler auditingHandler;
@@ -185,7 +176,7 @@ public class UserServiceIT {
         assertThat(users).isEmpty();
 
         // Verify Elasticsearch mock
-        verify(mockUserSearchRepository, times(1)).delete(user);
+//        verify(mockUserSearchRepository, times(1)).delete(user);
     }
 
     @Test
@@ -205,7 +196,7 @@ public class UserServiceIT {
         assertThat(maybeDbUser).contains(dbUser);
 
         // Verify Elasticsearch mock
-        verify(mockUserSearchRepository, never()).delete(user);
+//        verify(mockUserSearchRepository, never()).delete(user);
     }
 
     @Test

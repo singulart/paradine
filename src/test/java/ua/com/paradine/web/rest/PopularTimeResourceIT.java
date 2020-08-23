@@ -1,10 +1,10 @@
 package ua.com.paradine.web.rest;
 
+import org.junit.Ignore;
 import ua.com.paradine.ParadineApp;
 import ua.com.paradine.domain.PopularTime;
 import ua.com.paradine.domain.Restaurant;
 import ua.com.paradine.repository.PopularTimeRepository;
-import ua.com.paradine.repository.search.PopularTimeSearchRepository;
 import ua.com.paradine.service.PopularTimeService;
 import ua.com.paradine.service.dto.PopularTimeDTO;
 import ua.com.paradine.service.mapper.PopularTimeMapper;
@@ -30,7 +30,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -152,14 +151,6 @@ public class PopularTimeResourceIT {
 
     @Autowired
     private PopularTimeService popularTimeService;
-
-    /**
-     * This repository is mocked in the ua.com.paradine.repository.search test package.
-     *
-     * @see ua.com.paradine.repository.search.PopularTimeSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private PopularTimeSearchRepository mockPopularTimeSearchRepository;
 
     @Autowired
     private PopularTimeQueryService popularTimeQueryService;
@@ -290,7 +281,7 @@ public class PopularTimeResourceIT {
         assertThat(testPopularTime.getOcc24()).isEqualTo(DEFAULT_OCC_24);
 
         // Validate the PopularTime in Elasticsearch
-        verify(mockPopularTimeSearchRepository, times(1)).save(testPopularTime);
+//        verify(mockPopularTimeSearchRepository, times(1)).save(testPopularTime);
     }
 
     @Test
@@ -313,7 +304,7 @@ public class PopularTimeResourceIT {
         assertThat(popularTimeList).hasSize(databaseSizeBeforeCreate);
 
         // Validate the PopularTime in Elasticsearch
-        verify(mockPopularTimeSearchRepository, times(0)).save(popularTime);
+//        verify(mockPopularTimeSearchRepository, times(0)).save(popularTime);
     }
 
 
@@ -3672,7 +3663,7 @@ public class PopularTimeResourceIT {
         assertThat(testPopularTime.getOcc24()).isEqualTo(UPDATED_OCC_24);
 
         // Validate the PopularTime in Elasticsearch
-        verify(mockPopularTimeSearchRepository, times(1)).save(testPopularTime);
+//        verify(mockPopularTimeSearchRepository, times(1)).save(testPopularTime);
     }
 
     @Test
@@ -3694,7 +3685,7 @@ public class PopularTimeResourceIT {
         assertThat(popularTimeList).hasSize(databaseSizeBeforeUpdate);
 
         // Validate the PopularTime in Elasticsearch
-        verify(mockPopularTimeSearchRepository, times(0)).save(popularTime);
+//        verify(mockPopularTimeSearchRepository, times(0)).save(popularTime);
     }
 
     @Test
@@ -3715,17 +3706,18 @@ public class PopularTimeResourceIT {
         assertThat(popularTimeList).hasSize(databaseSizeBeforeDelete - 1);
 
         // Validate the PopularTime in Elasticsearch
-        verify(mockPopularTimeSearchRepository, times(1)).deleteById(popularTime.getId());
+//        verify(mockPopularTimeSearchRepository, times(1)).deleteById(popularTime.getId());
     }
 
     @Test
     @Transactional
+    @Ignore
     public void searchPopularTime() throws Exception {
         // Configure the mock search repository
         // Initialize the database
         popularTimeRepository.saveAndFlush(popularTime);
-        when(mockPopularTimeSearchRepository.search(queryStringQuery("id:" + popularTime.getId()), PageRequest.of(0, 20)))
-            .thenReturn(new PageImpl<>(Collections.singletonList(popularTime), PageRequest.of(0, 1), 1));
+//        when(mockPopularTimeSearchRepository.search(queryStringQuery("id:" + popularTime.getId()), PageRequest.of(0, 20)))
+//            .thenReturn(new PageImpl<>(Collections.singletonList(popularTime), PageRequest.of(0, 1), 1));
 
         // Search the popularTime
         restPopularTimeMockMvc.perform(get("/api/_search/popular-times?query=id:" + popularTime.getId()))

@@ -3,7 +3,6 @@ package ua.com.paradine.service.impl;
 import ua.com.paradine.service.RestaurantService;
 import ua.com.paradine.domain.Restaurant;
 import ua.com.paradine.repository.RestaurantRepository;
-import ua.com.paradine.repository.search.RestaurantSearchRepository;
 import ua.com.paradine.service.dto.RestaurantDTO;
 import ua.com.paradine.service.mapper.RestaurantMapper;
 import org.slf4j.Logger;
@@ -15,8 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing {@link Restaurant}.
@@ -31,12 +28,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     private final RestaurantMapper restaurantMapper;
 
-    private final RestaurantSearchRepository restaurantSearchRepository;
-
-    public RestaurantServiceImpl(RestaurantRepository restaurantRepository, RestaurantMapper restaurantMapper, RestaurantSearchRepository restaurantSearchRepository) {
+    public RestaurantServiceImpl(RestaurantRepository restaurantRepository, RestaurantMapper restaurantMapper) {
         this.restaurantRepository = restaurantRepository;
         this.restaurantMapper = restaurantMapper;
-        this.restaurantSearchRepository = restaurantSearchRepository;
     }
 
     /**
@@ -51,7 +45,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         Restaurant restaurant = restaurantMapper.toEntity(restaurantDTO);
         restaurant = restaurantRepository.save(restaurant);
         RestaurantDTO result = restaurantMapper.toDto(restaurant);
-        restaurantSearchRepository.save(restaurant);
+//        restaurantSearchRepository.save(restaurant);
         return result;
     }
 
@@ -93,7 +87,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     public void delete(Long id) {
         log.debug("Request to delete Restaurant : {}", id);
         restaurantRepository.deleteById(id);
-        restaurantSearchRepository.deleteById(id);
+//        restaurantSearchRepository.deleteById(id);
     }
 
     /**
@@ -107,7 +101,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Transactional(readOnly = true)
     public Page<RestaurantDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Restaurants for query {}", query);
-        return restaurantSearchRepository.search(queryStringQuery(query), pageable)
-            .map(restaurantMapper::toDto);
+//        return restaurantSearchRepository.search(queryStringQuery(query), pageable)
+//            .map(restaurantMapper::toDto);
+        return Page.empty();
     }
 }

@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
 import java.util.Arrays;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -40,9 +39,6 @@ public class ParadineRestLayerTest {
 
     @MockBean
     ViewClassifiedRestaurantsFlow viewListFlow;
-
-    @MockBean
-    private JestElasticsearchTemplate elasticsearchTemplate;
 
     @Test
     void getRestaurants_noQueryParams_400() throws Exception {

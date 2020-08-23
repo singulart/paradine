@@ -17,7 +17,6 @@ import io.github.jhipster.service.QueryService;
 import ua.com.paradine.domain.Restaurant;
 import ua.com.paradine.domain.*; // for static metamodels
 import ua.com.paradine.repository.RestaurantRepository;
-import ua.com.paradine.repository.search.RestaurantSearchRepository;
 import ua.com.paradine.service.dto.RestaurantCriteria;
 import ua.com.paradine.service.dto.RestaurantDTO;
 import ua.com.paradine.service.mapper.RestaurantMapper;
@@ -38,12 +37,9 @@ public class RestaurantQueryService extends QueryService<Restaurant> {
 
     private final RestaurantMapper restaurantMapper;
 
-    private final RestaurantSearchRepository restaurantSearchRepository;
-
-    public RestaurantQueryService(RestaurantRepository restaurantRepository, RestaurantMapper restaurantMapper, RestaurantSearchRepository restaurantSearchRepository) {
+    public RestaurantQueryService(RestaurantRepository restaurantRepository, RestaurantMapper restaurantMapper) {
         this.restaurantRepository = restaurantRepository;
         this.restaurantMapper = restaurantMapper;
-        this.restaurantSearchRepository = restaurantSearchRepository;
     }
 
     /**

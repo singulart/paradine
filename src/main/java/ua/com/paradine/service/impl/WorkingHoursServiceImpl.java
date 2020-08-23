@@ -3,7 +3,6 @@ package ua.com.paradine.service.impl;
 import ua.com.paradine.service.WorkingHoursService;
 import ua.com.paradine.domain.WorkingHours;
 import ua.com.paradine.repository.WorkingHoursRepository;
-import ua.com.paradine.repository.search.WorkingHoursSearchRepository;
 import ua.com.paradine.service.dto.WorkingHoursDTO;
 import ua.com.paradine.service.mapper.WorkingHoursMapper;
 import org.slf4j.Logger;
@@ -15,8 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing {@link WorkingHours}.
@@ -31,12 +28,9 @@ public class WorkingHoursServiceImpl implements WorkingHoursService {
 
     private final WorkingHoursMapper workingHoursMapper;
 
-    private final WorkingHoursSearchRepository workingHoursSearchRepository;
-
-    public WorkingHoursServiceImpl(WorkingHoursRepository workingHoursRepository, WorkingHoursMapper workingHoursMapper, WorkingHoursSearchRepository workingHoursSearchRepository) {
+    public WorkingHoursServiceImpl(WorkingHoursRepository workingHoursRepository, WorkingHoursMapper workingHoursMapper) {
         this.workingHoursRepository = workingHoursRepository;
         this.workingHoursMapper = workingHoursMapper;
-        this.workingHoursSearchRepository = workingHoursSearchRepository;
     }
 
     /**
@@ -51,7 +45,7 @@ public class WorkingHoursServiceImpl implements WorkingHoursService {
         WorkingHours workingHours = workingHoursMapper.toEntity(workingHoursDTO);
         workingHours = workingHoursRepository.save(workingHours);
         WorkingHoursDTO result = workingHoursMapper.toDto(workingHours);
-        workingHoursSearchRepository.save(workingHours);
+//        workingHoursSearchRepository.save(workingHours);
         return result;
     }
 
@@ -93,7 +87,7 @@ public class WorkingHoursServiceImpl implements WorkingHoursService {
     public void delete(Long id) {
         log.debug("Request to delete WorkingHours : {}", id);
         workingHoursRepository.deleteById(id);
-        workingHoursSearchRepository.deleteById(id);
+//        workingHoursSearchRepository.deleteById(id);
     }
 
     /**
@@ -107,7 +101,8 @@ public class WorkingHoursServiceImpl implements WorkingHoursService {
     @Transactional(readOnly = true)
     public Page<WorkingHoursDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of WorkingHours for query {}", query);
-        return workingHoursSearchRepository.search(queryStringQuery(query), pageable)
-            .map(workingHoursMapper::toDto);
+//        return workingHoursSearchRepository.search(queryStringQuery(query), pageable)
+//            .map(workingHoursMapper::toDto);
+        return Page.empty();
     }
 }

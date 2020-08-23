@@ -1,9 +1,9 @@
 package ua.com.paradine.web.rest;
 
 import ua.com.paradine.config.Constants;
+import ua.com.paradine.core.dao.search.UserSearchRepository;
 import ua.com.paradine.domain.User;
 import ua.com.paradine.repository.UserRepository;
-import ua.com.paradine.repository.search.UserSearchRepository;
 import ua.com.paradine.security.AuthoritiesConstants;
 import ua.com.paradine.service.MailService;
 import ua.com.paradine.service.UserService;
@@ -34,8 +34,6 @@ import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing users.
@@ -203,8 +201,9 @@ public class UserResource {
      */
     @GetMapping("/_search/users/{query}")
     public List<User> search(@PathVariable String query) {
-        return StreamSupport
-            .stream(userSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        return Collections.emptyList(); // TODO FIXME
+//        return StreamSupport
+//            .stream(userSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .collect(Collectors.toList());
     }
 }

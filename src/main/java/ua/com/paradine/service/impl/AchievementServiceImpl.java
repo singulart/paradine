@@ -1,9 +1,9 @@
 package ua.com.paradine.service.impl;
 
+import java.util.Collections;
 import ua.com.paradine.service.AchievementService;
 import ua.com.paradine.domain.Achievement;
 import ua.com.paradine.repository.AchievementRepository;
-import ua.com.paradine.repository.search.AchievementSearchRepository;
 import ua.com.paradine.service.dto.AchievementDTO;
 import ua.com.paradine.service.mapper.AchievementMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing {@link Achievement}.
@@ -33,12 +32,9 @@ public class AchievementServiceImpl implements AchievementService {
 
     private final AchievementMapper achievementMapper;
 
-    private final AchievementSearchRepository achievementSearchRepository;
-
-    public AchievementServiceImpl(AchievementRepository achievementRepository, AchievementMapper achievementMapper, AchievementSearchRepository achievementSearchRepository) {
+    public AchievementServiceImpl(AchievementRepository achievementRepository, AchievementMapper achievementMapper) {
         this.achievementRepository = achievementRepository;
         this.achievementMapper = achievementMapper;
-        this.achievementSearchRepository = achievementSearchRepository;
     }
 
     /**
@@ -53,7 +49,7 @@ public class AchievementServiceImpl implements AchievementService {
         Achievement achievement = achievementMapper.toEntity(achievementDTO);
         achievement = achievementRepository.save(achievement);
         AchievementDTO result = achievementMapper.toDto(achievement);
-        achievementSearchRepository.save(achievement);
+//        achievementSearchRepository.save(achievement);
         return result;
     }
 
@@ -95,7 +91,7 @@ public class AchievementServiceImpl implements AchievementService {
     public void delete(Long id) {
         log.debug("Request to delete Achievement : {}", id);
         achievementRepository.deleteById(id);
-        achievementSearchRepository.deleteById(id);
+//        achievementSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +104,10 @@ public class AchievementServiceImpl implements AchievementService {
     @Transactional(readOnly = true)
     public List<AchievementDTO> search(String query) {
         log.debug("Request to search Achievements for query {}", query);
-        return StreamSupport
-            .stream(achievementSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(achievementMapper::toDto)
-        .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(achievementSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(achievementMapper::toDto)
+//        .collect(Collectors.toList());
+        return Collections.emptyList();
     }
 }

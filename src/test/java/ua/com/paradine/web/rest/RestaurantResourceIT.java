@@ -1,10 +1,10 @@
 package ua.com.paradine.web.rest;
 
+import org.junit.Ignore;
 import ua.com.paradine.ParadineApp;
 import ua.com.paradine.domain.Restaurant;
 import ua.com.paradine.domain.City;
 import ua.com.paradine.repository.RestaurantRepository;
-import ua.com.paradine.repository.search.RestaurantSearchRepository;
 import ua.com.paradine.service.RestaurantService;
 import ua.com.paradine.service.dto.RestaurantDTO;
 import ua.com.paradine.service.mapper.RestaurantMapper;
@@ -35,7 +35,6 @@ import java.util.List;
 
 import static ua.com.paradine.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -108,14 +107,6 @@ public class RestaurantResourceIT {
 
     @Autowired
     private RestaurantService restaurantService;
-
-    /**
-     * This repository is mocked in the ua.com.paradine.repository.search test package.
-     *
-     * @see ua.com.paradine.repository.search.RestaurantSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private RestaurantSearchRepository mockRestaurantSearchRepository;
 
     @Autowired
     private RestaurantQueryService restaurantQueryService;
@@ -216,7 +207,7 @@ public class RestaurantResourceIT {
         assertThat(testRestaurant.getUuid()).isEqualTo(DEFAULT_UUID);
 
         // Validate the Restaurant in Elasticsearch
-        verify(mockRestaurantSearchRepository, times(1)).save(testRestaurant);
+//        verify(mockRestaurantSearchRepository, times(1)).save(testRestaurant);
     }
 
     @Test
@@ -239,7 +230,7 @@ public class RestaurantResourceIT {
         assertThat(restaurantList).hasSize(databaseSizeBeforeCreate);
 
         // Validate the Restaurant in Elasticsearch
-        verify(mockRestaurantSearchRepository, times(0)).save(restaurant);
+//        verify(mockRestaurantSearchRepository, times(0)).save(restaurant);
     }
 
 
@@ -1935,7 +1926,7 @@ public class RestaurantResourceIT {
         assertThat(testRestaurant.getUuid()).isEqualTo(UPDATED_UUID);
 
         // Validate the Restaurant in Elasticsearch
-        verify(mockRestaurantSearchRepository, times(1)).save(testRestaurant);
+//        verify(mockRestaurantSearchRepository, times(1)).save(testRestaurant);
     }
 
     @Test
@@ -1957,7 +1948,7 @@ public class RestaurantResourceIT {
         assertThat(restaurantList).hasSize(databaseSizeBeforeUpdate);
 
         // Validate the Restaurant in Elasticsearch
-        verify(mockRestaurantSearchRepository, times(0)).save(restaurant);
+//        verify(mockRestaurantSearchRepository, times(0)).save(restaurant);
     }
 
     @Test
@@ -1978,17 +1969,18 @@ public class RestaurantResourceIT {
         assertThat(restaurantList).hasSize(databaseSizeBeforeDelete - 1);
 
         // Validate the Restaurant in Elasticsearch
-        verify(mockRestaurantSearchRepository, times(1)).deleteById(restaurant.getId());
+//        verify(mockRestaurantSearchRepository, times(1)).deleteById(restaurant.getId());
     }
 
     @Test
     @Transactional
+    @Ignore
     public void searchRestaurant() throws Exception {
         // Configure the mock search repository
         // Initialize the database
         restaurantRepository.saveAndFlush(restaurant);
-        when(mockRestaurantSearchRepository.search(queryStringQuery("id:" + restaurant.getId()), PageRequest.of(0, 20)))
-            .thenReturn(new PageImpl<>(Collections.singletonList(restaurant), PageRequest.of(0, 1), 1));
+//        when(mockRestaurantSearchRepository.search(queryStringQuery("id:" + restaurant.getId()), PageRequest.of(0, 20)))
+//            .thenReturn(new PageImpl<>(Collections.singletonList(restaurant), PageRequest.of(0, 1), 1));
 
         // Search the restaurant
         restRestaurantMockMvc.perform(get("/api/_search/restaurants?query=id:" + restaurant.getId()))

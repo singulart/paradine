@@ -1,18 +1,15 @@
 package ua.com.paradine.web.rest;
 
-import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import ua.com.paradine.ParadineApp;
 import ua.com.paradine.domain.WorkingHours;
 import ua.com.paradine.repository.WorkingHoursRepository;
-import ua.com.paradine.repository.search.WorkingHoursSearchRepository;
 import ua.com.paradine.service.WorkingHoursService;
 import ua.com.paradine.service.dto.WorkingHoursDTO;
 import ua.com.paradine.service.mapper.WorkingHoursMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +26,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -61,20 +57,6 @@ public class WorkingHoursResourceIT {
 
     @Autowired
     private WorkingHoursMapper workingHoursMapper;
-
-    @Autowired
-    private WorkingHoursService workingHoursService;
-
-    @MockBean
-    private JestElasticsearchTemplate jestElasticsearchTemplate;
-
-    /**
-     * This repository is mocked in the ua.com.paradine.repository.search test package.
-     *
-     * @see ua.com.paradine.repository.search.WorkingHoursSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private WorkingHoursSearchRepository mockWorkingHoursSearchRepository;
 
     @Autowired
     private EntityManager em;
@@ -139,7 +121,7 @@ public class WorkingHoursResourceIT {
         assertThat(testWorkingHours.getClosingHour()).isEqualTo(DEFAULT_CLOSING_HOUR);
 
         // Validate the WorkingHours in Elasticsearch
-        verify(mockWorkingHoursSearchRepository, times(1)).save(testWorkingHours);
+//        verify(mockWorkingHoursSearchRepository, times(1)).save(testWorkingHours);
     }
 
     @Test
@@ -162,7 +144,7 @@ public class WorkingHoursResourceIT {
         assertThat(workingHoursList).hasSize(databaseSizeBeforeCreate);
 
         // Validate the WorkingHours in Elasticsearch
-        verify(mockWorkingHoursSearchRepository, times(0)).save(workingHours);
+//        verify(mockWorkingHoursSearchRepository, times(0)).save(workingHours);
     }
 
 
@@ -281,7 +263,7 @@ public class WorkingHoursResourceIT {
         assertThat(testWorkingHours.getClosingHour()).isEqualTo(UPDATED_CLOSING_HOUR);
 
         // Validate the WorkingHours in Elasticsearch
-        verify(mockWorkingHoursSearchRepository, times(1)).save(testWorkingHours);
+//        verify(mockWorkingHoursSearchRepository, times(1)).save(testWorkingHours);
     }
 
     @Test
@@ -303,7 +285,7 @@ public class WorkingHoursResourceIT {
         assertThat(workingHoursList).hasSize(databaseSizeBeforeUpdate);
 
         // Validate the WorkingHours in Elasticsearch
-        verify(mockWorkingHoursSearchRepository, times(0)).save(workingHours);
+//        verify(mockWorkingHoursSearchRepository, times(0)).save(workingHours);
     }
 
     @Test
@@ -324,7 +306,7 @@ public class WorkingHoursResourceIT {
         assertThat(workingHoursList).hasSize(databaseSizeBeforeDelete - 1);
 
         // Validate the WorkingHours in Elasticsearch
-        verify(mockWorkingHoursSearchRepository, times(1)).deleteById(workingHours.getId());
+//        verify(mockWorkingHoursSearchRepository, times(1)).deleteById(workingHours.getId());
     }
 
     @Test
@@ -333,8 +315,8 @@ public class WorkingHoursResourceIT {
         // Configure the mock search repository
         // Initialize the database
         workingHoursRepository.saveAndFlush(workingHours);
-        when(mockWorkingHoursSearchRepository.search(queryStringQuery("id:" + workingHours.getId()), PageRequest.of(0, 20)))
-            .thenReturn(new PageImpl<>(Collections.singletonList(workingHours), PageRequest.of(0, 1), 1));
+//        when(mockWorkingHoursSearchRepository.search(queryStringQuery("id:" + workingHours.getId()), PageRequest.of(0, 20)))
+//            .thenReturn(new PageImpl<>(Collections.singletonList(workingHours), PageRequest.of(0, 1), 1));
 
         // Search the workingHours
         restWorkingHoursMockMvc.perform(get("/api/_search/working-hours?query=id:" + workingHours.getId()))

@@ -17,7 +17,6 @@ import io.github.jhipster.service.QueryService;
 import ua.com.paradine.domain.PopularTime;
 import ua.com.paradine.domain.*; // for static metamodels
 import ua.com.paradine.repository.PopularTimeRepository;
-import ua.com.paradine.repository.search.PopularTimeSearchRepository;
 import ua.com.paradine.service.dto.PopularTimeCriteria;
 import ua.com.paradine.service.dto.PopularTimeDTO;
 import ua.com.paradine.service.mapper.PopularTimeMapper;
@@ -38,12 +37,9 @@ public class PopularTimeQueryService extends QueryService<PopularTime> {
 
     private final PopularTimeMapper popularTimeMapper;
 
-    private final PopularTimeSearchRepository popularTimeSearchRepository;
-
-    public PopularTimeQueryService(PopularTimeRepository popularTimeRepository, PopularTimeMapper popularTimeMapper, PopularTimeSearchRepository popularTimeSearchRepository) {
+    public PopularTimeQueryService(PopularTimeRepository popularTimeRepository, PopularTimeMapper popularTimeMapper) {
         this.popularTimeRepository = popularTimeRepository;
         this.popularTimeMapper = popularTimeMapper;
-        this.popularTimeSearchRepository = popularTimeSearchRepository;
     }
 
     /**

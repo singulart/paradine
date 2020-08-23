@@ -1,6 +1,5 @@
 package ua.com.paradine.web.rest;
 
-import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import ua.com.paradine.RedisTestContainerExtension;
 import ua.com.paradine.ParadineApp;
@@ -42,9 +41,6 @@ public class UserJWTControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @MockBean
-    private JestElasticsearchTemplate jestElasticsearchTemplate;
 
     @Test
     @Transactional

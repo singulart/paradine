@@ -8,9 +8,13 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Latitude;
+import org.hibernate.search.annotations.Longitude;
+import org.hibernate.search.annotations.Spatial;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import org.springframework.stereotype.Indexed;
 
 /**
  * A Restaurant.
@@ -18,7 +22,8 @@ import java.time.ZonedDateTime;
 @Entity
 @Table(name = "restaurant")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "restaurant")
+@Indexed
+@Spatial
 public class Restaurant implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,23 +36,28 @@ public class Restaurant implements Serializable {
     @NotNull
     @Size(min = 3, max = 128)
     @Column(name = "name", length = 128, nullable = false)
+    @Field
     private String name;
 
     @Size(max = 128)
     @Column(name = "alt_name_1", length = 128)
+    @Field
     private String altName1;
 
     @NotNull
     @Size(max = 200)
     @Column(name = "address_en", length = 200, nullable = false)
+    @Field
     private String addressEn;
 
     @Size(max = 200)
     @Column(name = "address_ru", length = 200)
+    @Field
     private String addressRu;
 
     @Size(max = 200)
     @Column(name = "address_ua", length = 200)
+    @Field
     private String addressUa;
 
     @Size(max = 255)
@@ -56,10 +66,12 @@ public class Restaurant implements Serializable {
 
     @NotNull
     @Column(name = "geolat", nullable = false)
+    @Latitude
     private Float geolat;
 
     @NotNull
     @Column(name = "geolng", nullable = false)
+    @Longitude
     private Float geolng;
 
     @NotNull
@@ -70,10 +82,12 @@ public class Restaurant implements Serializable {
 
     @Size(max = 128)
     @Column(name = "alt_name_2", length = 128)
+    @Field
     private String altName2;
 
     @Size(max = 128)
     @Column(name = "alt_name_3", length = 128)
+    @Field
     private String altName3;
 
     @NotNull

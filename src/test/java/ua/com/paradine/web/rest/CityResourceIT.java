@@ -1,16 +1,24 @@
 package ua.com.paradine.web.rest;
 
-import ua.com.paradine.ParadineApp;
-import ua.com.paradine.domain.City;
-import ua.com.paradine.repository.CityRepository;
-import ua.com.paradine.repository.search.CitySearchRepository;
-import ua.com.paradine.service.CityService;
-import ua.com.paradine.service.dto.CityDTO;
-import ua.com.paradine.service.mapper.CityMapper;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Collections;
+import java.util.List;
+import javax.persistence.EntityManager;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +28,12 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import ua.com.paradine.ParadineApp;
+import ua.com.paradine.domain.City;
+import ua.com.paradine.repository.CityRepository;
+import ua.com.paradine.service.CityService;
+import ua.com.paradine.service.dto.CityDTO;
+import ua.com.paradine.service.mapper.CityMapper;
 
 /**
  * Integration tests for the {@link CityResource} REST controller.
@@ -57,14 +61,6 @@ public class CityResourceIT {
 
     @Autowired
     private CityService cityService;
-
-    /**
-     * This repository is mocked in the ua.com.paradine.repository.search test package.
-     *
-     * @see ua.com.paradine.repository.search.CitySearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private CitySearchRepository mockCitySearchRepository;
 
     @Autowired
     private EntityManager em;
@@ -126,7 +122,7 @@ public class CityResourceIT {
         assertThat(testCity.getImage()).isEqualTo(DEFAULT_IMAGE);
 
         // Validate the City in Elasticsearch
-        verify(mockCitySearchRepository, times(1)).save(testCity);
+//        verify(mockCitySearchRepository, times(1)).save(testCity);
     }
 
     @Test
@@ -149,7 +145,7 @@ public class CityResourceIT {
         assertThat(cityList).hasSize(databaseSizeBeforeCreate);
 
         // Validate the City in Elasticsearch
-        verify(mockCitySearchRepository, times(0)).save(city);
+//        verify(mockCitySearchRepository, times(0)).save(city);
     }
 
 
@@ -284,7 +280,7 @@ public class CityResourceIT {
         assertThat(testCity.getImage()).isEqualTo(UPDATED_IMAGE);
 
         // Validate the City in Elasticsearch
-        verify(mockCitySearchRepository, times(1)).save(testCity);
+//        verify(mockCitySearchRepository, times(1)).save(testCity);
     }
 
     @Test
@@ -306,7 +302,7 @@ public class CityResourceIT {
         assertThat(cityList).hasSize(databaseSizeBeforeUpdate);
 
         // Validate the City in Elasticsearch
-        verify(mockCitySearchRepository, times(0)).save(city);
+//        verify(mockCitySearchRepository, times(0)).save(city);
     }
 
     @Test
@@ -327,17 +323,18 @@ public class CityResourceIT {
         assertThat(cityList).hasSize(databaseSizeBeforeDelete - 1);
 
         // Validate the City in Elasticsearch
-        verify(mockCitySearchRepository, times(1)).deleteById(city.getId());
+//        verify(mockCitySearchRepository, times(1)).deleteById(city.getId());
     }
 
     @Test
     @Transactional
+    @Ignore
     public void searchCity() throws Exception {
         // Configure the mock search repository
         // Initialize the database
         cityRepository.saveAndFlush(city);
-        when(mockCitySearchRepository.search(queryStringQuery("id:" + city.getId())))
-            .thenReturn(Collections.singletonList(city));
+//        when(mockCitySearchRepository.search(queryStringQuery("id:" + city.getId())))
+//            .thenReturn(Collections.singletonList(city));
 
         // Search the city
         restCityMockMvc.perform(get("/api/_search/cities?query=id:" + city.getId()))

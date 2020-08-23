@@ -17,7 +17,6 @@ import io.github.jhipster.service.QueryService;
 import ua.com.paradine.domain.Achievement;
 import ua.com.paradine.domain.*; // for static metamodels
 import ua.com.paradine.repository.AchievementRepository;
-import ua.com.paradine.repository.search.AchievementSearchRepository;
 import ua.com.paradine.service.dto.AchievementCriteria;
 import ua.com.paradine.service.dto.AchievementDTO;
 import ua.com.paradine.service.mapper.AchievementMapper;
@@ -38,12 +37,9 @@ public class AchievementQueryService extends QueryService<Achievement> {
 
     private final AchievementMapper achievementMapper;
 
-    private final AchievementSearchRepository achievementSearchRepository;
-
-    public AchievementQueryService(AchievementRepository achievementRepository, AchievementMapper achievementMapper, AchievementSearchRepository achievementSearchRepository) {
+    public AchievementQueryService(AchievementRepository achievementRepository, AchievementMapper achievementMapper) {
         this.achievementRepository = achievementRepository;
         this.achievementMapper = achievementMapper;
-        this.achievementSearchRepository = achievementSearchRepository;
     }
 
     /**

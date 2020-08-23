@@ -17,7 +17,6 @@ import io.github.jhipster.service.QueryService;
 import ua.com.paradine.domain.IntendedVisit;
 import ua.com.paradine.domain.*; // for static metamodels
 import ua.com.paradine.repository.IntendedVisitRepository;
-import ua.com.paradine.repository.search.IntendedVisitSearchRepository;
 import ua.com.paradine.service.dto.IntendedVisitCriteria;
 import ua.com.paradine.service.dto.IntendedVisitDTO;
 import ua.com.paradine.service.mapper.IntendedVisitMapper;
@@ -38,12 +37,9 @@ public class IntendedVisitQueryService extends QueryService<IntendedVisit> {
 
     private final IntendedVisitMapper intendedVisitMapper;
 
-    private final IntendedVisitSearchRepository intendedVisitSearchRepository;
-
-    public IntendedVisitQueryService(IntendedVisitRepository intendedVisitRepository, IntendedVisitMapper intendedVisitMapper, IntendedVisitSearchRepository intendedVisitSearchRepository) {
+    public IntendedVisitQueryService(IntendedVisitRepository intendedVisitRepository, IntendedVisitMapper intendedVisitMapper) {
         this.intendedVisitRepository = intendedVisitRepository;
         this.intendedVisitMapper = intendedVisitMapper;
-        this.intendedVisitSearchRepository = intendedVisitSearchRepository;
     }
 
     /**

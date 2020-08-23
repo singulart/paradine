@@ -1,22 +1,19 @@
 package ua.com.paradine.web.rest;
 
-import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
+import org.junit.Ignore;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import ua.com.paradine.ParadineApp;
 import ua.com.paradine.domain.IntendedVisit;
 import ua.com.paradine.domain.User;
 import ua.com.paradine.domain.Restaurant;
 import ua.com.paradine.repository.IntendedVisitRepository;
-import ua.com.paradine.repository.search.IntendedVisitSearchRepository;
 import ua.com.paradine.service.IntendedVisitService;
 import ua.com.paradine.service.dto.IntendedVisitDTO;
 import ua.com.paradine.service.mapper.IntendedVisitMapper;
-import ua.com.paradine.service.dto.IntendedVisitCriteria;
 import ua.com.paradine.service.IntendedVisitQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +35,6 @@ import java.util.List;
 
 import static ua.com.paradine.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -75,17 +71,6 @@ public class IntendedVisitResourceIT {
 
     @Autowired
     private IntendedVisitService intendedVisitService;
-
-    @MockBean
-    private JestElasticsearchTemplate jestElasticsearchTemplate;
-
-    /**
-     * This repository is mocked in the ua.com.paradine.repository.search test package.
-     *
-     * @see ua.com.paradine.repository.search.IntendedVisitSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private IntendedVisitSearchRepository mockIntendedVisitSearchRepository;
 
     @Autowired
     private IntendedVisitQueryService intendedVisitQueryService;
@@ -183,7 +168,7 @@ public class IntendedVisitResourceIT {
         assertThat(testIntendedVisit.isCancelled()).isEqualTo(DEFAULT_CANCELLED);
 
         // Validate the IntendedVisit in Elasticsearch
-        verify(mockIntendedVisitSearchRepository, times(1)).save(testIntendedVisit);
+//        verify(mockIntendedVisitSearchRepository, times(1)).save(testIntendedVisit);
     }
 
     @Test
@@ -206,7 +191,7 @@ public class IntendedVisitResourceIT {
         assertThat(intendedVisitList).hasSize(databaseSizeBeforeCreate);
 
         // Validate the IntendedVisit in Elasticsearch
-        verify(mockIntendedVisitSearchRepository, times(0)).save(intendedVisit);
+//        verify(mockIntendedVisitSearchRepository, times(0)).save(intendedVisit);
     }
 
 
@@ -794,7 +779,7 @@ public class IntendedVisitResourceIT {
         assertThat(testIntendedVisit.isCancelled()).isEqualTo(UPDATED_CANCELLED);
 
         // Validate the IntendedVisit in Elasticsearch
-        verify(mockIntendedVisitSearchRepository, times(1)).save(testIntendedVisit);
+//        verify(mockIntendedVisitSearchRepository, times(1)).save(testIntendedVisit);
     }
 
     @Test
@@ -816,7 +801,7 @@ public class IntendedVisitResourceIT {
         assertThat(intendedVisitList).hasSize(databaseSizeBeforeUpdate);
 
         // Validate the IntendedVisit in Elasticsearch
-        verify(mockIntendedVisitSearchRepository, times(0)).save(intendedVisit);
+//        verify(mockIntendedVisitSearchRepository, times(0)).save(intendedVisit);
     }
 
     @Test
@@ -837,17 +822,18 @@ public class IntendedVisitResourceIT {
         assertThat(intendedVisitList).hasSize(databaseSizeBeforeDelete - 1);
 
         // Validate the IntendedVisit in Elasticsearch
-        verify(mockIntendedVisitSearchRepository, times(1)).deleteById(intendedVisit.getId());
+//        verify(mockIntendedVisitSearchRepository, times(1)).deleteById(intendedVisit.getId());
     }
 
     @Test
     @Transactional
+    @Ignore
     public void searchIntendedVisit() throws Exception {
         // Configure the mock search repository
         // Initialize the database
         intendedVisitRepository.saveAndFlush(intendedVisit);
-        when(mockIntendedVisitSearchRepository.search(queryStringQuery("id:" + intendedVisit.getId()), PageRequest.of(0, 20)))
-            .thenReturn(new PageImpl<>(Collections.singletonList(intendedVisit), PageRequest.of(0, 1), 1));
+//        when(mockIntendedVisitSearchRepository.search(queryStringQuery("id:" + intendedVisit.getId()), PageRequest.of(0, 20)))
+//            .thenReturn(new PageImpl<>(Collections.singletonList(intendedVisit), PageRequest.of(0, 1), 1));
 
         // Search the intendedVisit
         restIntendedVisitMockMvc.perform(get("/api/_search/intended-visits?query=id:" + intendedVisit.getId()))

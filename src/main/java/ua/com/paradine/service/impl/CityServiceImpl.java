@@ -3,7 +3,6 @@ package ua.com.paradine.service.impl;
 import ua.com.paradine.service.CityService;
 import ua.com.paradine.domain.City;
 import ua.com.paradine.repository.CityRepository;
-import ua.com.paradine.repository.search.CitySearchRepository;
 import ua.com.paradine.service.dto.CityDTO;
 import ua.com.paradine.service.mapper.CityMapper;
 import org.slf4j.Logger;
@@ -18,8 +17,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
-
 /**
  * Service Implementation for managing {@link City}.
  */
@@ -33,12 +30,9 @@ public class CityServiceImpl implements CityService {
 
     private final CityMapper cityMapper;
 
-    private final CitySearchRepository citySearchRepository;
-
-    public CityServiceImpl(CityRepository cityRepository, CityMapper cityMapper, CitySearchRepository citySearchRepository) {
+    public CityServiceImpl(CityRepository cityRepository, CityMapper cityMapper) {
         this.cityRepository = cityRepository;
         this.cityMapper = cityMapper;
-        this.citySearchRepository = citySearchRepository;
     }
 
     /**
@@ -53,7 +47,6 @@ public class CityServiceImpl implements CityService {
         City city = cityMapper.toEntity(cityDTO);
         city = cityRepository.save(city);
         CityDTO result = cityMapper.toDto(city);
-        citySearchRepository.save(city);
         return result;
     }
 
@@ -95,7 +88,6 @@ public class CityServiceImpl implements CityService {
     public void delete(Long id) {
         log.debug("Request to delete City : {}", id);
         cityRepository.deleteById(id);
-        citySearchRepository.deleteById(id);
     }
 
     /**
@@ -107,10 +99,6 @@ public class CityServiceImpl implements CityService {
     @Override
     @Transactional(readOnly = true)
     public List<CityDTO> search(String query) {
-        log.debug("Request to search Cities for query {}", query);
-        return StreamSupport
-            .stream(citySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(cityMapper::toDto)
-        .collect(Collectors.toList());
+        return cityMapper.toDto(cityRepository.findAll());
     }
 }
