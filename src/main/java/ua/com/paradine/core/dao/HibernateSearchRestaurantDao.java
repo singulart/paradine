@@ -50,11 +50,14 @@ public class HibernateSearchRestaurantDao extends RestaurantRelationsBuilder {
             .get();
 
         final BooleanJunction<? extends BooleanJunction>[] combinedQuery = new BooleanJunction[]{restaurantQB.bool()};
-        TermTermination cityTerm = restaurantQB
-            .keyword()
-            .onFields("city.slug")
-            .matching(searchCriteria.getCitySlug());
-        combinedQuery[0] = combinedQuery[0].must(cityTerm.createQuery());
+
+        ofNullable(searchCriteria.getCitySlug()).ifPresent((city) -> {
+            TermTermination cityTerm = restaurantQB
+                .keyword()
+                .onFields("city.slug")
+                .matching(searchCriteria.getCitySlug());
+            combinedQuery[0] = combinedQuery[0].must(cityTerm.createQuery());
+        });
 
         Optional<Double> lat = ofNullable(searchCriteria.getLat());
         Optional<Double> lng = ofNullable(searchCriteria.getLng());

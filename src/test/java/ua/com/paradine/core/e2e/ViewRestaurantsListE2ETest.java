@@ -1,5 +1,6 @@
 package ua.com.paradine.core.e2e;
 
+import static java.lang.String.format;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,5 +97,22 @@ public class ViewRestaurantsListE2ETest extends SearchIndexTest {
         .andExpect(header().string("X-Total-Count", "1"))
         .andExpect(jsonPath("$.restaurants[0].id")
             .value(expectedUid));
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        {"50.424,30.51,Musafir",
+        "50.424,30.51,Turkish House Lounge Grill",
+        "50.42459,30.51967,Star Burger",
+        "50.439,30.53,Oxota Na Ovets"}
+    )
+    public void testGeolocationSearch(String lat, String lng, String expectedName) throws Exception {
+
+        mockMvc.perform(get("/api/paradine/v2/restaurants")
+            .queryParam("lat", lat)
+            .queryParam("lng", lng)
+        )
+        .andExpect(status().isOk())
+        .andExpect(jsonPath(format("$.restaurants[?(@.name=='%s')]", expectedName)).exists());
     }
 }
