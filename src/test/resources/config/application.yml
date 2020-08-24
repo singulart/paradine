@@ -52,8 +52,7 @@ spring:
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
     properties:
       hibernate.search.lucene_version: latest
-      hibernate.search.default.directory_provider: local-heap
-      hibernate.search.default.indexBase: ./target/paradine-lucene-test/indexes/
+      hibernate.search.default.directory_provider: local-heap # As suggested in https://stackoverflow.com/a/49253316
       hibernate.format_sql: true
       hibernate.id.new_generator_mappings: true
       hibernate.connection.provider_disables_autocommit: true
