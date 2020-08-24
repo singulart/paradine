@@ -9,6 +9,11 @@
       "name": "paradine.page.size",
       "type": "java.lang.Integer",
       "description": "Number of restaurants to fetch in a single API call."
+    },
+    {
+      "name": "paradine.geolocation.radius.km",
+      "type": "java.lang.Double",
+      "description": "Distance (in kilometres) used in geolocation search."
     }
   ]
 }

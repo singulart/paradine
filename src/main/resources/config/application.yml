@@ -19,6 +19,9 @@ paradine:
     version: 2.0
   page:
     size: 10
+  geolocation:
+    radius:
+      km: 3.0
 management:
   endpoints:
     web:

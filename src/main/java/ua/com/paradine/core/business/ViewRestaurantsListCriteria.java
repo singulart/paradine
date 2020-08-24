@@ -1,11 +1,13 @@
 package ua.com.paradine.core.business;
 
+import static java.util.Optional.ofNullable;
+
 public class ViewRestaurantsListCriteria {
 
     private String query;
     private String citySlug;
-    private Float lat;
-    private Float lng;
+    private Double lat;
+    private Double lng;
     private Integer page;
 
     private ViewRestaurantsListCriteria() {}
@@ -18,11 +20,11 @@ public class ViewRestaurantsListCriteria {
         return citySlug;
     }
 
-    public Float getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public Float getLng() {
+    public Double getLng() {
         return lng;
     }
 
@@ -34,8 +36,8 @@ public class ViewRestaurantsListCriteria {
 
         private String query;
         private String citySlug;
-        private Float lat;
-        private Float lng;
+        private Double lat;
+        private Double lng;
         private Integer page;
 
         private Builder() {
@@ -51,7 +53,7 @@ public class ViewRestaurantsListCriteria {
         }
 
         public Builder withQuery(String query) {
-            this.query = query;
+            ofNullable(query).ifPresent((q) -> this.query = q);
             return this;
         }
 
@@ -61,12 +63,12 @@ public class ViewRestaurantsListCriteria {
         }
 
         public Builder withLat(Float lat) {
-            this.lat = lat;
+            ofNullable(lat).ifPresent((l) -> this.lat = l.doubleValue());
             return this;
         }
 
         public Builder withLng(Float lng) {
-            this.lng = lng;
+            ofNullable(lng).ifPresent((l) -> this.lng = l.doubleValue());
             return this;
         }
 

@@ -1,5 +1,6 @@
 package ua.com.paradine.core.rest;
 
+import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.util.StringUtils.isEmpty;
 import static ua.com.paradine.core.Errors.BAD_GEOLOCATION_PARAMS;
