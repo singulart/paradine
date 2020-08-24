@@ -47,7 +47,7 @@
         <!-- The hibernate version should match the one managed by
         https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
         <hibernate.version>5.4.15.Final</hibernate.version>
-        <hibernate-search.version>5.4.0.Final</hibernate-search.version>
+        <hibernate-search.version>5.11.5.Final</hibernate-search.version>
         <!-- The javassist version should match the one managed by
         https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
         <javassist.version>3.24.0-GA</javassist.version>
@@ -190,6 +190,11 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-spatial</artifactId>
             <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-orm</artifactId>
+            <version>${hibernate-search.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
