@@ -77,6 +77,7 @@ spring:
     open-in-view: false
     properties:
       hibernate.search.lucene_version: latest
+      hibernate.search.indexing_strategy: manual
       hibernate.search.default.directory_provider: filesystem
       hibernate.search.default.indexBase: ./target/paradine-lucene/indexes/
       hibernate.jdbc.time_zone: UTC

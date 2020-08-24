@@ -8,6 +8,7 @@
     <property name="now" value="current_timestamp" dbms="postgresql"/>
 
     <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="doubleType" value="double" dbms="postgresql, h2"/>
     <property name="floatType" value="float" dbms="mysql, oracle, mssql, mariadb"/>
     <property name="clobType" value="longvarchar" dbms="h2"/>
     <property name="clobType" value="clob" dbms="mysql, oracle, mssql, mariadb, postgresql"/>
@@ -28,6 +29,7 @@
     <include file="config/liquibase/changelog/20200707072602_added_entity_constraints_IntendedVisit.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200618175046_added_entity_constraints_Restaurant.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/add_indices.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/alter_geoloc_datatype.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

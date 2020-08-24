@@ -1,34 +1,31 @@
-package ua.com.paradine.core.dao.search;
+package ua.com.paradine.core.e2e;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import org.hibernate.search.batchindexing.impl.SimpleIndexingProgressMonitor;
 import org.hibernate.search.jpa.FullTextEntityManager;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
+import ua.com.paradine.domain.Restaurant;
 
-@Component
+//TODO this class was added because ua.com.paradine.core.dao.search.HibernateSearchIndexer
+// did not index data ingested with @Sql
 @Transactional
-public class HibernateSearchIndexer implements ApplicationListener<ApplicationReadyEvent> {
+public class SearchIndexTest {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Override
-    public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
+    public void rebuildIndex() {
         FullTextEntityManager fullTextEntityManager =
             org.hibernate.search.jpa.Search.getFullTextEntityManager(entityManager);
         try {
             fullTextEntityManager
-                .createIndexer()
+                .createIndexer(Restaurant.class)
                 .batchSizeToLoadObjects(100)
-                .threadsToLoadObjects(12)
-                .progressMonitor(new SimpleIndexingProgressMonitor())
                 .startAndWait();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
 }

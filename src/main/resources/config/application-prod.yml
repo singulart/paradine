@@ -53,11 +53,6 @@ spring:
     database-platform: io.github.jhipster.domain.util.FixedPostgreSQL10Dialect
     show-sql: false
     properties: hibernate.format_sql=true
-  data:
-    elasticsearch:
-      properties:
-        path:
-          home: target/elasticsearch
   #    jest:
   #      uri: http://localhost:9200
   # see https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-nosql.html#boot-features-connecting-to-elasticsearch-jest

@@ -32,10 +32,10 @@ public class RestaurantDTO implements Serializable {
     private String googlePlacesId;
 
     @NotNull
-    private Float geolat;
+    private Double geolat;
 
     @NotNull
-    private Float geolng;
+    private Double geolng;
 
     @NotNull
     @Size(min = 2, max = 256)
@@ -124,19 +124,19 @@ public class RestaurantDTO implements Serializable {
         this.googlePlacesId = googlePlacesId;
     }
 
-    public Float getGeolat() {
+    public Double getGeolat() {
         return geolat;
     }
 
-    public void setGeolat(Float geolat) {
+    public void setGeolat(Double geolat) {
         this.geolat = geolat;
     }
 
-    public Float getGeolng() {
+    public Double getGeolng() {
         return geolng;
     }
 
-    public void setGeolng(Float geolng) {
+    public void setGeolng(Double geolng) {
         this.geolng = geolng;
     }
 

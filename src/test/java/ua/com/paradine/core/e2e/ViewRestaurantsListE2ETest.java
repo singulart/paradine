@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -29,13 +30,18 @@ import ua.com.paradine.core.business.SafetyMarker;
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @Sql(scripts = {"/db/test_data.sql"})
-public class ViewRestaurantsListE2ETest {
+public class ViewRestaurantsListE2ETest extends SearchIndexTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @SpyBean
     private GooglePopularTimesSafetyClassifier classifier;
+
+    @BeforeEach // TODO indexing before each test method is very time-consuming and ineffective
+    public void setup() {
+        super.rebuildIndex();
+    }
 
     @Test
     public void testLoadPage() throws Exception {

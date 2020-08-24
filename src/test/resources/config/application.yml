@@ -53,7 +53,7 @@ spring:
     properties:
       hibernate.search.lucene_version: latest
       hibernate.search.default.directory_provider: filesystem
-      hibernate.search.default.indexBase: ./target/paradine-lucene/indexes/
+      hibernate.search.default.indexBase: ./target/paradine-lucene-test/indexes/
       hibernate.format_sql: true
       hibernate.id.new_generator_mappings: true
       hibernate.connection.provider_disables_autocommit: true

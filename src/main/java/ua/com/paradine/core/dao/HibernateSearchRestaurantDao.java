@@ -3,6 +3,7 @@ package ua.com.paradine.core.dao;
 
 import static java.util.Optional.ofNullable;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.hibernate.search.jpa.FullTextEntityManager;
@@ -18,13 +19,18 @@ import ua.com.paradine.core.business.ViewRestaurantsListCriteria;
 import ua.com.paradine.domain.Restaurant;
 
 @Service
-public class HibernateSearchRestaurantDao implements RestaurantDao {
+public class HibernateSearchRestaurantDao extends RestaurantRelationsBuilder {
 
     @PersistenceContext
     private EntityManager em;
 
     @Value("${paradine.page.size:10}")
     private Integer pageSize;
+
+    public HibernateSearchRestaurantDao(ExtendedPopularTimeRepository popularTimeRepository,
+        ExtendedWorkingHoursRepository workingHoursRepository) {
+        super(popularTimeRepository, workingHoursRepository);
+    }
 
     @Override
     public Page<Restaurant> loadRestaurants(ViewRestaurantsListCriteria searchCriteria) {
@@ -53,6 +59,9 @@ public class HibernateSearchRestaurantDao implements RestaurantDao {
         jpaQuery.setFirstResult(page * pageSize);
         jpaQuery.setMaxResults(pageSize);
 
-        return new PageImpl<Restaurant>(jpaQuery.getResultList(), PageRequest.of(page, pageSize), jpaQuery.getResultSize());
+        List<Restaurant> resultList = jpaQuery.getResultList();
+        super.buildRestaurantRelations(resultList);
+
+        return new PageImpl<>(resultList, PageRequest.of(page, pageSize), jpaQuery.getResultSize());
     }
 }
