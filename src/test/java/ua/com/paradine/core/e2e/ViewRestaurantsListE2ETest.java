@@ -4,7 +4,6 @@ import static java.lang.String.format;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.context.jdbc.SqlConfig.TransactionMode.ISOLATED;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -16,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
@@ -26,7 +24,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import ua.com.paradine.ParadineApp;
@@ -77,16 +74,23 @@ public class ViewRestaurantsListE2ETest extends SearchIndexTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {
-        "musafir",
-        "Мусафир",
-        "мусаф",
-        "мусафиr",
-        "Uусафир",
+    @CsvSource({
+        "musafir,6a2f41a3-c54c-fce8-32d2-0324e1c32e22",
+        "Мусафир,6a2f41a3-c54c-fce8-32d2-0324e1c32e22",
+        "мусаф,6a2f41a3-c54c-fce8-32d2-0324e1c32e22",
+        "мусафиr,6a2f41a3-c54c-fce8-32d2-0324e1c32e22",
+        "Uусафир,6a2f41a3-c54c-fce8-32d2-0324e1c32e22",
+        "Éclair Little Artwork,ea14a6e4-d241-4723-adce-945a47255c33",
+        "Little Artwork,ea14a6e4-d241-4723-adce-945a47255c33",
+        "little,ea14a6e4-d241-4723-adce-945a47255c33",
+        "artwork,ea14a6e4-d241-4723-adce-945a47255c33",
+        "art ecler,ea14a6e4-d241-4723-adce-945a47255c33",
+        "ohota,6a2f31a3-c54c-fce8-32d2-0324e1c32e22",
+        "озота,6a2f31a3-c54c-fce8-32d2-0324e1c32e22",
+        "охота,6a2f31a3-c54c-fce8-32d2-0324e1c32e22",
+        "Okhota,6a2f31a3-c54c-fce8-32d2-0324e1c32e22",
     })
-    public void testKeywordSearch(String keyword) throws Exception {
-
-        String expectedUid = "6a2f41a3-c54c-fce8-32d2-0324e1c32e22";
+    public void testKeywordSearch(String keyword, String expectedUid) throws Exception {
 
         mockMvc.perform(get("/api/paradine/v2/restaurants")
             .queryParam("q", keyword)
@@ -94,18 +98,16 @@ public class ViewRestaurantsListE2ETest extends SearchIndexTest {
         )
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andExpect(header().string("X-Total-Count", "1"))
-        .andExpect(jsonPath("$.restaurants[0].id")
-            .value(expectedUid));
+        .andExpect(jsonPath(format("$.restaurants[?(@.id=='%s')]", expectedUid)).exists());
     }
 
     @ParameterizedTest
-    @CsvSource(
-        {"50.424,30.51,Musafir",
+    @CsvSource({
+        "50.424,30.51,Musafir",
         "50.424,30.51,Turkish House Lounge Grill",
         "50.42459,30.51967,Star Burger",
-        "50.439,30.53,Oxota Na Ovets"}
-    )
+        "50.439,30.53,Oxota Na Ovets"
+    })
     public void testGeolocationSearch(String lat, String lng, String expectedName) throws Exception {
 
         mockMvc.perform(get("/api/paradine/v2/restaurants")
