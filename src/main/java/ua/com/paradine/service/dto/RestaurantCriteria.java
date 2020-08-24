@@ -3,10 +3,9 @@ package ua.com.paradine.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
 import io.github.jhipster.service.Criteria;
-import io.github.jhipster.service.filter.BooleanFilter;
 import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.Filter;
-import io.github.jhipster.service.filter.FloatFilter;
+import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
@@ -39,9 +38,9 @@ public class RestaurantCriteria implements Serializable, Criteria {
 
     private StringFilter googlePlacesId;
 
-    private FloatFilter geolat;
+    private DoubleFilter geolat;
 
-    private FloatFilter geolng;
+    private DoubleFilter geolng;
 
     private StringFilter photoUrl;
 
@@ -143,19 +142,19 @@ public class RestaurantCriteria implements Serializable, Criteria {
         this.googlePlacesId = googlePlacesId;
     }
 
-    public FloatFilter getGeolat() {
+    public DoubleFilter getGeolat() {
         return geolat;
     }
 
-    public void setGeolat(FloatFilter geolat) {
+    public void setGeolat(DoubleFilter geolat) {
         this.geolat = geolat;
     }
 
-    public FloatFilter getGeolng() {
+    public DoubleFilter getGeolng() {
         return geolng;
     }
 
-    public void setGeolng(FloatFilter geolng) {
+    public void setGeolng(DoubleFilter geolng) {
         this.geolng = geolng;
     }
 

@@ -9,12 +9,13 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Latitude;
 import org.hibernate.search.annotations.Longitude;
 import org.hibernate.search.annotations.Spatial;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import org.springframework.stereotype.Indexed;
 
 /**
  * A Restaurant.
@@ -67,12 +68,12 @@ public class Restaurant implements Serializable {
     @NotNull
     @Column(name = "geolat", nullable = false)
     @Latitude
-    private Float geolat;
+    private Double geolat;
 
     @NotNull
     @Column(name = "geolng", nullable = false)
     @Longitude
-    private Float geolng;
+    private Double geolng;
 
     @NotNull
     @Size(min = 2, max = 256)
@@ -110,6 +111,7 @@ public class Restaurant implements Serializable {
     private String uuid;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @IndexedEmbedded(includePaths = { "slug" })
     private City city;
 
     @Transient
@@ -205,29 +207,29 @@ public class Restaurant implements Serializable {
         this.googlePlacesId = googlePlacesId;
     }
 
-    public Float getGeolat() {
+    public Double getGeolat() {
         return geolat;
     }
 
-    public Restaurant geolat(Float geolat) {
+    public Restaurant geolat(Double geolat) {
         this.geolat = geolat;
         return this;
     }
 
-    public void setGeolat(Float geolat) {
+    public void setGeolat(Double geolat) {
         this.geolat = geolat;
     }
 
-    public Float getGeolng() {
+    public Double getGeolng() {
         return geolng;
     }
 
-    public Restaurant geolng(Float geolng) {
+    public Restaurant geolng(Double geolng) {
         this.geolng = geolng;
         return this;
     }
 
-    public void setGeolng(Float geolng) {
+    public void setGeolng(Double geolng) {
         this.geolng = geolng;
     }
 

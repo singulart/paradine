@@ -67,13 +67,13 @@ public class RestaurantResourceIT {
     private static final String DEFAULT_GOOGLE_PLACES_ID = "AAAAAAAAAA";
     private static final String UPDATED_GOOGLE_PLACES_ID = "BBBBBBBBBB";
 
-    private static final Float DEFAULT_GEOLAT = 1F;
-    private static final Float UPDATED_GEOLAT = 2F;
-    private static final Float SMALLER_GEOLAT = 1F - 1F;
+    private static final Double DEFAULT_GEOLAT = 1.0;
+    private static final Double UPDATED_GEOLAT = 2.0;
+    private static final Double SMALLER_GEOLAT = 1.0 - 1.0;
 
-    private static final Float DEFAULT_GEOLNG = 1F;
-    private static final Float UPDATED_GEOLNG = 2F;
-    private static final Float SMALLER_GEOLNG = 1F - 1F;
+    private static final Double DEFAULT_GEOLNG = 1.0;
+    private static final Double UPDATED_GEOLNG = 2.0;
+    private static final Double SMALLER_GEOLNG = 1.0 - 1.0;
 
     private static final String DEFAULT_PHOTO_URL = "rCKfE@3qs%T9c6vv_sA+G9%XkgKR8Ih(C#DDs7#y6ZuM2=9OLhCBush1OACrZ8bkMXIx2ZJugZ:4sn(_8t7Z(FtQoku57iohYzPQDkTZWF4.dh";
     private static final String UPDATED_PHOTO_URL = "IT#md1g:lzf3RtzZK#L3sKW00KvH)ea8~6Hd8F3zNl~PxFyc?2BYrB8ZbQg%(BfMPGol+RqVwC@5Jvlr0oMbuaE.sbc";

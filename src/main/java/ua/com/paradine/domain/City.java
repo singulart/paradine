@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import org.hibernate.search.annotations.Field;
 
 /**
  * A City.
@@ -25,6 +26,7 @@ public class City implements Serializable {
 
     @NotNull
     @Column(name = "slug", nullable = false, unique = true)
+    @Field
     private String slug;
 
     @NotNull

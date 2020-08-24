@@ -13,8 +13,8 @@ public class RestaurantVO {
     private String addressRu;
     private String addressUa;
     private Integer capacity;
-    private Float geolat;
-    private Float geolng;
+    private Double geolat;
+    private Double geolng;
     private String photoUrl;
     private String googlePlacesId;
     private Set<PopularTimeVO> popularTimes = new HashSet<>();
@@ -44,19 +44,19 @@ public class RestaurantVO {
         this.capacity = capacity;
     }
 
-    public Float getGeolat() {
+    public Double getGeolat() {
         return geolat;
     }
 
-    public void setGeolat(Float geolat) {
+    public void setGeolat(Double geolat) {
         this.geolat = geolat;
     }
 
-    public Float getGeolng() {
+    public Double getGeolng() {
         return geolng;
     }
 
-    public void setGeolng(Float geolng) {
+    public void setGeolng(Double geolng) {
         this.geolng = geolng;
     }
 

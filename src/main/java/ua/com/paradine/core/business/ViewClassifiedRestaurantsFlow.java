@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toList;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class ViewClassifiedRestaurantsFlow {
     private final RestaurantMapperBusiness mapper = Mappers.getMapper(RestaurantMapperBusiness.class);
 
     @Autowired
-    public ViewClassifiedRestaurantsFlow(RestaurantDao restaurantDao, RestaurantSafetyClassifier classifier) {
+    public ViewClassifiedRestaurantsFlow(@Qualifier("hibernateSearchRestaurantDao") RestaurantDao restaurantDao, RestaurantSafetyClassifier classifier) {
         this.dao = restaurantDao;
         this.classifier = classifier;
     }

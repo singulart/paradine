@@ -15,32 +15,16 @@
 
 logging:
   level:
-    ROOT: DEBUG
+    ROOT: INFO
     io.github.jhipster: DEBUG
-    ua:
-      com:
-        paradine: DEBUG
+    org.hibernate.search: DEBUG
+    ua.com.paradine: DEBUG
 
 eureka:
   client:
     enabled: false
-#eureka:
-#  instance:
-#    prefer-ip-address: true
-#  client:
-#    enabled: false # By default, the JHipster Registry is not used in the "dev" profile
-#    service-url:
-#      defaultZone: http://admin:${jhipster.registry.password}@UAIEV8759NBM.LEVI9.COM:8761/eureka/
-
-management:
-  health:
-    elasticsearch:
-      enabled: false
 
 spring:
-  #  cloud:
-  #    config:
-  #      uri: http://admin:${jhipster.registry.password}@UAIEV8759NBM.LEVI9.COM:8761/config
   profiles:
     active: dev
     include:
@@ -72,11 +56,6 @@ spring:
     show-sql: true
     properties:
       hibernate.format_sql: true
-  data:
-    elasticsearch:
-      properties:
-        path:
-          home: target/elasticsearch
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev
@@ -109,14 +88,6 @@ server:
 # ===================================================================
 
 jhipster:
-  #  cache: # Cache configuration
-  #    redis: # Redis configuration
-  #      expiration: 3600 # By default objects stay 1 hour (in seconds) in the cache
-  #      server: redis://localhost:6379
-  #      cluster: false
-  # server: redis://localhost:6379,redis://localhost:16379,redis://localhost:26379
-  # cluster: true
-  # CORS is only enabled by default with the "dev" profile, so BrowserSync can access the API
   cors:
     allowed-origins: '*'
     allowed-methods: '*'
