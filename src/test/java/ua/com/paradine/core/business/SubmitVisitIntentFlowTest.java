@@ -16,7 +16,6 @@ import static ua.com.paradine.core.Nowness.getNow;
 import static ua.com.paradine.core.Nowness.getNowZoned;
 
 import java.time.Duration;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
@@ -94,21 +93,6 @@ class SubmitVisitIntentFlowTest {
 
         SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
         cmd.setWhen(getNow().plusDays(2));
-
-        SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
-
-        assertNotNull(outcome.getError());
-        assertEquals(BAD_REQUEST.value(), outcome.getError().getStatus().getStatusCode());
-        assertEquals(Errors.VISIT_DATE_OUT_OF_RANGE, outcome.getError().getDetail());
-
-        verifyNoInteractions(visitIntentionRepository, userRepository, restaurantRepository, workingHoursRepository);
-    }
-
-    @Test
-    void visitDateCannotBeAfterTomorrow2() {
-
-        SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
-        cmd.setWhen(getNow().plusDays(2).minusHours(1)); // 1 day, 23h
 
         SubmitVisitIntentOutcome outcome = submitVisitIntentFlow.submitVisitIntent(cmd);
 

@@ -69,7 +69,7 @@ public class SubmitVisitIntentFlow {
         OffsetDateTime endOfTomorrow = startOfToday.plusDays(2);
         Duration tillEndOfTomorrow = Duration.between(now(DEFAULT_ZONE).truncatedTo(ChronoUnit.HOURS), endOfTomorrow);
 
-        if(dur.isZero() || dur.isNegative() || dur.toHours() > tillEndOfTomorrow.toHours()) {
+        if(dur.isZero() || dur.isNegative() || dur.toHours() >= tillEndOfTomorrow.toHours()) {
             return new SubmitVisitIntentOutcome(
                 Problem.valueOf(Status.BAD_REQUEST, VISIT_DATE_OUT_OF_RANGE));
         }
