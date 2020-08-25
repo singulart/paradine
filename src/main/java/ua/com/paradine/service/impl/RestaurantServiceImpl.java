@@ -109,7 +109,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Page<RestaurantDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Restaurants for query {}", query);
         return restaurantDao.loadRestaurants(
-            ViewRestaurantsListCriteria.Builder.init().withQuery(query).build())
+            ViewRestaurantsListCriteria.Builder.init().withQuery(query).withPage(pageable.getPageNumber()).build())
             .map(restaurantMapper::toDto);
     }
 }

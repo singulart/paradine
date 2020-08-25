@@ -103,6 +103,36 @@ public class ViewRestaurantsListE2ETest extends SearchIndexTest {
         .andExpect(jsonPath(format("$.restaurants[?(@.id=='%s')]", expectedUid)).exists());
     }
 
+    @Test
+    @Sql(
+        scripts = {"/db/similar_titles.sql"},
+        executionPhase = BEFORE_TEST_METHOD
+    )
+    public void testKeywordSearch_and_paging() throws Exception {
+
+        String keyword = "Lviv";
+
+        mockMvc.perform(get("/api/paradine/v2/restaurants")
+            .queryParam("q", keyword)
+            .queryParam("page", "0")
+            .queryParam("city", "kyiv")
+        )
+        .andExpect(status().isOk())
+        .andExpect(header().string("X-Total-Count", "13"))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.restaurants.length()").value(10));
+
+        mockMvc.perform(get("/api/paradine/v2/restaurants")
+            .queryParam("q", keyword)
+            .queryParam("page", "1")
+            .queryParam("city", "kyiv")
+        )
+        .andExpect(status().isOk())
+        .andExpect(header().string("X-Total-Count", "13"))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.restaurants.length()").value(3));
+    }
+
     @ParameterizedTest
     @CsvSource({
         "50.424,30.51,Musafir",
