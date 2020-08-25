@@ -89,6 +89,8 @@ public class ViewRestaurantsListE2ETest extends SearchIndexTest {
         "озота,6a2f31a3-c54c-fce8-32d2-0324e1c32e22",
         "охота,6a2f31a3-c54c-fce8-32d2-0324e1c32e22",
         "Okhota,6a2f31a3-c54c-fce8-32d2-0324e1c32e22",
+        "polyu,6a2f31a3-c54c-fce8-32d2-0324e1c32e22",
+        "хрещ,1a2f41a3-c54c-fce8-32d2-0324e1c32e22",
     })
     public void testKeywordSearch(String keyword, String expectedUid) throws Exception {
 

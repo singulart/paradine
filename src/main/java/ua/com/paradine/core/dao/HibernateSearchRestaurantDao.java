@@ -1,6 +1,7 @@
 package ua.com.paradine.core.dao;
 
 
+import static java.lang.String.join;
 import static java.util.Optional.ofNullable;
 
 import java.util.List;
@@ -69,12 +70,24 @@ public class HibernateSearchRestaurantDao extends RestaurantRelationsBuilder {
             combinedQuery[0] = combinedQuery[0].must(geolocationTerm.createQuery());
         } else {
             ofNullable(searchCriteria.getQuery()).ifPresent((query) -> {
+
+                BooleanJunction<? extends BooleanJunction> searchTermsPart = restaurantQB.bool();
+
                 TermTermination keywordTerm = restaurantQB
                     .keyword()
                     .fuzzy()
                     .onFields("name", "altName1", "altName2", "altName3")
                     .matching(query);
-                combinedQuery[0] = combinedQuery[0].must(keywordTerm.createQuery());
+                searchTermsPart = searchTermsPart.should(keywordTerm.createQuery());
+
+                TermTermination wildcardTerm = restaurantQB
+                    .keyword()
+                    .wildcard()
+                    .onFields("name", "altName1", "altName2", "altName3")
+                    .matching(join("", query, "*"));
+                searchTermsPart = searchTermsPart.should(wildcardTerm.createQuery());
+
+                combinedQuery[0] = combinedQuery[0].must(searchTermsPart.createQuery());
             });
         }
 

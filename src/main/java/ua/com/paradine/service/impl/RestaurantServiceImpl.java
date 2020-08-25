@@ -1,5 +1,8 @@
 package ua.com.paradine.service.impl;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import ua.com.paradine.core.business.ViewRestaurantsListCriteria;
+import ua.com.paradine.core.dao.RestaurantDao;
 import ua.com.paradine.service.RestaurantService;
 import ua.com.paradine.domain.Restaurant;
 import ua.com.paradine.repository.RestaurantRepository;
@@ -28,9 +31,13 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     private final RestaurantMapper restaurantMapper;
 
-    public RestaurantServiceImpl(RestaurantRepository restaurantRepository, RestaurantMapper restaurantMapper) {
+    private final RestaurantDao restaurantDao;
+
+    public RestaurantServiceImpl(RestaurantRepository restaurantRepository, RestaurantMapper restaurantMapper,
+        @Qualifier("hibernateSearchRestaurantDao") RestaurantDao restaurantDao) {
         this.restaurantRepository = restaurantRepository;
         this.restaurantMapper = restaurantMapper;
+        this.restaurantDao = restaurantDao;
     }
 
     /**
@@ -101,8 +108,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Transactional(readOnly = true)
     public Page<RestaurantDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Restaurants for query {}", query);
-//        return restaurantSearchRepository.search(queryStringQuery(query), pageable)
-//            .map(restaurantMapper::toDto);
-        return Page.empty();
+        return restaurantDao.loadRestaurants(
+            ViewRestaurantsListCriteria.Builder.init().withQuery(query).build())
+            .map(restaurantMapper::toDto);
     }
 }
