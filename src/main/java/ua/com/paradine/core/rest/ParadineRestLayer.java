@@ -7,6 +7,7 @@ import static ua.com.paradine.core.Errors.BAD_GEOLOCATION_PARAMS;
 import static ua.com.paradine.core.Errors.NOT_FOUND;
 
 import io.github.jhipster.web.util.PaginationUtil;
+import java.math.BigDecimal;
 import java.util.List;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +90,7 @@ public class ParadineRestLayer implements RestaurantsApiDelegate {
             .headers(headers)
             .body(new RestaurantsGetResponse()
             .version(API_VERSION)
+            .totalPages(BigDecimal.valueOf(classifiedRestaurants.getTotalPages()))
             .restaurants(restMapper.map(classifiedRestaurants.getContent())));
     }
 

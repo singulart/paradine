@@ -243,6 +243,17 @@ components:
           description: API version
           type: string
 
+    PaginationData:
+      type: object
+      description: Pagination metadata. A temporary solution due to https://github.com/contiamo/restful-react/issues/297
+      required:
+        - totalPages
+      properties:
+        totalPages:
+          description: total pages
+          type: number
+          example: 10
+
     UuidResponse:
       description: Response for POST operation returning uuid of the created resource.
       allOf:
@@ -270,6 +281,7 @@ components:
     RestaurantsGetResponse:
       allOf:
         - $ref: '#/components/schemas/Envelope'
+        - $ref: '#/components/schemas/PaginationData'
         - type: object
           properties:
             restaurants:
