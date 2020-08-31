@@ -141,21 +141,20 @@ info:
 jhipster:
   clientApp:
     name: 'paradineApp'
-  # By default CORS is disabled. Uncomment to enable.
-  # cors:
-  #     allowed-origins: "*"
-  #     allowed-methods: "*"
-  #     allowed-headers: "*"
-  #     exposed-headers: "Authorization,Link,X-Total-Count"
-  #     allow-credentials: true
-  #     max-age: 1800
+  cors:
+    allowed-origins: '*'
+    allowed-methods: '*'
+    allowed-headers: '*'
+    exposed-headers: 'Authorization,Link,X-Total-Count'
+    allow-credentials: true
+    max-age: 1800
   mail:
     from: paradine@localhost
   swagger:
     default-include-pattern: /api/.*
     title: paradine API
     description: paradine API documentation
-    version: 0.0.1
+    version: 2.0.0
     terms-of-service-url:
     contact-name:
     contact-url:
