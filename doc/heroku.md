@@ -27,9 +27,3 @@ SPRING_PROFILES_ACTIVE:              prod
 TODO
 разобраться с проблемой с портами при 
 SERVER_SSL_ENABLED:                  true
-
-
-CORS настройки
-JHIPSTER_CORS_ALLOWED_HEADERS:       *
-JHIPSTER_CORS_ALLOWED_METHODS:       GET,POST,OPTIONS
-JHIPSTER_CORS_ALLOWED_ORIGINS:       https://paradine-web.herokuapp.com
