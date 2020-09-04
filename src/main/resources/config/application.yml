@@ -139,6 +139,10 @@ info:
 # ===================================================================
 
 jhipster:
+  cache:
+    ehcache:
+      max-entries: 10000
+      time-to-live-seconds: 3600
   clientApp:
     name: 'paradineApp'
   cors:
