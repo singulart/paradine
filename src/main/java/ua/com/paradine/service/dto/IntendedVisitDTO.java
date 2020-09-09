@@ -25,6 +25,8 @@ public class IntendedVisitDTO implements Serializable {
     @NotNull
     private Boolean cancelled;
 
+    private Integer safety;
+
 
     private Long visitingUserId;
 
@@ -72,6 +74,14 @@ public class IntendedVisitDTO implements Serializable {
 
     public void setCancelled(Boolean cancelled) {
         this.cancelled = cancelled;
+    }
+
+    public Integer getSafety() {
+        return safety;
+    }
+
+    public void setSafety(Integer safety) {
+        this.safety = safety;
     }
 
     public Long getVisitingUserId() {
@@ -132,6 +142,7 @@ public class IntendedVisitDTO implements Serializable {
             ", visitStartDate='" + getVisitStartDate() + "'" +
             ", visitEndDate='" + getVisitEndDate() + "'" +
             ", cancelled='" + isCancelled() + "'" +
+            ", safety=" + getSafety() +
             ", visitingUserId=" + getVisitingUserId() +
             ", visitingUserLogin='" + getVisitingUserLogin() + "'" +
             ", restaurantId=" + getRestaurantId() +

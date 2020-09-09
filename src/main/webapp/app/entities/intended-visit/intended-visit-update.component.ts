@@ -40,6 +40,7 @@ export class IntendedVisitUpdateComponent implements OnInit {
     visitStartDate: [null, [Validators.required]],
     visitEndDate: [null, [Validators.required]],
     cancelled: [null, [Validators.required]],
+    safety: [],
     visitingUserId: [null, Validators.required],
     restaurantId: [null, Validators.required],
   });
@@ -95,6 +96,7 @@ export class IntendedVisitUpdateComponent implements OnInit {
       visitStartDate: intendedVisit.visitStartDate ? intendedVisit.visitStartDate.format(DATE_TIME_FORMAT) : null,
       visitEndDate: intendedVisit.visitEndDate ? intendedVisit.visitEndDate.format(DATE_TIME_FORMAT) : null,
       cancelled: intendedVisit.cancelled,
+      safety: intendedVisit.safety,
       visitingUserId: intendedVisit.visitingUserId,
       restaurantId: intendedVisit.restaurantId,
     });
@@ -126,6 +128,7 @@ export class IntendedVisitUpdateComponent implements OnInit {
         ? moment(this.editForm.get(['visitEndDate'])!.value, DATE_TIME_FORMAT)
         : undefined,
       cancelled: this.editForm.get(['cancelled'])!.value,
+      safety: this.editForm.get(['safety'])!.value,
       visitingUserId: this.editForm.get(['visitingUserId'])!.value,
       restaurantId: this.editForm.get(['restaurantId'])!.value,
     };

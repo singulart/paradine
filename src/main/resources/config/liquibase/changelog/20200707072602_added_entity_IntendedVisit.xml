@@ -62,6 +62,7 @@
             <column name="visit_start_date" type="datetime"/>
             <column name="visit_end_date" type="datetime"/>
             <column name="cancelled" type="boolean"/>
+            <column name="safety" type="numeric"/>
             <column name="visiting_user_id" type="numeric"/>
             <column name="restaurant_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

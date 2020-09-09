@@ -87,7 +87,6 @@ public class IntendedVisitServiceImpl implements IntendedVisitService {
     public void delete(Long id) {
         log.debug("Request to delete IntendedVisit : {}", id);
         intendedVisitRepository.deleteById(id);
-//        intendedVisitSearchRepository.deleteById(id);
     }
 
     /**

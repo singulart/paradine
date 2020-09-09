@@ -33,6 +33,7 @@ export class IntendedVisitUpdatePage {
   visitStartDateInput = element(by.id('field_visitStartDate'));
   visitEndDateInput = element(by.id('field_visitEndDate'));
   cancelledInput = element(by.id('field_cancelled'));
+  safetyInput = element(by.id('field_safety'));
 
   visitingUserSelect = element(by.id('field_visitingUser'));
   restaurantSelect = element(by.id('field_restaurant'));
@@ -67,6 +68,14 @@ export class IntendedVisitUpdatePage {
 
   getCancelledInput(): ElementFinder {
     return this.cancelledInput;
+  }
+
+  async setSafetyInput(safety: string): Promise<void> {
+    await this.safetyInput.sendKeys(safety);
+  }
+
+  async getSafetyInput(): Promise<string> {
+    return await this.safetyInput.getAttribute('value');
   }
 
   async visitingUserSelectLastOption(): Promise<void> {

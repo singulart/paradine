@@ -17,7 +17,7 @@
     "devDatabaseType": "h2Disk",
     "cacheProvider": "ehcache",
     "prodDatabaseType": "postgresql",
-    "searchEngine": "elasticsearch",
+    "searchEngine": "false",
     "serviceDiscoveryType": "eureka",
     "buildTool": "maven",
     "enableSwaggerCodegen": true,

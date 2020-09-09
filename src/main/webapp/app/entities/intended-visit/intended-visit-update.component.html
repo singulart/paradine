@@ -82,6 +82,12 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="paradineApp.intendedVisit.safety" for="field_safety">Safety</label>
+                    <input type="number" class="form-control" name="safety" id="field_safety"
+                           formControlName="safety"/>
+                </div>
+
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="paradineApp.intendedVisit.visitingUser" for="field_visitingUser">Visiting User</label>
                     <select class="form-control" id="field_visitingUser" name="visitingUser" formControlName="visitingUserId">
                         <option *ngIf="!editForm.get('visitingUserId')!.value" [ngValue]="null" selected></option>

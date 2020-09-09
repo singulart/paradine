@@ -1,1 +1,1 @@
-id;uuid;visit_start_date;visit_end_date;cancelled;visiting_user_id;restaurant_id
+id;uuid;visit_start_date;visit_end_date;cancelled;safety;visiting_user_id;restaurant_id

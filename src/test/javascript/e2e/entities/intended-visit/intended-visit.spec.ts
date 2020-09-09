@@ -51,6 +51,7 @@ describe('IntendedVisit e2e test', () => {
             intendedVisitUpdatePage.setUuidInput('b825A3C1-4E31-D2ba-DDf9-bB2d50cfabAF'),
             intendedVisitUpdatePage.setVisitStartDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
             intendedVisitUpdatePage.setVisitEndDateInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+            intendedVisitUpdatePage.setSafetyInput('5'),
             intendedVisitUpdatePage.visitingUserSelectLastOption(),
             intendedVisitUpdatePage.restaurantSelectLastOption(),
         ]);
@@ -66,6 +67,7 @@ describe('IntendedVisit e2e test', () => {
             await intendedVisitUpdatePage.getCancelledInput().click();
             expect(await intendedVisitUpdatePage.getCancelledInput().isSelected(), 'Expected cancelled to be selected').to.be.true;
         }
+        expect(await intendedVisitUpdatePage.getSafetyInput()).to.eq('5', 'Expected safety value to be equals to 5');
 
         await intendedVisitUpdatePage.save();
         expect(await intendedVisitUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;

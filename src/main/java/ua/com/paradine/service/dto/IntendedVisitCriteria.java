@@ -35,6 +35,8 @@ public class IntendedVisitCriteria implements Serializable, Criteria {
 
     private BooleanFilter cancelled;
 
+    private IntegerFilter safety;
+
     private LongFilter visitingUserId;
 
     private LongFilter restaurantId;
@@ -48,6 +50,7 @@ public class IntendedVisitCriteria implements Serializable, Criteria {
         this.visitStartDate = other.visitStartDate == null ? null : other.visitStartDate.copy();
         this.visitEndDate = other.visitEndDate == null ? null : other.visitEndDate.copy();
         this.cancelled = other.cancelled == null ? null : other.cancelled.copy();
+        this.safety = other.safety == null ? null : other.safety.copy();
         this.visitingUserId = other.visitingUserId == null ? null : other.visitingUserId.copy();
         this.restaurantId = other.restaurantId == null ? null : other.restaurantId.copy();
     }
@@ -97,6 +100,14 @@ public class IntendedVisitCriteria implements Serializable, Criteria {
         this.cancelled = cancelled;
     }
 
+    public IntegerFilter getSafety() {
+        return safety;
+    }
+
+    public void setSafety(IntegerFilter safety) {
+        this.safety = safety;
+    }
+
     public LongFilter getVisitingUserId() {
         return visitingUserId;
     }
@@ -129,6 +140,7 @@ public class IntendedVisitCriteria implements Serializable, Criteria {
             Objects.equals(visitStartDate, that.visitStartDate) &&
             Objects.equals(visitEndDate, that.visitEndDate) &&
             Objects.equals(cancelled, that.cancelled) &&
+            Objects.equals(safety, that.safety) &&
             Objects.equals(visitingUserId, that.visitingUserId) &&
             Objects.equals(restaurantId, that.restaurantId);
     }
@@ -141,6 +153,7 @@ public class IntendedVisitCriteria implements Serializable, Criteria {
         visitStartDate,
         visitEndDate,
         cancelled,
+        safety,
         visitingUserId,
         restaurantId
         );
@@ -155,6 +168,7 @@ public class IntendedVisitCriteria implements Serializable, Criteria {
                 (visitStartDate != null ? "visitStartDate=" + visitStartDate + ", " : "") +
                 (visitEndDate != null ? "visitEndDate=" + visitEndDate + ", " : "") +
                 (cancelled != null ? "cancelled=" + cancelled + ", " : "") +
+                (safety != null ? "safety=" + safety + ", " : "") +
                 (visitingUserId != null ? "visitingUserId=" + visitingUserId + ", " : "") +
                 (restaurantId != null ? "restaurantId=" + restaurantId + ", " : "") +
             "}";

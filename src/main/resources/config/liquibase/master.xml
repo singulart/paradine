@@ -30,6 +30,7 @@
     <include file="config/liquibase/changelog/20200618175046_added_entity_constraints_Restaurant.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/add_indices.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/alter_geoloc_datatype.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/add_safety_column.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

@@ -1,7 +1,5 @@
 package ua.com.paradine.web.rest;
 
-import org.junit.Ignore;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import ua.com.paradine.ParadineApp;
 import ua.com.paradine.domain.IntendedVisit;
 import ua.com.paradine.domain.User;
@@ -10,17 +8,14 @@ import ua.com.paradine.repository.IntendedVisitRepository;
 import ua.com.paradine.service.IntendedVisitService;
 import ua.com.paradine.service.dto.IntendedVisitDTO;
 import ua.com.paradine.service.mapper.IntendedVisitMapper;
+import ua.com.paradine.service.dto.IntendedVisitCriteria;
 import ua.com.paradine.service.IntendedVisitQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,13 +25,11 @@ import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.ZoneOffset;
 import java.time.ZoneId;
-import java.util.Collections;
 import java.util.List;
 
 import static ua.com.paradine.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -44,7 +37,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link IntendedVisitResource} REST controller.
  */
 @SpringBootTest(classes = ParadineApp.class)
-@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 public class IntendedVisitResourceIT {
@@ -62,6 +54,10 @@ public class IntendedVisitResourceIT {
 
     private static final Boolean DEFAULT_CANCELLED = false;
     private static final Boolean UPDATED_CANCELLED = true;
+
+    private static final Integer DEFAULT_SAFETY = 1;
+    private static final Integer UPDATED_SAFETY = 2;
+    private static final Integer SMALLER_SAFETY = 1 - 1;
 
     @Autowired
     private IntendedVisitRepository intendedVisitRepository;
@@ -94,7 +90,8 @@ public class IntendedVisitResourceIT {
             .uuid(DEFAULT_UUID)
             .visitStartDate(DEFAULT_VISIT_START_DATE)
             .visitEndDate(DEFAULT_VISIT_END_DATE)
-            .cancelled(DEFAULT_CANCELLED);
+            .cancelled(DEFAULT_CANCELLED)
+            .safety(DEFAULT_SAFETY);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
@@ -123,7 +120,8 @@ public class IntendedVisitResourceIT {
             .uuid(UPDATED_UUID)
             .visitStartDate(UPDATED_VISIT_START_DATE)
             .visitEndDate(UPDATED_VISIT_END_DATE)
-            .cancelled(UPDATED_CANCELLED);
+            .cancelled(UPDATED_CANCELLED)
+            .safety(UPDATED_SAFETY);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
@@ -166,9 +164,7 @@ public class IntendedVisitResourceIT {
         assertThat(testIntendedVisit.getVisitStartDate()).isEqualTo(DEFAULT_VISIT_START_DATE);
         assertThat(testIntendedVisit.getVisitEndDate()).isEqualTo(DEFAULT_VISIT_END_DATE);
         assertThat(testIntendedVisit.isCancelled()).isEqualTo(DEFAULT_CANCELLED);
-
-        // Validate the IntendedVisit in Elasticsearch
-//        verify(mockIntendedVisitSearchRepository, times(1)).save(testIntendedVisit);
+        assertThat(testIntendedVisit.getSafety()).isEqualTo(DEFAULT_SAFETY);
     }
 
     @Test
@@ -189,9 +185,6 @@ public class IntendedVisitResourceIT {
         // Validate the IntendedVisit in the database
         List<IntendedVisit> intendedVisitList = intendedVisitRepository.findAll();
         assertThat(intendedVisitList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the IntendedVisit in Elasticsearch
-//        verify(mockIntendedVisitSearchRepository, times(0)).save(intendedVisit);
     }
 
 
@@ -289,7 +282,8 @@ public class IntendedVisitResourceIT {
             .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID)))
             .andExpect(jsonPath("$.[*].visitStartDate").value(hasItem(sameInstant(DEFAULT_VISIT_START_DATE))))
             .andExpect(jsonPath("$.[*].visitEndDate").value(hasItem(sameInstant(DEFAULT_VISIT_END_DATE))))
-            .andExpect(jsonPath("$.[*].cancelled").value(hasItem(DEFAULT_CANCELLED.booleanValue())));
+            .andExpect(jsonPath("$.[*].cancelled").value(hasItem(DEFAULT_CANCELLED.booleanValue())))
+            .andExpect(jsonPath("$.[*].safety").value(hasItem(DEFAULT_SAFETY)));
     }
     
     @Test
@@ -306,7 +300,8 @@ public class IntendedVisitResourceIT {
             .andExpect(jsonPath("$.uuid").value(DEFAULT_UUID))
             .andExpect(jsonPath("$.visitStartDate").value(sameInstant(DEFAULT_VISIT_START_DATE)))
             .andExpect(jsonPath("$.visitEndDate").value(sameInstant(DEFAULT_VISIT_END_DATE)))
-            .andExpect(jsonPath("$.cancelled").value(DEFAULT_CANCELLED.booleanValue()));
+            .andExpect(jsonPath("$.cancelled").value(DEFAULT_CANCELLED.booleanValue()))
+            .andExpect(jsonPath("$.safety").value(DEFAULT_SAFETY));
     }
 
 
@@ -671,6 +666,111 @@ public class IntendedVisitResourceIT {
 
     @Test
     @Transactional
+    public void getAllIntendedVisitsBySafetyIsEqualToSomething() throws Exception {
+        // Initialize the database
+        intendedVisitRepository.saveAndFlush(intendedVisit);
+
+        // Get all the intendedVisitList where safety equals to DEFAULT_SAFETY
+        defaultIntendedVisitShouldBeFound("safety.equals=" + DEFAULT_SAFETY);
+
+        // Get all the intendedVisitList where safety equals to UPDATED_SAFETY
+        defaultIntendedVisitShouldNotBeFound("safety.equals=" + UPDATED_SAFETY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIntendedVisitsBySafetyIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        intendedVisitRepository.saveAndFlush(intendedVisit);
+
+        // Get all the intendedVisitList where safety not equals to DEFAULT_SAFETY
+        defaultIntendedVisitShouldNotBeFound("safety.notEquals=" + DEFAULT_SAFETY);
+
+        // Get all the intendedVisitList where safety not equals to UPDATED_SAFETY
+        defaultIntendedVisitShouldBeFound("safety.notEquals=" + UPDATED_SAFETY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIntendedVisitsBySafetyIsInShouldWork() throws Exception {
+        // Initialize the database
+        intendedVisitRepository.saveAndFlush(intendedVisit);
+
+        // Get all the intendedVisitList where safety in DEFAULT_SAFETY or UPDATED_SAFETY
+        defaultIntendedVisitShouldBeFound("safety.in=" + DEFAULT_SAFETY + "," + UPDATED_SAFETY);
+
+        // Get all the intendedVisitList where safety equals to UPDATED_SAFETY
+        defaultIntendedVisitShouldNotBeFound("safety.in=" + UPDATED_SAFETY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIntendedVisitsBySafetyIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        intendedVisitRepository.saveAndFlush(intendedVisit);
+
+        // Get all the intendedVisitList where safety is not null
+        defaultIntendedVisitShouldBeFound("safety.specified=true");
+
+        // Get all the intendedVisitList where safety is null
+        defaultIntendedVisitShouldNotBeFound("safety.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllIntendedVisitsBySafetyIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        intendedVisitRepository.saveAndFlush(intendedVisit);
+
+        // Get all the intendedVisitList where safety is greater than or equal to DEFAULT_SAFETY
+        defaultIntendedVisitShouldBeFound("safety.greaterThanOrEqual=" + DEFAULT_SAFETY);
+
+        // Get all the intendedVisitList where safety is greater than or equal to UPDATED_SAFETY
+        defaultIntendedVisitShouldNotBeFound("safety.greaterThanOrEqual=" + UPDATED_SAFETY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIntendedVisitsBySafetyIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        intendedVisitRepository.saveAndFlush(intendedVisit);
+
+        // Get all the intendedVisitList where safety is less than or equal to DEFAULT_SAFETY
+        defaultIntendedVisitShouldBeFound("safety.lessThanOrEqual=" + DEFAULT_SAFETY);
+
+        // Get all the intendedVisitList where safety is less than or equal to SMALLER_SAFETY
+        defaultIntendedVisitShouldNotBeFound("safety.lessThanOrEqual=" + SMALLER_SAFETY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIntendedVisitsBySafetyIsLessThanSomething() throws Exception {
+        // Initialize the database
+        intendedVisitRepository.saveAndFlush(intendedVisit);
+
+        // Get all the intendedVisitList where safety is less than DEFAULT_SAFETY
+        defaultIntendedVisitShouldNotBeFound("safety.lessThan=" + DEFAULT_SAFETY);
+
+        // Get all the intendedVisitList where safety is less than UPDATED_SAFETY
+        defaultIntendedVisitShouldBeFound("safety.lessThan=" + UPDATED_SAFETY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIntendedVisitsBySafetyIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        intendedVisitRepository.saveAndFlush(intendedVisit);
+
+        // Get all the intendedVisitList where safety is greater than DEFAULT_SAFETY
+        defaultIntendedVisitShouldNotBeFound("safety.greaterThan=" + DEFAULT_SAFETY);
+
+        // Get all the intendedVisitList where safety is greater than SMALLER_SAFETY
+        defaultIntendedVisitShouldBeFound("safety.greaterThan=" + SMALLER_SAFETY);
+    }
+
+
+    @Test
+    @Transactional
     public void getAllIntendedVisitsByVisitingUserIsEqualToSomething() throws Exception {
         // Get already existing entity
         User visitingUser = intendedVisit.getVisitingUser();
@@ -711,7 +811,8 @@ public class IntendedVisitResourceIT {
             .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID)))
             .andExpect(jsonPath("$.[*].visitStartDate").value(hasItem(sameInstant(DEFAULT_VISIT_START_DATE))))
             .andExpect(jsonPath("$.[*].visitEndDate").value(hasItem(sameInstant(DEFAULT_VISIT_END_DATE))))
-            .andExpect(jsonPath("$.[*].cancelled").value(hasItem(DEFAULT_CANCELLED.booleanValue())));
+            .andExpect(jsonPath("$.[*].cancelled").value(hasItem(DEFAULT_CANCELLED.booleanValue())))
+            .andExpect(jsonPath("$.[*].safety").value(hasItem(DEFAULT_SAFETY)));
 
         // Check, that the count call also returns 1
         restIntendedVisitMockMvc.perform(get("/api/intended-visits/count?sort=id,desc&" + filter))
@@ -761,7 +862,8 @@ public class IntendedVisitResourceIT {
             .uuid(UPDATED_UUID)
             .visitStartDate(UPDATED_VISIT_START_DATE)
             .visitEndDate(UPDATED_VISIT_END_DATE)
-            .cancelled(UPDATED_CANCELLED);
+            .cancelled(UPDATED_CANCELLED)
+            .safety(UPDATED_SAFETY);
         IntendedVisitDTO intendedVisitDTO = intendedVisitMapper.toDto(updatedIntendedVisit);
 
         restIntendedVisitMockMvc.perform(put("/api/intended-visits")
@@ -777,9 +879,7 @@ public class IntendedVisitResourceIT {
         assertThat(testIntendedVisit.getVisitStartDate()).isEqualTo(UPDATED_VISIT_START_DATE);
         assertThat(testIntendedVisit.getVisitEndDate()).isEqualTo(UPDATED_VISIT_END_DATE);
         assertThat(testIntendedVisit.isCancelled()).isEqualTo(UPDATED_CANCELLED);
-
-        // Validate the IntendedVisit in Elasticsearch
-//        verify(mockIntendedVisitSearchRepository, times(1)).save(testIntendedVisit);
+        assertThat(testIntendedVisit.getSafety()).isEqualTo(UPDATED_SAFETY);
     }
 
     @Test
@@ -799,9 +899,6 @@ public class IntendedVisitResourceIT {
         // Validate the IntendedVisit in the database
         List<IntendedVisit> intendedVisitList = intendedVisitRepository.findAll();
         assertThat(intendedVisitList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the IntendedVisit in Elasticsearch
-//        verify(mockIntendedVisitSearchRepository, times(0)).save(intendedVisit);
     }
 
     @Test
@@ -820,20 +917,13 @@ public class IntendedVisitResourceIT {
         // Validate the database contains one less item
         List<IntendedVisit> intendedVisitList = intendedVisitRepository.findAll();
         assertThat(intendedVisitList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the IntendedVisit in Elasticsearch
-//        verify(mockIntendedVisitSearchRepository, times(1)).deleteById(intendedVisit.getId());
     }
 
     @Test
     @Transactional
-    @Ignore
     public void searchIntendedVisit() throws Exception {
-        // Configure the mock search repository
         // Initialize the database
         intendedVisitRepository.saveAndFlush(intendedVisit);
-//        when(mockIntendedVisitSearchRepository.search(queryStringQuery("id:" + intendedVisit.getId()), PageRequest.of(0, 20)))
-//            .thenReturn(new PageImpl<>(Collections.singletonList(intendedVisit), PageRequest.of(0, 1), 1));
 
         // Search the intendedVisit
         restIntendedVisitMockMvc.perform(get("/api/_search/intended-visits?query=id:" + intendedVisit.getId()))
@@ -843,6 +933,7 @@ public class IntendedVisitResourceIT {
             .andExpect(jsonPath("$.[*].uuid").value(hasItem(DEFAULT_UUID)))
             .andExpect(jsonPath("$.[*].visitStartDate").value(hasItem(sameInstant(DEFAULT_VISIT_START_DATE))))
             .andExpect(jsonPath("$.[*].visitEndDate").value(hasItem(sameInstant(DEFAULT_VISIT_END_DATE))))
-            .andExpect(jsonPath("$.[*].cancelled").value(hasItem(DEFAULT_CANCELLED.booleanValue())));
+            .andExpect(jsonPath("$.[*].cancelled").value(hasItem(DEFAULT_CANCELLED.booleanValue())))
+            .andExpect(jsonPath("$.[*].safety").value(hasItem(DEFAULT_SAFETY)));
     }
 }

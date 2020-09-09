@@ -21,6 +21,7 @@
       "visitStartDate": "Visit Start Date",
       "visitEndDate": "Visit End Date",
       "cancelled": "Cancelled",
+      "safety": "Safety",
       "visitingUser": "Visiting User",
       "restaurant": "Restaurant"
     }

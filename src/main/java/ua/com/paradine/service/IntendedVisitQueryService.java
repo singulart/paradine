@@ -103,6 +103,9 @@ public class IntendedVisitQueryService extends QueryService<IntendedVisit> {
             if (criteria.getCancelled() != null) {
                 specification = specification.and(buildSpecification(criteria.getCancelled(), IntendedVisit_.cancelled));
             }
+            if (criteria.getSafety() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getSafety(), IntendedVisit_.safety));
+            }
             if (criteria.getVisitingUserId() != null) {
                 specification = specification.and(buildSpecification(criteria.getVisitingUserId(),
                     root -> root.join(IntendedVisit_.visitingUser, JoinType.LEFT).get(User_.id)));

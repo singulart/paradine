@@ -6,6 +6,7 @@ export interface IIntendedVisit {
   visitStartDate?: Moment;
   visitEndDate?: Moment;
   cancelled?: boolean;
+  safety?: number;
   visitingUserLogin?: string;
   visitingUserId?: number;
   restaurantName?: string;
@@ -19,6 +20,7 @@ export class IntendedVisit implements IIntendedVisit {
     public visitStartDate?: Moment,
     public visitEndDate?: Moment,
     public cancelled?: boolean,
+    public safety?: number,
     public visitingUserLogin?: string,
     public visitingUserId?: number,
     public restaurantName?: string,

@@ -45,6 +45,7 @@
                     <th scope="col"  jhiSortBy="visitStartDate"><span jhiTranslate="paradineApp.intendedVisit.visitStartDate">Visit Start Date</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="visitEndDate"><span jhiTranslate="paradineApp.intendedVisit.visitEndDate">Visit End Date</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="cancelled"><span jhiTranslate="paradineApp.intendedVisit.cancelled">Cancelled</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="safety"><span jhiTranslate="paradineApp.intendedVisit.safety">Safety</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="visitingUserLogin"><span jhiTranslate="paradineApp.intendedVisit.visitingUser">Visiting User</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="restaurantName"><span jhiTranslate="paradineApp.intendedVisit.restaurant">Restaurant</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
@@ -57,6 +58,7 @@
                     <td>{{ intendedVisit.visitStartDate | date:'medium' }}</td>
                     <td>{{ intendedVisit.visitEndDate | date:'medium' }}</td>
                     <td>{{ intendedVisit.cancelled }}</td>
+                    <td>{{ intendedVisit.safety }}</td>
                     <td>
                         {{ intendedVisit.visitingUserLogin }}
                     </td>

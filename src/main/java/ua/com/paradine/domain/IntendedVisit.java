@@ -42,12 +42,15 @@ public class IntendedVisit implements Serializable {
     @Column(name = "cancelled", nullable = false)
     private Boolean cancelled;
 
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @Column(name = "safety")
+    private Integer safety;
+
+    @OneToOne(optional = false)
     @NotNull
     @JoinColumn(unique = true)
     private User visitingUser;
 
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false)
     @NotNull
     @JoinColumn(unique = true)
     private Restaurant restaurant;
@@ -113,6 +116,19 @@ public class IntendedVisit implements Serializable {
         this.cancelled = cancelled;
     }
 
+    public Integer getSafety() {
+        return safety;
+    }
+
+    public IntendedVisit safety(Integer safety) {
+        this.safety = safety;
+        return this;
+    }
+
+    public void setSafety(Integer safety) {
+        this.safety = safety;
+    }
+
     public User getVisitingUser() {
         return visitingUser;
     }
@@ -165,6 +181,7 @@ public class IntendedVisit implements Serializable {
             ", visitStartDate='" + getVisitStartDate() + "'" +
             ", visitEndDate='" + getVisitEndDate() + "'" +
             ", cancelled='" + isCancelled() + "'" +
+            ", safety=" + getSafety() +
             "}";
     }
 }

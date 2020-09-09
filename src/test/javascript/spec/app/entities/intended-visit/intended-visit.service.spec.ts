@@ -24,7 +24,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new IntendedVisit(0, 'AAAAAAA', currentDate, currentDate, false);
+      elemDefault = new IntendedVisit(0, 'AAAAAAA', currentDate, currentDate, false, 0);
     });
 
     describe('Service methods', () => {
@@ -76,6 +76,7 @@ describe('Service Tests', () => {
             visitStartDate: currentDate.format(DATE_TIME_FORMAT),
             visitEndDate: currentDate.format(DATE_TIME_FORMAT),
             cancelled: true,
+            safety: 1,
           },
           elemDefault
         );
@@ -102,6 +103,7 @@ describe('Service Tests', () => {
             visitStartDate: currentDate.format(DATE_TIME_FORMAT),
             visitEndDate: currentDate.format(DATE_TIME_FORMAT),
             cancelled: true,
+            safety: 1,
           },
           elemDefault
         );
