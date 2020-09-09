@@ -21,7 +21,7 @@
   ],
   "changelogDate": "20200818121226",
   "dto": "mapstruct",
-  "searchEngine": "elasticsearch",
+  "searchEngine": "false",
   "service": "serviceImpl",
   "entityTableName": "city",
   "databaseType": "sql",

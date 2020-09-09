@@ -189,7 +189,7 @@
   ],
   "changelogDate": "20200623201417",
   "dto": "mapstruct",
-  "searchEngine": "elasticsearch",
+  "searchEngine": "false",
   "service": "serviceImpl",
   "entityTableName": "popular_time",
   "databaseType": "sql",

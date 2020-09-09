@@ -96,7 +96,7 @@
   ],
   "changelogDate": "20200618175046",
   "dto": "mapstruct",
-  "searchEngine": "elasticsearch",
+  "searchEngine": "false",
   "service": "serviceImpl",
   "entityTableName": "restaurant",
   "databaseType": "sql",

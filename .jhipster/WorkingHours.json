@@ -40,7 +40,7 @@
   ],
   "changelogDate": "20200703102529",
   "dto": "mapstruct",
-  "searchEngine": "elasticsearch",
+  "searchEngine": "false",
   "service": "serviceImpl",
   "entityTableName": "working_hours",
   "databaseType": "sql",

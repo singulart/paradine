@@ -46,11 +46,15 @@
       "fieldName": "cancelled",
       "fieldType": "Boolean",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "safety",
+      "fieldType": "Integer"
     }
   ],
   "changelogDate": "20200707072602",
   "dto": "mapstruct",
-  "searchEngine": "elasticsearch",
+  "searchEngine": "false",
   "service": "serviceImpl",
   "entityTableName": "intended_visit",
   "databaseType": "sql",

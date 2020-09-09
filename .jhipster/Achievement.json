@@ -36,7 +36,7 @@
   ],
   "changelogDate": "20200706153731",
   "dto": "mapstruct",
-  "searchEngine": "elasticsearch",
+  "searchEngine": "false",
   "service": "serviceImpl",
   "entityTableName": "achievement",
   "databaseType": "sql",
