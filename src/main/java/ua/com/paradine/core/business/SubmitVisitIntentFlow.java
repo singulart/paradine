@@ -131,6 +131,7 @@ public class SubmitVisitIntentFlow {
         visit.setCancelled(Boolean.FALSE);
         visit.setVisitStartDate(when);
         visit.setVisitEndDate(when.plusHours(VISIT_DURATION_HOURS));
+        // visit.setSafety(); //TODO add safety calculation
         visitIntentionRepository.saveAndFlush(visit);
         return visit;
     }
