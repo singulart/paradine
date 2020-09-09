@@ -47,12 +47,10 @@ public class CacheConfiguration {
         return cm -> {
             createCache(cm, ua.com.paradine.repository.UserRepository.USERS_BY_LOGIN_CACHE);
             createCache(cm, ua.com.paradine.repository.UserRepository.USERS_BY_EMAIL_CACHE);
-            createCache(cm, ua.com.paradine.domain.User.class.getName());
-            createCache(cm, ua.com.paradine.domain.Authority.class.getName());
-            createCache(cm, ua.com.paradine.domain.User.class.getName() + ".authorities");
+            createCache(cm, ua.com.paradine.domain.City.class.getName());
             createCache(cm, ua.com.paradine.domain.Restaurant.class.getName());
+            createCache(cm, ua.com.paradine.domain.WorkingHours.class.getName());
             createCache(cm, ua.com.paradine.domain.PopularTime.class.getName());
-            createCache(cm, ua.com.paradine.domain.Restaurant.class.getName() + ".popularTimes");
             // jhipster-needle-redis-add-entry
         };
     }
