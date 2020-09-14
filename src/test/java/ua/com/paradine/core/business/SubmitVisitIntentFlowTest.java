@@ -18,6 +18,8 @@ import static ua.com.paradine.core.Nowness.getNowZoned;
 import java.time.Duration;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +27,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
 import ua.com.paradine.core.Errors;
 import ua.com.paradine.core.business.vo.commands.SubmitVisitIntentCommand;
 import ua.com.paradine.core.business.vo.outcomes.SubmitVisitIntentOutcome;
@@ -33,7 +37,9 @@ import ua.com.paradine.core.dao.ExtendedRestaurantRepository;
 import ua.com.paradine.core.dao.ExtendedUserRepository;
 import ua.com.paradine.core.dao.ExtendedVisitIntentionRepository;
 import ua.com.paradine.core.dao.ExtendedWorkingHoursRepository;
+import ua.com.paradine.core.dao.RestaurantDao;
 import ua.com.paradine.domain.IntendedVisit;
+import ua.com.paradine.domain.Restaurant;
 import ua.com.paradine.domain.WorkingHours;
 
 @ExtendWith({MockitoExtension.class})
@@ -50,6 +56,12 @@ class SubmitVisitIntentFlowTest {
 
     @Mock
     private ExtendedWorkingHoursRepository workingHoursRepository;
+
+    @Mock
+    private RestaurantDao restaurantDao;
+
+    @Spy
+    private GooglePopularTimesSafetyClassifier restaurantSafetyClassifier = new GooglePopularTimesSafetyClassifier();
 
     @Captor
     private ArgumentCaptor<IntendedVisit> intendedVisitCaptor;
@@ -108,6 +120,8 @@ class SubmitVisitIntentFlowTest {
 
         lenient().when(restaurantRepository.findIdByUuid(eq("123")))
             .thenReturn(Optional.empty());
+        lenient().when(restaurantDao.loadRestaurants(any()))
+            .thenReturn(new PageImpl<>(new ArrayList<>()));
 
         SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
         cmd.setWhen(getNow().plusHours(2));
@@ -126,6 +140,9 @@ class SubmitVisitIntentFlowTest {
 
         lenient().when(restaurantRepository.findIdByUuid(eq("123")))
             .thenReturn(Optional.of(1000L));
+        Restaurant rest = new Restaurant();
+        lenient().when(restaurantDao.loadRestaurants(any()))
+            .thenReturn(new PageImpl<>(Collections.singletonList(rest)));
 
         lenient().when(userRepository.findIdByLogin(eq("hito")))
             .thenReturn(Optional.empty());
@@ -152,8 +169,14 @@ class SubmitVisitIntentFlowTest {
         lenient().when(userRepository.findIdByLogin(eq("hito")))
             .thenReturn(Optional.of(42L));
 
-        lenient().when(workingHoursRepository.fetchByRestaurantIdAndDayOfWeek(eq(1000L), anyString()))
-            .thenReturn(Optional.of(new WorkingHours().closed(Boolean.TRUE)));
+        Restaurant rest = new Restaurant();
+        rest.getWorkingHours().add(
+            new WorkingHours()
+                .closed(Boolean.TRUE)
+                .dayOfWeek(restaurantSafetyClassifier.getToday())
+        );
+        lenient().when(restaurantDao.loadRestaurants(any()))
+            .thenReturn(new PageImpl<>(Collections.singletonList(rest)));
 
         SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
         cmd.setWhen(getNow().plusHours(2));
@@ -175,11 +198,22 @@ class SubmitVisitIntentFlowTest {
         lenient().when(restaurantRepository.findIdByUuid(eq("123")))
             .thenReturn(Optional.of(1000L));
 
+        Restaurant rest = new Restaurant();
+        rest.getWorkingHours().add(
+            new WorkingHours()
+                .closed(Boolean.FALSE)
+                .closingHour(21)
+                .openingHour(9)
+                .dayOfWeek(restaurantSafetyClassifier.getTomorrow())
+        );
+        lenient().when(restaurantDao.loadRestaurants(any()))
+            .thenReturn(new PageImpl<>(Collections.singletonList(rest)));
+
         lenient().when(userRepository.findIdByLogin(eq("hito")))
             .thenReturn(Optional.of(42L));
 
-        lenient().when(workingHoursRepository.fetchByRestaurantIdAndDayOfWeek(eq(1000L), anyString()))
-            .thenReturn(Optional.of(new WorkingHours().closed(Boolean.FALSE).closingHour(21).openingHour(9)));
+//        lenient().when(workingHoursRepository.fetchByRestaurantIdAndDayOfWeek(eq(1000L), anyString()))
+//            .thenReturn(Optional.of(new WorkingHours().closed(Boolean.FALSE).closingHour(21).openingHour(9)));
 
         SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
         cmd.setWhen(getNow()
@@ -209,8 +243,16 @@ class SubmitVisitIntentFlowTest {
         lenient().when(userRepository.findIdByLogin(eq("hito")))
             .thenReturn(Optional.of(42L));
 
-        lenient().when(workingHoursRepository.fetchByRestaurantIdAndDayOfWeek(eq(1000L), anyString()))
-            .thenReturn(Optional.of(new WorkingHours().closed(Boolean.FALSE).closingHour(21).openingHour(9)));
+        Restaurant rest = new Restaurant();
+        rest.getWorkingHours().add(
+            new WorkingHours()
+                .closed(Boolean.FALSE)
+                .closingHour(21)
+                .openingHour(9)
+                .dayOfWeek(restaurantSafetyClassifier.getTomorrow())
+        );
+        lenient().when(restaurantDao.loadRestaurants(any()))
+            .thenReturn(new PageImpl<>(Collections.singletonList(rest)));
 
         SubmitVisitIntentCommand cmd = new SubmitVisitIntentCommand();
         cmd.setWhen(getNow()
@@ -232,6 +274,11 @@ class SubmitVisitIntentFlowTest {
 
         lenient().when(restaurantRepository.findIdByUuid(eq("123")))
             .thenReturn(Optional.of(1000L));
+
+        Restaurant rest = new Restaurant();
+        lenient().when(restaurantDao.loadRestaurants(any()))
+            .thenReturn(new PageImpl<>(Collections.singletonList(rest)));
+
 
         lenient().when(userRepository.findIdByLogin(eq("hito")))
             .thenReturn(Optional.of(42L));
@@ -256,6 +303,9 @@ class SubmitVisitIntentFlowTest {
 
         lenient().when(restaurantRepository.findIdByUuid(eq("123")))
             .thenReturn(Optional.of(1000L));
+
+        lenient().when(restaurantDao.loadRestaurants(any()))
+            .thenReturn(new PageImpl<>(Collections.singletonList(new Restaurant())));
 
         lenient().when(userRepository.findIdByLogin(eq("hito")))
             .thenReturn(Optional.of(42L));
@@ -286,6 +336,9 @@ class SubmitVisitIntentFlowTest {
 
         lenient().when(restaurantRepository.findIdByUuid(eq("123")))
             .thenReturn(Optional.of(1000L));
+        Restaurant rest = new Restaurant();
+        lenient().when(restaurantDao.loadRestaurants(any()))
+            .thenReturn(new PageImpl<>(Collections.singletonList(rest)));
 
         lenient().when(userRepository.findIdByLogin(eq("hito")))
             .thenReturn(Optional.of(42L));

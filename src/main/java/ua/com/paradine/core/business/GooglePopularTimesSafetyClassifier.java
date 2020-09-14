@@ -4,6 +4,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import static ua.com.paradine.core.util.DaysOfWeek.DOW;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 import org.mapstruct.factory.Mappers;
@@ -32,6 +33,20 @@ public class GooglePopularTimesSafetyClassifier implements RestaurantSafetyClass
         List<HourlyClassifier> today = classify(restaurant, getToday());
         List<HourlyClassifier> tomorrow = classify(restaurant, getTomorrow());
         return mapper.convertToSafety(restaurant, today, tomorrow);
+    }
+
+    @Override
+    public SafetyMarker classifySafety(RestaurantVO restaurant, ZonedDateTime at) {
+        ClassifiedRestaurantVO classified = classifySafety(restaurant);
+        List<HourlyClassifier> classifiers;
+        if(DOW.get(at.getDayOfWeek()).equals(getToday())) {
+            classifiers = classified.getClassifiersToday();
+        } else {
+            classifiers = classified.getClassifiersTomorrow();
+        }
+        return classifiers.stream().filter(
+                s -> s.getHour().equals(at.getHour())
+            ).findFirst().map(HourlyClassifier::getMarker).get();
     }
 
     private List<HourlyClassifier> classify(RestaurantVO restaurant, String dayCode) {

@@ -19,17 +19,19 @@ import java.util.Optional;
 import java.util.UUID;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
+import ua.com.paradine.core.business.ViewRestaurantsListCriteria.Builder;
 import ua.com.paradine.core.business.vo.WorkingHoursVO;
 import ua.com.paradine.core.business.vo.commands.SubmitVisitIntentCommand;
 import ua.com.paradine.core.business.vo.outcomes.SubmitVisitIntentOutcome;
-import ua.com.paradine.core.dao.ExtendedRestaurantRepository;
 import ua.com.paradine.core.dao.ExtendedUserRepository;
 import ua.com.paradine.core.dao.ExtendedVisitIntentionRepository;
 import ua.com.paradine.core.dao.ExtendedWorkingHoursRepository;
+import ua.com.paradine.core.dao.RestaurantDao;
 import ua.com.paradine.domain.IntendedVisit;
 import ua.com.paradine.domain.Restaurant;
 import ua.com.paradine.domain.User;
@@ -40,7 +42,8 @@ import ua.com.paradine.domain.WorkingHours;
 public class SubmitVisitIntentFlow {
 
     private final ExtendedVisitIntentionRepository visitIntentionRepository;
-    private final ExtendedRestaurantRepository restaurantRepository;
+    private final RestaurantDao restaurantDao;
+    private final RestaurantSafetyClassifier restaurantSafetyClassifier;
     private final ExtendedUserRepository userRepository;
     private final ExtendedWorkingHoursRepository workingHoursRepository;
     private final RestaurantMapperBusiness mapper = Mappers.getMapper(RestaurantMapperBusiness.class);
@@ -51,11 +54,14 @@ public class SubmitVisitIntentFlow {
 
     @Autowired
     public SubmitVisitIntentFlow(ExtendedVisitIntentionRepository visitIntentionRepository,
-        ExtendedRestaurantRepository restaurantRepository,
+        @Qualifier("jpaRestaurantDao")
+            RestaurantDao restaurantDao,
+        RestaurantSafetyClassifier restaurantSafetyClassifier,
         ExtendedUserRepository userRepository,
         ExtendedWorkingHoursRepository workingHoursRepository) {
         this.visitIntentionRepository = visitIntentionRepository;
-        this.restaurantRepository = restaurantRepository;
+        this.restaurantDao = restaurantDao;
+        this.restaurantSafetyClassifier = restaurantSafetyClassifier;
         this.userRepository = userRepository;
         this.workingHoursRepository = workingHoursRepository;
     }
@@ -74,7 +80,9 @@ public class SubmitVisitIntentFlow {
                 Problem.valueOf(Status.BAD_REQUEST, VISIT_DATE_OUT_OF_RANGE));
         }
 
-        Optional<Long> restaurant = restaurantRepository.findIdByUuid(command.getRestaurantId());
+        Optional<Restaurant> restaurant = restaurantDao.loadRestaurants(
+            Builder.init().withId(command.getRestaurantId()).build()
+        ).stream().findFirst();
         if(!restaurant.isPresent()) {
             return new SubmitVisitIntentOutcome(Problem.valueOf(Status.NOT_FOUND));
         }
@@ -86,8 +94,8 @@ public class SubmitVisitIntentFlow {
 
         String dayOfWeek = DOW.get(plannedVisitDate.getDayOfWeek());
         int hour = plannedVisitDate.getHour();
-        Optional<WorkingHours> workingHours = workingHoursRepository
-            .fetchByRestaurantIdAndDayOfWeek(restaurant.get(), dayOfWeek);
+        Optional<WorkingHours> workingHours = restaurant.get().getWorkingHours()
+            .stream().filter(r -> r.getDayOfWeek().equals(dayOfWeek)).findFirst();
         if(workingHours.isPresent()) {
             WorkingHoursVO workingHoursVO = mapper.dbEntityToValueObject(workingHours.get());
             WorkingHoursChecker workingHoursChecker = new WorkingHoursChecker();
@@ -123,28 +131,30 @@ public class SubmitVisitIntentFlow {
         return new SubmitVisitIntentOutcome(fromString(visit.getUuid()));
     }
 
-    private IntendedVisit persistVisitIntent(Long who, ZonedDateTime when, Long where) {
+    private IntendedVisit persistVisitIntent(Long who, ZonedDateTime when, Restaurant where) {
         IntendedVisit visit = new IntendedVisit();
         visit.setUuid(UUID.randomUUID().toString());
         visit.setVisitingUser(userReference(who));
-        visit.setRestaurant(restaurantReference(where));
+        visit.setRestaurant(restaurantReference(where.getId()));
         visit.setCancelled(Boolean.FALSE);
         visit.setVisitStartDate(when);
         visit.setVisitEndDate(when.plusHours(VISIT_DURATION_HOURS));
-        // visit.setSafety(); //TODO add safety calculation
+        visit.setSafety(
+            restaurantSafetyClassifier.classifySafety(mapper.dbEntityToValueObject(where), when).getIndicator()
+        );
         visitIntentionRepository.saveAndFlush(visit);
         return visit;
     }
 
-    private User userReference(Long id) {
+    private User userReference(Long who) {
         User ref = new User();
-        ref.setId(id);
+        ref.setId(who);
         return ref;
     }
 
-    private Restaurant restaurantReference(Long id) {
+    private Restaurant restaurantReference(Long where) {
         Restaurant ref = new Restaurant();
-        ref.setId(id);
+        ref.setId(where);
         return ref;
     }
 }

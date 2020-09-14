@@ -1,5 +1,6 @@
 package ua.com.paradine.core.business;
 
+import java.time.ZonedDateTime;
 import ua.com.paradine.core.business.vo.ClassifiedRestaurantVO;
 import ua.com.paradine.core.business.vo.RestaurantVO;
 
@@ -12,5 +13,7 @@ public interface RestaurantSafetyClassifier {
      * @return restaurant classified  <br/>
      */
     ClassifiedRestaurantVO classifySafety(RestaurantVO restaurant);
+
+    SafetyMarker classifySafety(RestaurantVO restaurant, ZonedDateTime at);
 
 }

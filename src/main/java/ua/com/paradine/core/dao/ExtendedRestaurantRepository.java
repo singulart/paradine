@@ -21,4 +21,6 @@ public interface ExtendedRestaurantRepository extends RestaurantRepository {
         "SELECT r.id FROM Restaurant r where r.uuid = :uuid"
     )
     Optional<Long> findIdByUuid(@Param("uuid") String uuid);
+
+    Restaurant findByUuid(@Param("uuid") String uuid);
 }

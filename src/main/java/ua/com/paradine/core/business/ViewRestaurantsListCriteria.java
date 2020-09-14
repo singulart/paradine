@@ -4,6 +4,7 @@ import static java.util.Optional.ofNullable;
 
 public class ViewRestaurantsListCriteria {
 
+    private String id;
     private String query;
     private String citySlug;
     private Double lat;
@@ -11,6 +12,10 @@ public class ViewRestaurantsListCriteria {
     private Integer page;
 
     private ViewRestaurantsListCriteria() {}
+
+    public String getId() {
+        return id;
+    }
 
     public String getQuery() {
         return query;
@@ -34,6 +39,7 @@ public class ViewRestaurantsListCriteria {
 
     public static final class Builder {
 
+        private String id;
         private String query;
         private String citySlug;
         private Double lat;
@@ -49,6 +55,11 @@ public class ViewRestaurantsListCriteria {
 
         public Builder withPage(Integer page) {
             this.page = page;
+            return this;
+        }
+
+        public Builder withId(String id) {
+            this.id = id;
             return this;
         }
 
@@ -79,6 +90,7 @@ public class ViewRestaurantsListCriteria {
             viewRestaurantsListCriteria.citySlug = this.citySlug;
             viewRestaurantsListCriteria.lng = this.lng;
             viewRestaurantsListCriteria.lat = this.lat;
+            viewRestaurantsListCriteria.id = this.id;
             return viewRestaurantsListCriteria;
         }
     }
