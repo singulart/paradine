@@ -2,20 +2,29 @@ package ua.com.paradine.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.core.StopFilterFactory;
+import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilterFactory;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Latitude;
 import org.hibernate.search.annotations.Longitude;
+import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.Spatial;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
 
 /**
  * A Restaurant.
@@ -25,6 +34,19 @@ import java.time.ZonedDateTime;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Indexed
 @Spatial
+@AnalyzerDef(
+    name = "noStopWordsAnalyzer",
+    tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+    filters = {
+        @TokenFilterDef(factory = ASCIIFoldingFilterFactory.class),
+        @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+        @TokenFilterDef( factory = StopFilterFactory.class,
+            params = {
+                @Parameter(name = "words", value = "paradine_lucene_stopwords.txt")
+            }
+        )
+    }
+)
 public class Restaurant implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,12 +59,12 @@ public class Restaurant implements Serializable {
     @NotNull
     @Size(min = 3, max = 128)
     @Column(name = "name", length = 128, nullable = false)
-    @Field
+    @Field(analyzer = @Analyzer(definition = "noStopWordsAnalyzer"))
     private String name;
 
     @Size(max = 128)
     @Column(name = "alt_name_1", length = 128)
-    @Field
+    @Field(analyzer = @Analyzer(definition = "noStopWordsAnalyzer"))
     private String altName1;
 
     @NotNull
@@ -83,12 +105,12 @@ public class Restaurant implements Serializable {
 
     @Size(max = 128)
     @Column(name = "alt_name_2", length = 128)
-    @Field
+    @Field(analyzer = @Analyzer(definition = "noStopWordsAnalyzer"))
     private String altName2;
 
     @Size(max = 128)
     @Column(name = "alt_name_3", length = 128)
-    @Field
+    @Field(analyzer = @Analyzer(definition = "noStopWordsAnalyzer"))
     private String altName3;
 
     @NotNull

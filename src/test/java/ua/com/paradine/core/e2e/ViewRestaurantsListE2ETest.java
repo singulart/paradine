@@ -64,7 +64,7 @@ public class ViewRestaurantsListE2ETest extends SearchIndexTest {
         mockMvc.perform(get("/api/paradine/v2/restaurants").queryParam("city", "kyiv"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(header().string("X-Total-Count", "10"))
+            .andExpect(header().string("X-Total-Count", "11"))
             .andExpect(jsonPath("$.version").value("2.0"))
             .andExpect(jsonPath("$.restaurants[?(@.name=='Musafir')].safetyToday[?(@.h=='09')].value")
                 .value(SafetyMarker.GREEN.getIndicator()))
@@ -91,6 +91,7 @@ public class ViewRestaurantsListE2ETest extends SearchIndexTest {
         "Okhota,6a2f31a3-c54c-fce8-32d2-0324e1c32e22",
         "polyu,6a2f31a3-c54c-fce8-32d2-0324e1c32e22",
         "хрещ,1a2f41a3-c54c-fce8-32d2-0324e1c32e22",
+        "the,b3f34ec0-010f-dddd-8a1d-9858cbb05b35",
     })
     public void testKeywordSearch(String keyword, String expectedUid) throws Exception {
 
