@@ -118,8 +118,8 @@ class SubmitVisitIntentFlowTest {
     @Test
     void nonExistentRestaurantShouldYield404() {
 
-        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
-            .thenReturn(Optional.empty());
+//        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
+//            .thenReturn(Optional.empty());
         lenient().when(restaurantDao.loadRestaurants(any()))
             .thenReturn(new PageImpl<>(new ArrayList<>()));
 
@@ -138,8 +138,8 @@ class SubmitVisitIntentFlowTest {
     @Test
     void nonExistentUserShouldYield404() {
 
-        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
-            .thenReturn(Optional.of(1000L));
+//        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
+//            .thenReturn(Optional.of(1000L));
         Restaurant rest = new Restaurant();
         lenient().when(restaurantDao.loadRestaurants(any()))
             .thenReturn(new PageImpl<>(Collections.singletonList(rest)));
@@ -163,8 +163,8 @@ class SubmitVisitIntentFlowTest {
     @Test
     void visitInNonBusinessHoursShouldBeRejected_venueClosed() {
 
-        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
-            .thenReturn(Optional.of(1000L));
+//        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
+//            .thenReturn(Optional.of(1000L));
 
         lenient().when(userRepository.findIdByLogin(eq("hito")))
             .thenReturn(Optional.of(42L));
@@ -195,8 +195,8 @@ class SubmitVisitIntentFlowTest {
     @Test
     void visitInNonBusinessHoursShouldBeRejected_venueEOD() {
 
-        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
-            .thenReturn(Optional.of(1000L));
+//        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
+//            .thenReturn(Optional.of(1000L));
 
         Restaurant rest = new Restaurant();
         rest.getWorkingHours().add(
@@ -237,8 +237,8 @@ class SubmitVisitIntentFlowTest {
     @Test
     void visitAtExactOpeningHour_should_be_accepted() {
 
-        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
-            .thenReturn(Optional.of(1000L));
+//        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
+//            .thenReturn(Optional.of(1000L));
 
         lenient().when(userRepository.findIdByLogin(eq("hito")))
             .thenReturn(Optional.of(42L));
@@ -272,8 +272,8 @@ class SubmitVisitIntentFlowTest {
     @Test
     void usersAllowedToHavePredefinedNumberOfScheduledVisitsEachDay() {
 
-        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
-            .thenReturn(Optional.of(1000L));
+//        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
+//            .thenReturn(Optional.of(1000L));
 
         Restaurant rest = new Restaurant();
         lenient().when(restaurantDao.loadRestaurants(any()))
@@ -301,8 +301,8 @@ class SubmitVisitIntentFlowTest {
     @Test
     void minimalIntervalsBetweenVisitsMustBeValidated() {
 
-        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
-            .thenReturn(Optional.of(1000L));
+//        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
+//            .thenReturn(Optional.of(1000L));
 
         lenient().when(restaurantDao.loadRestaurants(any()))
             .thenReturn(new PageImpl<>(Collections.singletonList(new Restaurant())));
@@ -334,8 +334,8 @@ class SubmitVisitIntentFlowTest {
     @Test
     void fieldsShouldBePopulatedCorrectly() {
 
-        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
-            .thenReturn(Optional.of(1000L));
+//        lenient().when(restaurantRepository.findIdByUuid(eq("123")))
+//            .thenReturn(Optional.of(1000L));
         Restaurant rest = new Restaurant();
         lenient().when(restaurantDao.loadRestaurants(any()))
             .thenReturn(new PageImpl<>(Collections.singletonList(rest)));

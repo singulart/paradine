@@ -17,10 +17,14 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
@@ -28,9 +32,9 @@ import ua.com.paradine.core.business.ViewRestaurantsListCriteria.Builder;
 import ua.com.paradine.core.business.vo.WorkingHoursVO;
 import ua.com.paradine.core.business.vo.commands.SubmitVisitIntentCommand;
 import ua.com.paradine.core.business.vo.outcomes.SubmitVisitIntentOutcome;
+import ua.com.paradine.core.dao.ExtendedRestaurantRepository;
 import ua.com.paradine.core.dao.ExtendedUserRepository;
 import ua.com.paradine.core.dao.ExtendedVisitIntentionRepository;
-import ua.com.paradine.core.dao.ExtendedWorkingHoursRepository;
 import ua.com.paradine.core.dao.RestaurantDao;
 import ua.com.paradine.domain.IntendedVisit;
 import ua.com.paradine.domain.Restaurant;
@@ -38,14 +42,14 @@ import ua.com.paradine.domain.User;
 import ua.com.paradine.domain.WorkingHours;
 
 @Service
-@Transactional
+@Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRES_NEW)
 public class SubmitVisitIntentFlow {
 
     private final ExtendedVisitIntentionRepository visitIntentionRepository;
     private final RestaurantDao restaurantDao;
     private final RestaurantSafetyClassifier restaurantSafetyClassifier;
     private final ExtendedUserRepository userRepository;
-    private final ExtendedWorkingHoursRepository workingHoursRepository;
+    private final ExtendedRestaurantRepository restaurantRepository;
     private final RestaurantMapperBusiness mapper = Mappers.getMapper(RestaurantMapperBusiness.class);
 
     public static final Integer VISIT_DURATION_HOURS = 2;
@@ -58,12 +62,12 @@ public class SubmitVisitIntentFlow {
             RestaurantDao restaurantDao,
         RestaurantSafetyClassifier restaurantSafetyClassifier,
         ExtendedUserRepository userRepository,
-        ExtendedWorkingHoursRepository workingHoursRepository) {
+        ExtendedRestaurantRepository restaurantRepository) {
         this.visitIntentionRepository = visitIntentionRepository;
         this.restaurantDao = restaurantDao;
         this.restaurantSafetyClassifier = restaurantSafetyClassifier;
         this.userRepository = userRepository;
-        this.workingHoursRepository = workingHoursRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     public SubmitVisitIntentOutcome submitVisitIntent(SubmitVisitIntentCommand command) {
@@ -104,6 +108,9 @@ public class SubmitVisitIntentFlow {
                     Problem.valueOf(Status.BAD_REQUEST, VISIT_IN_NON_BUSINESS_HOURS_NOT_ALLOWED));
             }
         }
+
+        // enter critical section
+        restaurantRepository.lockRestaurantRowByUuid(restaurant.get().getUuid());
 
         // minus 1 second is a little trick allowing to stay within 'tomorrow', see testSubmitTooManyVisits_400_end_of_tomorrow_edge_case
         ZonedDateTime startOfDay = plannedVisitDate.minusSeconds(1).truncatedTo(ChronoUnit.DAYS);

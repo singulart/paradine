@@ -1,8 +1,9 @@
 package ua.com.paradine.core.dao;
 
-import java.util.Optional;
+import javax.persistence.LockModeType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -20,7 +21,8 @@ public interface ExtendedRestaurantRepository extends RestaurantRepository {
     @Query(value =
         "SELECT r.id FROM Restaurant r where r.uuid = :uuid"
     )
-    Optional<Long> findIdByUuid(@Param("uuid") String uuid);
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    Long lockRestaurantRowByUuid(@Param("uuid") String uuid);
 
     Restaurant findByUuid(@Param("uuid") String uuid);
 }

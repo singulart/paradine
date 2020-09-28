@@ -22,6 +22,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -33,10 +34,10 @@ import ua.com.paradine.web.api.model.IntendedVisit;
 @SpringBootTest(classes = ParadineApp.class)
 @ExtendWith({MockitoExtension.class, SpringExtension.class})
 @AutoConfigureMockMvc
-@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @Sql(scripts = {"/db/test_data.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = {"/db/cleanup.sql"}, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 @WithMockUser
+@ActiveProfiles(profiles = {"testcontainers"})
 public class ViewIntendedVisitsE2ETest {
 
     @Autowired

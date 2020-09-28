@@ -33,7 +33,7 @@ import ua.com.paradine.core.business.SafetyMarker;
 @SpringBootTest(classes = ParadineApp.class)
 @ExtendWith({MockitoExtension.class, SpringExtension.class})
 @AutoConfigureMockMvc
-@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2) //TODO problems migrating this to testcontainers
 @Sql(
     scripts = {"/db/test_data.sql"},
     executionPhase = BEFORE_TEST_METHOD
