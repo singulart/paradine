@@ -50,7 +50,7 @@ paths:
           name: lat
           description: |
             Latitude for geolocation search.
-            Must be used in conbination with 'lng'.
+            Must be used in combination with 'lng'.
             If present, parameter 'city' is ignored.
           required: false
           schema:
@@ -62,7 +62,7 @@ paths:
           name: lng
           description: |
             Longitude for geolocation search.
-            Must be used in conbination with 'lat'.
+            Must be used in combination with 'lat'.
             If present, parameter 'city' is ignored.
           required: false
           schema:
